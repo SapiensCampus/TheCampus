@@ -175,7 +175,7 @@ function Footer() {
   )
 }
 
-function Progress({ answered, total }) {
+function Progress({ answered, total, onBack }) {
   const rounds = Math.ceil(total / RIASEC_KEYS.length) || 5
   const perRound = RIASEC_KEYS.length
   const currentRound = Math.min(
@@ -184,13 +184,27 @@ function Progress({ answered, total }) {
   )
 
   return (
-    <>
+    <div className="progress-block">
       <div className="progress-caption">
-        <span>
-          Round {currentRound} / {rounds}
-        </span>
-        <span>
-          {answered} / {total} explored
+        {onBack ? (
+          <button type="button" className="linkish progress-back" onClick={onBack}>
+            ← Back
+          </button>
+        ) : (
+          <span>Round {currentRound} / {rounds}</span>
+        )}
+        <span className="progress-meta">
+          {onBack ? (
+            <>
+              Round {currentRound} / {rounds}
+              <span aria-hidden="true"> · </span>
+              {answered} / {total}
+            </>
+          ) : (
+            <>
+              {answered} / {total} explored
+            </>
+          )}
         </span>
       </div>
       <div
@@ -212,7 +226,7 @@ function Progress({ answered, total }) {
           )
         })}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -1473,18 +1487,9 @@ export default function App() {
       )}
 
       {view === 'quiz' && current && (
-        <section className="screen dots-bg">
+        <section className="screen dots-bg quiz-screen">
           <div className="quiz-wrap">
-            <div className="quiz-nav">
-              <button type="button" className="linkish" onClick={goBack}>
-                ← Back
-              </button>
-              <button type="button" className="linkish" onClick={() => setView('intro')}>
-                Pause
-              </button>
-            </div>
-
-            <Progress answered={answeredCount} total={quiz.length} />
+            <Progress answered={answeredCount} total={quiz.length} onBack={goBack} />
 
             {liveTrivia ? (
               <div

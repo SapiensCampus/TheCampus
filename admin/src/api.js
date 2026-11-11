@@ -23,13 +23,6 @@ async function request(path, options = {}) {
   return data
 }
 
-export const listWaitlist = ({ limit = 25, cursor = '' } = {}) => {
-  const params = new URLSearchParams()
-  if (limit) params.set('limit', String(limit))
-  if (cursor) params.set('cursor', cursor)
-  const query = params.toString()
-  return request(`/api/admin/waitlist${query ? `?${query}` : ''}`)
-}
 export const listQuestions = () => request('/api/admin/questions')
 export const createQuestion = (body) =>
   request('/api/admin/questions', { method: 'POST', body: JSON.stringify(body) })
@@ -102,6 +95,9 @@ export const listUsers = ({ limit = 25, cursor = '' } = {}) => {
   const query = params.toString()
   return request(`/api/admin/users${query ? `?${query}` : ''}`)
 }
+export const getUser = (uid) => request(`/api/admin/users/${encodeURIComponent(uid)}`)
+export const getUserRoadmap = (uid) =>
+  request(`/api/admin/users/${encodeURIComponent(uid)}/roadmap`)
 
 export const getRoadmapCatalog = () => request('/api/admin/roadmaps')
 export const getRoadmapEditor = (roleId) =>

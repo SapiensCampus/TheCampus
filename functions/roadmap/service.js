@@ -1200,6 +1200,80 @@ class RoadmapService {
     };
   }
 
+  /** Progress-only view for one student. Notes and evidence stay private. */
+  async learnerSummary(uid) {
+    return this.store.transaction(async (tx) => {
+      const enrolment = await tx.get(keyEnrol(uid));
+      if (!enrolment) {
+        return {
+          ok: true,
+          excluded: false,
+          active: null,
+          trails: [],
+          noteAccess: "Progress only. Notes and evidence stay private.",
+        };
+      }
+      const trails = [];
+      for (const entry of Object.values(enrolment.trails || {})) {
+        const role = this.byRole.get(entry.roleId)?.get(entry.version);
+        if (!role) {
+          trails.push({
+            roleId: entry.roleId,
+            version: entry.version,
+            title: "",
+            missingContent: true,
+            active: false,
+            state: "unknown-trail",
+            done: 0,
+            total: 0,
+            currentStep: null,
+            attemptNo: null,
+            archivedAttempts: 0,
+          });
+          continue;
+        }
+        const index = (await tx.get(keyIndex(uid, role.id, role.version))) || null;
+        if (!index?.currentAttemptNo) continue;
+        const attempt = await tx.get(keyAttempt(uid, role.id, role.version, index.currentAttemptNo));
+        const progress = progressOf(role.steps, attempt?.completed);
+        const active =
+          enrolment.activeRoleId === role.id &&
+          enrolment.activeVersion === role.version &&
+          enrolment.activeAttemptNo === index.currentAttemptNo;
+        trails.push({
+          roleId: role.id,
+          version: role.version,
+          title: role.title,
+          avatar: role.avatar || null,
+          missingContent: false,
+          active,
+          state: progress.finished ? "finished" : "on-step",
+          done: progress.done,
+          total: progress.total,
+          currentStep: progress.finished ? null : progress.nextTitle,
+          currentStepId: progress.currentStepId,
+          attemptNo: index.currentAttemptNo,
+          archivedAttempts: Array.isArray(index.archived) ? index.archived.length : 0,
+          steps: (role.steps || []).map((step) => ({
+            id: step.id,
+            order: step.order,
+            title: step.title,
+            completed: Boolean(attempt?.completed?.[step.id]),
+          })),
+        });
+      }
+      const active = trails.find((trail) => trail.active) || null;
+      return {
+        ok: true,
+        excluded: Boolean(enrolment.excluded),
+        updatedAt: enrolment.updatedAt || null,
+        active,
+        trails,
+        noteAccess: "Progress only. Notes and evidence stay private.",
+      };
+    });
+  }
+
   async _attemptFor(tx, enrolment, role, preloaded) {
     if (!enrolment?.activeRoleId) return null;
     if (enrolment.activeRoleId !== role.id || enrolment.activeVersion !== role.version) return null;

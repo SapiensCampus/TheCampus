@@ -857,6 +857,224 @@ td.email {
   gap: 4px;
 }
 
+.users-table .users-row {
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.users-table .users-row:hover,
+.users-table .users-row:focus-visible {
+  background: var(--cream);
+  outline: none;
+}
+
+.users-row-action {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.users-row-action .btn {
+  pointer-events: none;
+}
+
+.user-detail-dialog {
+  max-width: 720px;
+  max-height: min(90vh, 900px);
+}
+
+.user-detail-dialog .window {
+  max-height: min(90vh, 900px);
+  display: flex;
+  flex-direction: column;
+}
+
+.user-detail-body {
+  overflow: auto;
+  display: grid;
+  gap: 18px;
+}
+
+.user-detail-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.user-detail-hero h2 {
+  font: 800 clamp(26px, 5vw, 34px)/1.05 var(--h);
+  letter-spacing: -0.04em;
+  margin: 4px 0 6px;
+}
+
+.user-detail-email {
+  color: var(--muted);
+  word-break: break-word;
+}
+
+.user-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.user-detail-card {
+  border: var(--b);
+  background: var(--cream);
+  padding: 12px 14px;
+  display: grid;
+  gap: 4px;
+}
+
+.user-detail-card .label,
+.user-detail-section .label,
+.trail-active .label,
+.trail-other .label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.user-detail-card strong {
+  font-size: 15px;
+  word-break: break-word;
+}
+
+.user-detail-section {
+  border: var(--b);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+  background: var(--paper);
+}
+
+.user-detail-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.user-detail-section-head h3 {
+  font: 800 18px/1.1 var(--h);
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.user-detail-role-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.role-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.trail-active {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: var(--b);
+  background: var(--cream);
+}
+
+.trail-active-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.trail-meter {
+  height: 10px;
+  border: var(--b);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.trail-meter i {
+  display: block;
+  height: 100%;
+  background: var(--mint);
+  transition: width 220ms ease;
+}
+
+.trail-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.trail-steps li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: var(--b);
+  background: var(--paper);
+  font-size: 13px;
+}
+
+.trail-steps li.done {
+  background: var(--mint);
+}
+
+.trail-other ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.trail-other li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: var(--b);
+}
+
+.trail-other li:last-child {
+  border-bottom: 0;
+}
+
+.user-detail-meta {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.empty.compact {
+  padding: 18px 12px;
+}
+
+@media (max-width: 640px) {
+  .user-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .users-table th:nth-child(4),
+  .users-table td:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .users-table .users-row,
+  .trail-meter i {
+    transition: none;
+  }
+}
+
 .muted {
   color: var(--muted);
 }

@@ -104,8 +104,15 @@ h3 {
 
 .app {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+}
+
+.app:has(.quiz-screen) {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .wrap {
@@ -814,31 +821,57 @@ h3 {
 }
 
 /* ——— Quiz ——— */
+.quiz-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 16px 0 20px;
+  overflow: hidden;
+}
+
 .quiz-wrap {
   width: min(740px, calc(100% - 32px));
   margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.quiz-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+.progress-block {
+  flex: none;
 }
 
 .progress-caption {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   font: 600 11px/1.4 var(--mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
 
+.progress-back {
+  min-height: 0;
+  padding: 0;
+  font: 700 13px/1.2 var(--body);
+  letter-spacing: 0;
+  text-transform: none;
+  flex: none;
+}
+
+.progress-meta {
+  text-align: right;
+  white-space: nowrap;
+}
+
 .round-progress {
   display: flex;
   gap: 6px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .round-progress i {
@@ -864,7 +897,8 @@ h3 {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 52px;
+  flex: none;
+  min-height: 0;
   margin-bottom: 10px;
   font-size: 13px;
   font-weight: 500;
@@ -874,8 +908,9 @@ h3 {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 12px;
-  padding: 10px 12px;
+  flex: none;
+  margin-bottom: 10px;
+  padding: 8px 12px;
   border: 1.5px solid var(--ink);
   border-radius: 14px;
   background: var(--mint);
@@ -888,6 +923,10 @@ h3 {
   font-size: 13px;
   line-height: 1.45;
   font-weight: 500;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .trivia-strip strong {
@@ -932,7 +971,11 @@ h3 {
 .q-stack {
   position: relative;
   isolation: isolate;
-  margin-bottom: 16px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
 }
 
 .q-stack::before,
@@ -956,12 +999,18 @@ h3 {
   background: var(--paper);
   border: var(--b);
   box-shadow: var(--sh);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .q-top {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  flex: none;
   padding: 12px 18px;
   border-bottom: 1.5px solid var(--ink);
   font: 600 10px/1.3 var(--mono);
@@ -975,7 +1024,9 @@ h3 {
   display: grid;
   gap: 10px;
   justify-items: center;
-  min-height: 240px;
+  align-content: center;
+  flex: 1;
+  min-height: 0;
 }
 
 .q-icon {
@@ -1013,6 +1064,7 @@ h3 {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
+  flex: none;
 }
 
 .reaction {
@@ -1684,8 +1736,32 @@ h3 {
     right: -4px;
   }
 
+  .quiz-screen {
+    padding: 8px 0 0;
+  }
+
+  .quiz-wrap {
+    width: min(740px, calc(100% - 24px));
+  }
+
+  .progress-caption {
+    margin-bottom: 6px;
+  }
+
+  .round-progress {
+    margin-bottom: 8px;
+  }
+
+  .round-progress i {
+    height: 8px;
+  }
+
+  .q-top {
+    padding: 8px 12px;
+  }
+
   .q-body {
-    padding: 14px 14px 16px;
+    padding: 12px 12px 14px;
     min-height: 0;
     gap: 6px;
   }
@@ -1697,34 +1773,99 @@ h3 {
   }
 
   .q-body h1 {
-    font-size: clamp(22px, 6.2vw, 28px);
+    font-size: clamp(20px, 5.6vw, 26px);
+  }
+
+  .q-body .cue {
+    font-size: 13px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
   .coach {
     min-height: 0;
     margin-bottom: 6px;
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .coach .face {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+
+  .trivia-strip {
+    margin-bottom: 6px;
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .trivia-strip p {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+  }
+
+  .q-stack {
+    margin-bottom: 8px;
+  }
+
+  .q-stack::before,
+  .q-stack::after {
+    display: none;
   }
 
   .reactions {
     position: sticky;
     bottom: 0;
     z-index: 5;
-    gap: 8px;
-    margin-top: 8px;
-    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    gap: 6px;
+    margin-top: auto;
+    padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
     background: linear-gradient(to top, var(--cream) 78%, rgb(254 238 195 / 0));
   }
 
   .reaction {
-    min-height: 52px;
+    min-height: 48px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 14px;
+    padding: 8px 12px;
   }
 
   .reaction span {
     text-align: right;
+  }
+
+  /* Short phones: squeeze chrome so the prompt + cue stay visible */
+  @media (max-height: 740px) {
+    .site-header .nav-wrap {
+      min-height: 56px;
+      padding: 6px 0;
+    }
+
+    .q-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .q-body h1 {
+      font-size: clamp(18px, 5vw, 22px);
+    }
+
+    .reaction {
+      min-height: 44px;
+      padding: 6px 12px;
+    }
+
+    .reaction span {
+      font-size: 12px;
+    }
   }
 
   .role-avatar-card {

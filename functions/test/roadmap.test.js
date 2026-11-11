@@ -772,6 +772,11 @@ test("publishing a trail keeps the old version and hides private notes", async (
   assert.equal(board.learners[0].done, 0);
   assert.equal(board.learners[0].currentStep, "Notice one campus friction");
   assert.equal(JSON.stringify(board).includes("private-bus-note"), false);
+  const summary = await service.learnerSummary("ada");
+  assert.equal(summary.active?.roleId, "builders");
+  assert.equal(summary.active?.currentStep, "Notice one campus friction");
+  assert.equal(summary.active?.steps?.[0]?.title, "Notice one campus friction");
+  assert.equal(JSON.stringify(summary).includes("private-bus-note"), false);
 
   const extra = structuredClone(role);
   extra.steps.push({

@@ -878,46 +878,6 @@ router.post("/waitlist", async (req, res) => {
   }
 });
 
-router.get("/admin/waitlist", requireAdmin, async (req, res) => {
-  try {
-    const limit = clampPageSize(req.query.limit, { fallback: 25, max: 50 });
-    const cursor = String(req.query.cursor || "").trim();
-    let query = WAITLIST.orderBy("createdAt", "desc").limit(limit);
-    if (cursor) {
-      const cursorSnap = await WAITLIST.doc(cursor).get();
-      if (cursorSnap.exists) {
-        query = query.startAfter(cursorSnap);
-      }
-    }
-
-    const [snap, totalSnap] = await Promise.all([query.get(), WAITLIST.count().get()]);
-    const entries = snap.docs.map((doc) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        email: data.email,
-        consent: data.consent,
-        scores: data.scores || null,
-        hasAnswers: data.hasAnswers === true || Boolean(data.answers),
-        createdAt: data.createdAt?.toDate?.()?.toISOString?.() || null,
-        updatedAt: data.updatedAt?.toDate?.()?.toISOString?.() || null,
-      };
-    });
-    const nextCursor = snap.docs.length === limit ? snap.docs[snap.docs.length - 1].id : null;
-    res.json({
-      ok: true,
-      entries,
-      pageSize: limit,
-      nextCursor,
-      total: totalSnap.data().count || 0,
-      answeredOnPage: entries.filter((row) => row.hasAnswers).length,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ ok: false, error: "Failed to list waitlist" });
-  }
-});
-
 router.get("/admin/questions", requireAdmin, async (_req, res) => {
   try {
     const [metaSnap, questionSnap] = await Promise.all([
@@ -1373,6 +1333,48 @@ router.put("/admin/campus", requireAdmin, async (req, res) => {
   }
 });
 
+function serializeAdminUser(doc, names = {}) {
+  const data = doc.data() || {};
+  const collegeId = data.collegeId || "";
+  const departmentId = data.departmentId || "";
+  return {
+    id: doc.id,
+    email: data.email || "",
+    displayName: data.displayName || "",
+    collegeId,
+    collegeName: names.colleges?.[collegeId] || "",
+    departmentId,
+    departmentName: names.departments?.[departmentId] || "",
+    passoutYear: data.passoutYear || null,
+    mobile: data.mobile || "",
+    inviteCode: data.inviteCode || "",
+    roles: Array.isArray(data.roles) ? data.roles : [],
+    selectedRole: data.selectedRole || null,
+    scores: data.scores && typeof data.scores === "object" ? data.scores : null,
+    hasAnswers: Boolean(data.answers),
+    createdAt: data.createdAt?.toDate?.()?.toISOString?.() || null,
+    updatedAt: data.updatedAt?.toDate?.()?.toISOString?.() || null,
+  };
+}
+
+async function resolveDirectoryNames(users) {
+  const collegeIds = [...new Set(users.map((u) => u.collegeId).filter(Boolean))];
+  const departmentIds = [...new Set(users.map((u) => u.departmentId).filter(Boolean))];
+  const [collegeSnaps, deptSnaps] = await Promise.all([
+    Promise.all(collegeIds.map((id) => COLLEGES.doc(id).get())),
+    Promise.all(departmentIds.map((id) => DEPARTMENTS.doc(id).get())),
+  ]);
+  const colleges = {};
+  collegeSnaps.forEach((snap, index) => {
+    if (snap.exists) colleges[collegeIds[index]] = snap.data()?.name || collegeIds[index];
+  });
+  const departments = {};
+  deptSnaps.forEach((snap, index) => {
+    if (snap.exists) departments[departmentIds[index]] = snap.data()?.name || departmentIds[index];
+  });
+  return { colleges, departments };
+}
+
 router.get("/admin/users", requireAdmin, async (req, res) => {
   try {
     const limit = clampPageSize(req.query.limit, { fallback: 25, max: 50 });
@@ -1386,23 +1388,9 @@ router.get("/admin/users", requireAdmin, async (req, res) => {
     }
 
     const [snap, totalSnap] = await Promise.all([query.get(), USERS.count().get()]);
-    const users = snap.docs.map((doc) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        email: data.email,
-        displayName: data.displayName || "",
-        collegeId: data.collegeId || "",
-        departmentId: data.departmentId || "",
-        passoutYear: data.passoutYear || null,
-        mobile: data.mobile || "",
-        inviteCode: data.inviteCode || "",
-        roles: data.roles || [],
-        selectedRole: data.selectedRole || null,
-        hasAnswers: Boolean(data.answers),
-        createdAt: data.createdAt?.toDate?.()?.toISOString?.() || null,
-      };
-    });
+    const bare = snap.docs.map((doc) => serializeAdminUser(doc));
+    const names = await resolveDirectoryNames(bare);
+    const users = snap.docs.map((doc) => serializeAdminUser(doc, names));
     const nextCursor = snap.docs.length === limit ? snap.docs[snap.docs.length - 1].id : null;
     res.json({
       ok: true,
@@ -1410,10 +1398,41 @@ router.get("/admin/users", requireAdmin, async (req, res) => {
       pageSize: limit,
       nextCursor,
       total: totalSnap.data().count || 0,
+      withDiscoveryOnPage: users.filter((row) => row.hasAnswers).length,
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({ ok: false, error: "Failed to list users" });
+  }
+});
+
+router.get("/admin/users/:uid", requireAdmin, async (req, res) => {
+  try {
+    const uid = String(req.params.uid || "").trim();
+    if (!uid) {
+      return res.status(400).json({ ok: false, error: "User id required" });
+    }
+    const snap = await USERS.doc(uid).get();
+    if (!snap.exists) {
+      return res.status(404).json({ ok: false, error: "User not found" });
+    }
+    const bare = serializeAdminUser(snap);
+    const names = await resolveDirectoryNames([bare]);
+    const user = serializeAdminUser(snap, names);
+    const answerKeys =
+      snap.data()?.answers && typeof snap.data().answers === "object"
+        ? Object.keys(snap.data().answers).length
+        : 0;
+    res.json({
+      ok: true,
+      user: {
+        ...user,
+        answerCount: answerKeys,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ ok: false, error: "Failed to load user" });
   }
 });
 

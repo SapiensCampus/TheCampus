@@ -90,7 +90,6 @@ firebase deploy --only firestore,functions,hosting
 
 ## Admin API (Bearer Firebase ID token)
 
-- `GET /api/admin/waitlist`
 - `GET|POST /api/admin/questions`
 - `PUT|DELETE /api/admin/questions/:id`
 - `GET /api/admin/questions/export`
@@ -99,4 +98,6 @@ firebase deploy --only firestore,functions,hosting
 - `GET|POST /api/admin/colleges`, `PUT /api/admin/colleges/:id`
 - `POST /api/admin/departments`, `PUT /api/admin/departments/:id`
 - `GET|PUT /api/admin/campus`
-- `GET /api/admin/users`
+- `GET /api/admin/users` — paginated directory with scores and join dates
+- `GET /api/admin/users/:uid` — full student profile
+- `GET /api/admin/users/:uid/roadmap` — trail progress only (notes stay private)

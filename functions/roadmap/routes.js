@@ -241,6 +241,12 @@ function createRouter({
     res.json(board);
   }));
 
+  router.get("/admin/users/:uid/roadmap", requireAdmin, handle(async (req, res) => {
+    const uid = String(req.params.uid || "").trim();
+    if (!uid) throw new RoadmapError(400, "uid_required", "User id required.");
+    res.json(await service.learnerSummary(uid));
+  }));
+
   router.get("/admin/roadmaps/editor/:roleId", requireAdmin, handle(async (req, res) => {
     res.json(service.editorFor(req.params.roleId));
   }));
