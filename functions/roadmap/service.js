@@ -218,7 +218,8 @@ function assertCounts(agg, steps) {
       throw new RoadmapError(500, "count_invariant", "Count update was rejected.");
     }
     sum += here;
-    if (done > prev) throw new RoadmapError(500, "count_invariant", "Count update was rejected.");
+    // Per-unit trails complete out of order, so "done never rises" only holds for linear trails.
+    if (!steps.some((s) => s.unit) && done > prev) throw new RoadmapError(500, "count_invariant", "Count update was rejected.");
     prev = done;
   }
   if (sum + (agg.finished || 0) !== (agg.cohort || 0)) {
@@ -238,17 +239,40 @@ function progressOf(steps, completed) {
   };
 }
 
-function decorateSteps(steps, attempt) {
+/**
+ * Which steps can be worked on now.
+ * Linear trails (no units): the first unfinished step.
+ * Unit trails: the first unfinished step of each unit; skill units wait for every "try" step.
+ */
+function unlockedIds(role, completed) {
+  const done = completed || {};
+  const open = new Set();
+  const units = role.units || [];
+  if (!units.length) {
+    const next = role.steps.find((step) => !done[step.id]);
+    if (next) open.add(next.id);
+    return open;
+  }
+  const tryDone = role.steps
+    .filter((step) => units.find((u) => u.id === step.unit)?.kind === "try")
+    .every((step) => done[step.id]);
+  for (const unit of units) {
+    if (unit.kind === "skill" && !tryDone) continue;
+    const next = role.steps.find((step) => step.unit === unit.id && !done[step.id]);
+    if (next) open.add(next.id);
+  }
+  return open;
+}
+
+function decorateSteps(role, attempt) {
+  const steps = role.steps;
   const completed = attempt?.completed || {};
   const saved = attempt?.checklist || {};
-  let opened = false;
+  const open = unlockedIds(role, completed);
   return steps.map((step) => {
     let state = "locked";
     if (completed[step.id]) state = "completed";
-    else if (!opened) {
-      state = "available";
-      opened = true;
-    }
+    else if (open.has(step.id)) state = "available";
     const checklist = {};
     step.checklist.forEach((_, index) => {
       const key = String(index);
@@ -433,7 +457,7 @@ class RoadmapService {
         active,
         missingContent: false,
         progress: progressOf(role.steps, attempt?.completed),
-        steps: decorateSteps(role.steps, attempt),
+        steps: decorateSteps(role, attempt),
         notes,
         archives,
         history: attempt?.history || [],
@@ -565,8 +589,7 @@ class RoadmapService {
       if (!allChecked(checks)) {
         throw new RoadmapError(400, "checklist_incomplete", "Tick every item after you try the task.");
       }
-      const open = role.steps.find((item) => !attempt.completed?.[item.id]);
-      if (!open || open.id !== step.id) {
+      if (!unlockedIds(role, attempt.completed).has(step.id)) {
         throw new RoadmapError(400, "step_locked", "Finish the earlier steps before marking this one done.");
       }
       const before = this._eligibleVector(enrolment, role, attempt);
@@ -606,7 +629,14 @@ class RoadmapService {
       if (!attempt.completed?.[step.id]) {
         throw new RoadmapError(400, "nothing_to_undo", "That step is not marked done.");
       }
-      const suffix = role.steps.filter((item) => item.order >= step.order);
+      // Undo re-locks whatever depended on this step: later steps in its unit, and
+      // every skill unit when a "try" step is undone.
+      const tryUnit = (role.units || []).find((u) => u.id === step.unit)?.kind === "try";
+      const suffix = role.steps.filter((item) => {
+        if (!role.units?.length) return item.order >= step.order;
+        if (item.unit === step.unit) return item.order >= step.order;
+        return tryUnit && (role.units.find((u) => u.id === item.unit)?.kind === "skill");
+      });
       const cleared = suffix
         .filter((item) => attempt.completed?.[item.id] || attempt.checklist?.[item.id])
         .map((item) => ({

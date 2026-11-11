@@ -67,7 +67,7 @@ test("seed has six avatars, ten steps, and checked https resources", () => {
   for (const role of result.catalog.roles) {
     assert.equal(role.avatar, AVATARS[role.id]);
     assert.equal(role.steps.length, 10);
-    assert.ok(role.steps.length <= 15);
+    assert.ok(role.steps.length <= 40);
     for (const step of role.steps) {
       assert.ok(!seen.has(step.id));
       seen.add(step.id);
@@ -100,7 +100,7 @@ test("validator rejects unsafe or oversized trails", () => {
   const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
   const tooMany = structuredClone(raw);
   const template = tooMany.roles[0].steps[0];
-  tooMany.roles[0].steps = Array.from({ length: 16 }, (_, index) => ({
+  tooMany.roles[0].steps = Array.from({ length: 41 }, (_, index) => ({
     ...template,
     id: `builders-extra-${index + 1}`,
     order: index + 1,
@@ -791,4 +791,81 @@ test("publishing a trail keeps the old version and hides private notes", async (
   assert.equal(service.publicRole("builders", 1).role.steps.length, 10);
   assert.equal(service.publicRole("builders").role.version, 2);
   assert.equal(service.role("builders", 1).steps[0].title, "Notice one campus friction");
+});
+
+function unitCatalog() {
+  const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
+  const role = raw.roles.find((r) => r.id === "builders");
+  role.units = [
+    { id: "try", kind: "try", title: "Try it" },
+    { id: "careers", kind: "careers", title: "Careers" },
+    { id: "skill-a", kind: "skill", title: "Skill A", skill: "A" },
+    { id: "skill-b", kind: "skill", title: "Skill B", skill: "B" },
+  ];
+  role.steps.forEach((step, i) => {
+    step.unit = i < 3 ? "try" : i < 7 ? "skill-a" : "skill-b";
+  });
+  const result = validateContent(raw);
+  assert.equal(result.ok, true, result.errors.join("\n"));
+  return result.catalog;
+}
+
+test("unit trails unlock per unit, skills wait for try, undo re-locks dependants", async () => {
+  const { service, op } = fresh(unitCatalog());
+  await enrol(service, op, "u1", "builders");
+  const role = service.role("builders");
+  const state = async () => {
+    const mine = await service.getOwnerState("u1");
+    return Object.fromEntries(mine.active.steps.map((s) => [s.id, s.state]));
+  };
+  let st = await state();
+  assert.equal(st[role.steps[0].id], "available");
+  assert.equal(st[role.steps[3].id], "locked", "skill locked until try is done");
+
+  let revision = (await service.getOwnerState("u1")).active.revision;
+  for (const step of role.steps.slice(0, 3)) {
+    const res = await service.complete({
+      uid: "u1", roleId: "builders", version: 1, stepId: step.id,
+      checklist: checked(step), expectedRevision: revision, opId: op(),
+    });
+    revision = res.revision;
+  }
+  st = await state();
+  assert.equal(st[role.steps[3].id], "available");
+  assert.equal(st[role.steps[7].id], "available", "second skill opens independently");
+  assert.equal(st[role.steps[4].id], "locked", "inside a unit order still applies");
+
+  // Completing the second skill first is allowed.
+  const jump = role.steps[7];
+  const res = await service.complete({
+    uid: "u1", roleId: "builders", version: 1, stepId: jump.id,
+    checklist: checked(jump), expectedRevision: revision, opId: op(),
+  });
+  revision = res.revision;
+  await assert.rejects(
+    service.complete({
+      uid: "u1", roleId: "builders", version: 1, stepId: role.steps[4].id,
+      checklist: checked(role.steps[4]), expectedRevision: revision, opId: op(),
+    }),
+    (err) => err.code === "step_locked"
+  );
+
+  // Undoing a try step re-locks every skill unit.
+  await service.undo({
+    uid: "u1", roleId: "builders", version: 1, stepId: role.steps[2].id,
+    expectedRevision: revision, opId: op(),
+  });
+  st = await state();
+  assert.equal(st[role.steps[2].id], "available");
+  assert.equal(st[role.steps[7].id], "locked");
+  const counts = await service.getCounts("builders", 1);
+  const sum = counts.steps.reduce((t, s) => t + s.current, 0);
+  assert.equal(sum + counts.finished, counts.cohort);
+});
+
+test("validator rejects a step with no unit when units are declared", () => {
+  const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
+  const role = raw.roles[0];
+  role.units = [{ id: "try", kind: "try", title: "Try it" }];
+  assert.equal(validateContent(raw).ok, false);
 });

@@ -22,8 +22,9 @@ const AVATAR_FILES = {
   planners: "planners-spider.svg",
 };
 
-const MAX_STEPS = 15;
-const MIN_ESTIMATE = 20;
+const MAX_STEPS = 40;
+const MIN_ESTIMATE = 5;
+const UNIT_KINDS = ["try", "careers", "skill"];
 const MAX_ESTIMATE = 75;
 
 function push(errors, message) {
@@ -75,6 +76,45 @@ function validateContent(raw) {
       return;
     }
 
+    // Schema v2 (optional): units group steps into a path; careers feed the careers screen.
+    const rawUnits = Array.isArray(role.units) ? role.units : [];
+    const unitIds = new Set();
+    const units = rawUnits.map((unit, unitIndex) => {
+      const ua = `${where}.units[${unitIndex}]`;
+      if (!unit || !/^[a-z0-9-]{2,40}$/.test(unit.id || "") || unitIds.has(unit.id)) {
+        push(errors, `${ua} needs a unique id`);
+        return null;
+      }
+      unitIds.add(unit.id);
+      if (!UNIT_KINDS.includes(unit.kind)) push(errors, `${ua} kind must be one of ${UNIT_KINDS.join(", ")}`);
+      if (!unit.title || !String(unit.title).trim()) push(errors, `${ua} needs a title`);
+      return {
+        id: unit.id,
+        kind: unit.kind,
+        title: String(unit.title || "").trim(),
+        skill: String(unit.skill || "").trim(),
+      };
+    });
+    if (units.length && units.filter((u) => u && u.kind === "try").length !== 1) {
+      push(errors, `${where} needs exactly one "try" unit`);
+    }
+    const careers = (Array.isArray(role.careers) ? role.careers : []).map((career, careerIndex) => {
+      const ca = `${where}.careers[${careerIndex}]`;
+      if (!career || !/^[a-z0-9-]{2,60}$/.test(career.id || "") || !career.title || !career.blurb) {
+        push(errors, `${ca} needs an id, title and blurb`);
+        return null;
+      }
+      return {
+        id: career.id,
+        title: String(career.title).trim(),
+        tag: career.tag === "pays" ? "pays" : "interesting",
+        blurb: String(career.blurb).trim(),
+        dayInLife: String(career.dayInLife || "").trim(),
+        skills: (Array.isArray(career.skills) ? career.skills : []).map((s) => String(s).trim()).filter(Boolean),
+        profiles: Array.isArray(career.profiles) ? career.profiles : [],
+      };
+    });
+
     const orders = new Set();
     const steps = role.steps.map((step, stepIndex) => {
       const at = `${where}.steps[${stepIndex}]`;
@@ -90,6 +130,10 @@ function validateContent(raw) {
         seenIds.add(step.id);
       }
       if (step.role !== id) push(errors, `${at} role does not match ${id}`);
+      if (units.length) {
+        const unit = units.find((u) => u && u.id === step.unit);
+        if (!unit || unit.kind === "careers") push(errors, `${at} needs a "try" or "skill" unit`);
+      }
       if (Number(step.version) !== version) push(errors, `${at} version does not match the trail`);
       const order = Number(step.order);
       if (!Number.isInteger(order) || order < 1 || order > role.steps.length) {
@@ -149,6 +193,7 @@ function validateContent(raw) {
       return {
         id: step.id,
         order,
+        unit: String(step.unit || ""),
         section: section || "Trail",
         type: String(step.type || "").trim(),
         title: String(step.title || "").trim(),
@@ -187,6 +232,8 @@ function validateContent(raw) {
       avatarFile: AVATAR_FILES[id],
       version,
       description: String(role.description || "").trim(),
+      units: units.filter(Boolean),
+      careers: careers.filter(Boolean),
       steps: steps.filter(Boolean).sort((a, b) => a.order - b.order),
     };
     byRole[id] = byRole[id] || {};
