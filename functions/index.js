@@ -30,6 +30,8 @@ const INVITE_CODES = db.collection("inviteCodes");
 const COLLEGES = db.collection("colleges");
 const DEPARTMENTS = db.collection("departments");
 const USERS = db.collection("users");
+const { SocialService, FirestoreRepo } = require("./social/service");
+const social = new SocialService({ repo: new FirestoreRepo(db) });
 /** Always-allowed admin Google accounts (in addition to Firestore `admins`). */
 const BOOTSTRAP_ADMIN_EMAILS = new Set(["sapienscampus@gmail.com"]);
 
@@ -825,6 +827,17 @@ router.post("/me/discovery", requireStudent, async (req, res) => {
     }
 
     await userRef.set(payload, { merge: true });
+    // +20 XP once, for finishing the quiz. quizDone is idempotent; XP must never fail this save.
+    try {
+      await social.quizDone({
+        uid: req.student.uid,
+        displayName: existingData.displayName || "",
+        collegeId: existingData.collegeId || "",
+        roleId: normalizedSelected?.id || existingData.selectedRole?.id || "",
+      });
+    } catch (_err) {
+      console.error("quiz xp failed");
+    }
     res.json({ ok: true, selectedRole: normalizedSelected });
   } catch (err) {
     console.error(err);

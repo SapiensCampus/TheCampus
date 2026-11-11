@@ -5,6 +5,8 @@ const { FieldValue } = require("firebase-admin/firestore");
 const { RoadmapService, RoadmapError } = require("./service");
 const { FirestoreStore } = require("./store");
 const { AVATARS, loadSeed, readSeed } = require("./validate");
+const { SocialService, FirestoreRepo } = require("../social/service");
+const { createSocialRouter } = require("../social/routes");
 
 function createRouter({
   service,
@@ -13,9 +15,27 @@ function createRouter({
   resolveLearner,
   touchUser,
   loadProfiles,
+  social = null,
   countsTtlMs = 30000,
 }) {
   const router = express.Router();
+
+  // XP must never block a learning save: log and move on.
+  async function award(fn) {
+    if (!social) return null;
+    try {
+      return await fn(social);
+    } catch (_err) {
+      console.error("social award failed");
+      return null;
+    }
+  }
+  const whoOf = (learner) => ({
+    uid: learner.uid,
+    displayName: learner.displayName,
+    collegeId: learner.collegeId,
+    roleId: learner.selectedRole?.id || "",
+  });
   const cache = new Map();
 
   function bust(keys) {
@@ -144,17 +164,18 @@ function createRouter({
 
   router.post("/me/roadmap/checklist", requireStudent, handle(async (req, res) => {
     const learner = await resolveLearner(req);
-    res.json(
-      await service.saveChecklist({
-        uid: learner.uid,
-        roleId: req.body?.roleId,
-        version: req.body?.version,
-        stepId: req.body?.stepId,
-        checklist: req.body?.checklist,
-        expectedRevision: req.body?.expectedRevision,
-        opId: req.body?.opId,
-      })
-    );
+    const result = await service.saveChecklist({
+      uid: learner.uid,
+      roleId: req.body?.roleId,
+      version: req.body?.version,
+      stepId: req.body?.stepId,
+      checklist: req.body?.checklist,
+      expectedRevision: req.body?.expectedRevision,
+      opId: req.body?.opId,
+    });
+    const ticked = Object.values(result.checklist || {}).filter((v) => v === true).length;
+    const quests = await award((x) => x.checklistSaved(whoOf(learner), result.stepId, ticked));
+    res.json(quests ? { ...result, social: quests } : result);
   }));
 
   router.post("/me/roadmap/complete", requireStudent, handle(async (req, res) => {
@@ -169,7 +190,11 @@ function createRouter({
       opId: req.body?.opId,
     });
     bust(result.countKeys);
-    res.json(result);
+    const gained =
+      result.saved && !result.alreadyComplete
+        ? await award((x) => x.stepCompleted(whoOf(learner), req.body?.opId))
+        : null;
+    res.json(gained ? { ...result, social: gained } : result);
   }));
 
   router.post("/me/roadmap/undo", requireStudent, handle(async (req, res) => {
@@ -183,7 +208,8 @@ function createRouter({
       opId: req.body?.opId,
     });
     bust(result.countKeys);
-    res.json(result);
+    const lost = await award((x) => x.stepUndone(whoOf(learner), result.cleared?.length || 1, req.body?.opId));
+    res.json(lost ? { ...result, social: lost } : result);
   }));
 
   router.post("/me/roadmap/notes", requireStudent, handle(async (req, res) => {
@@ -309,6 +335,8 @@ function createProductionRouter({ db, users, admins, bootstrapEmails, requireStu
       roles: Array.isArray(data.roles) ? data.roles : [],
       selectedRole: data.selectedRole || null,
       scores: data.scores || null,
+      displayName: data.displayName || "",
+      collegeId: data.collegeId || "",
       excluded,
     };
   }
@@ -332,14 +360,18 @@ function createProductionRouter({ db, users, admins, bootstrapEmails, requireStu
     return profiles;
   }
 
-  return createRouter({
+  const social = new SocialService({ repo: new FirestoreRepo(db) });
+  const router = createRouter({
     service,
     requireStudent,
     requireAdmin,
     resolveLearner,
     touchUser,
     loadProfiles,
+    social,
   });
+  router.use(createSocialRouter({ social, requireStudent, resolveLearner }));
+  return router;
 }
 
 module.exports = { createRouter, createProductionRouter };
