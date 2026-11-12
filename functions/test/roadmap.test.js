@@ -20,7 +20,15 @@ function clock() {
   return () => new Date(Date.UTC(2026, 10, 9, 0, 0, tick++)).toISOString();
 }
 
-function fresh(catalog = loadSeed()) {
+function legacyCatalog() {
+  const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
+  raw.roles = raw.roles.filter((r) => r.version === 1);
+  const result = validateContent(raw);
+  assert.equal(result.ok, true, result.errors.join("\n"));
+  return result.catalog;
+}
+
+function fresh(catalog = legacyCatalog()) {
   const store = new MemoryStore();
   const service = new RoadmapService({ store, catalog, now: clock() });
   let n = 0;
@@ -56,13 +64,13 @@ async function expectInvariants(service, roleId = "builders", version = 1) {
   return counts;
 }
 
-test("seed has six avatars, ten steps, and checked https resources", () => {
+test("seed has six avatars, two versions each, ten steps, and checked https resources", () => {
   const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
   const result = validateContent(raw);
   assert.equal(result.ok, true, result.errors.join("\n"));
   assert.equal(result.catalog.status, "published");
   assert.equal(result.catalog.editorialStatus, "draft-for-review");
-  assert.equal(result.catalog.roles.length, 6);
+  assert.equal(result.catalog.roles.length, 12);
   const seen = new Set();
   for (const role of result.catalog.roles) {
     assert.equal(role.avatar, AVATARS[role.id]);
@@ -76,7 +84,7 @@ test("seed has six avatars, ten steps, and checked https resources", () => {
       assert.ok(step.resource.url.startsWith("https://"));
     }
   }
-  assert.equal(seen.size, 60);
+  assert.equal(seen.size, 120);
 
   const checks = JSON.parse(fs.readFileSync(checksPath, "utf8"));
   const byUrl = new Map(checks.map((item) => [item.url, item]));
@@ -410,7 +418,7 @@ test("notes conflict, and completion does not overwrite notes", async () => {
 });
 
 test("role switch, version opt-in, exclusion, finish, and erasure", async () => {
-  const base = loadSeed();
+  const base = legacyCatalog();
   const catalog = structuredClone(base);
   const builders = catalog.roles.find((role) => role.id === "builders");
   const next = structuredClone(builders);
@@ -735,11 +743,12 @@ test("http routes isolate students and ignore client count flags", async () => {
 
 test("publishing a trail keeps the old version and hides private notes", async () => {
   const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
+  raw.roles = raw.roles.filter((r) => r.version === 1);
   const store = new MemoryStore();
   let tick = 0;
   const service = new RoadmapService({
     store,
-    catalog: loadSeed(),
+    catalog: legacyCatalog(),
     raw,
     now: () => new Date(Date.UTC(2026, 10, 9, 1, 0, tick++)).toISOString(),
   });
@@ -793,74 +802,51 @@ test("publishing a trail keeps the old version and hides private notes", async (
   assert.equal(service.role("builders", 1).steps[0].title, "Notice one campus friction");
 });
 
-function unitCatalog() {
-  const raw = JSON.parse(fs.readFileSync(seedPath, "utf8"));
-  const role = raw.roles.find((r) => r.id === "builders");
-  role.units = [
-    { id: "try", kind: "try", title: "Try it" },
-    { id: "careers", kind: "careers", title: "Careers" },
-    { id: "skill-a", kind: "skill", title: "Skill A", skill: "A" },
-    { id: "skill-b", kind: "skill", title: "Skill B", skill: "B" },
-  ];
-  role.steps.forEach((step, i) => {
-    step.unit = i < 3 ? "try" : i < 7 ? "skill-a" : "skill-b";
-  });
-  const result = validateContent(raw);
-  assert.equal(result.ok, true, result.errors.join("\n"));
-  return result.catalog;
-}
-
-test("unit trails unlock per unit, skills wait for try, undo re-locks dependants", async () => {
-  const { service, op } = fresh(unitCatalog());
+test("shipped v2 trails unlock per unit, skills wait for try, undo re-locks dependants", async () => {
+  const { service, op } = fresh(loadSeed());
   await enrol(service, op, "u1", "builders");
   const role = service.role("builders");
+  assert.equal(role.version, 2);
+  assert.deepEqual(role.units.map((u) => u.kind), ["try", "careers", "skill", "skill"]);
+  const [t1, t2, t3, a1, a2, , b1] = role.steps;
   const state = async () => {
     const mine = await service.getOwnerState("u1");
     return Object.fromEntries(mine.active.steps.map((s) => [s.id, s.state]));
   };
   let st = await state();
-  assert.equal(st[role.steps[0].id], "available");
-  assert.equal(st[role.steps[3].id], "locked", "skill locked until try is done");
+  assert.equal(st[t1.id], "available");
+  assert.equal(st[a1.id], "locked", "skill locked until try is done");
 
   let revision = (await service.getOwnerState("u1")).active.revision;
-  for (const step of role.steps.slice(0, 3)) {
+  const done = async (step) => {
     const res = await service.complete({
-      uid: "u1", roleId: "builders", version: 1, stepId: step.id,
+      uid: "u1", roleId: "builders", version: 2, stepId: step.id,
       checklist: checked(step), expectedRevision: revision, opId: op(),
     });
     revision = res.revision;
-  }
+  };
+  for (const step of [t1, t2, t3]) await done(step);
   st = await state();
-  assert.equal(st[role.steps[3].id], "available");
-  assert.equal(st[role.steps[7].id], "available", "second skill opens independently");
-  assert.equal(st[role.steps[4].id], "locked", "inside a unit order still applies");
+  assert.equal(st[a1.id], "available");
+  assert.equal(st[b1.id], "available", "second skill opens independently");
+  assert.equal(st[a2.id], "locked", "inside a unit order still applies");
 
-  // Completing the second skill first is allowed.
-  const jump = role.steps[7];
-  const res = await service.complete({
-    uid: "u1", roleId: "builders", version: 1, stepId: jump.id,
-    checklist: checked(jump), expectedRevision: revision, opId: op(),
-  });
-  revision = res.revision;
+  await done(b1); // finishing the second skill first is allowed
   await assert.rejects(
     service.complete({
-      uid: "u1", roleId: "builders", version: 1, stepId: role.steps[4].id,
-      checklist: checked(role.steps[4]), expectedRevision: revision, opId: op(),
+      uid: "u1", roleId: "builders", version: 2, stepId: a2.id,
+      checklist: checked(a2), expectedRevision: revision, opId: op(),
     }),
     (err) => err.code === "step_locked"
   );
 
   // Undoing a try step re-locks every skill unit.
-  await service.undo({
-    uid: "u1", roleId: "builders", version: 1, stepId: role.steps[2].id,
-    expectedRevision: revision, opId: op(),
-  });
+  await service.undo({ uid: "u1", roleId: "builders", version: 2, stepId: t3.id, expectedRevision: revision, opId: op() });
   st = await state();
-  assert.equal(st[role.steps[2].id], "available");
-  assert.equal(st[role.steps[7].id], "locked");
-  const counts = await service.getCounts("builders", 1);
-  const sum = counts.steps.reduce((t, s) => t + s.current, 0);
-  assert.equal(sum + counts.finished, counts.cohort);
+  assert.equal(st[t3.id], "available");
+  assert.equal(st[b1.id], "locked");
+  const counts = await service.getCounts("builders", 2);
+  assert.equal(counts.steps.reduce((t, x) => t + x.current, 0) + counts.finished, counts.cohort);
 });
 
 test("validator rejects a step with no unit when units are declared", () => {
@@ -868,4 +854,22 @@ test("validator rejects a step with no unit when units are declared", () => {
   const role = raw.roles[0];
   role.units = [{ id: "try", kind: "try", title: "Try it" }];
   assert.equal(validateContent(raw).ok, false);
+});
+
+test("every role ships a v2 path: try it, careers, skills, no invented profiles", () => {
+  const catalog = loadSeed();
+  for (const id of Object.keys(AVATARS)) {
+    const role = catalog.roles.find((r) => r.id === id && r.version === 2);
+    assert.ok(role, `${id} has v2`);
+    assert.deepEqual(role.units.map((u) => u.kind).slice(0, 2), ["try", "careers"]);
+    const skills = role.units.filter((u) => u.kind === "skill");
+    assert.ok(skills.length >= 2, `${id} has skills`);
+    assert.equal(role.steps.filter((s) => s.unit === "try").length, 3);
+    for (const unit of skills) assert.ok(role.steps.some((s) => s.unit === unit.id), `${id} ${unit.id} has lessons`);
+    assert.ok(role.careers.length >= 2);
+    for (const career of role.careers) {
+      assert.ok(career.blurb && career.dayInLife);
+      assert.deepEqual(career.profiles, [], "profiles are for the owner to fill, never invented");
+    }
+  }
 });

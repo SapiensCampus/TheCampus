@@ -1,11 +1,11 @@
 {
-  "schemaVersion": "1.0-proposed",
-  "contentVersion": "2026-11-09-paths",
+  "schemaVersion": "2.0-proposed",
+  "contentVersion": "2026-11-12-units",
   "status": "draft-for-review",
   "checkedDate": "2026-11-09",
   "timezone": "Asia/Kolkata (IST)",
   "audience": "First-year college students, Chennai/India; no prior specialist skills",
-  "unlockPolicy": "Prior steps complete; immediate next-step unlock; no daily waiting",
+  "unlockPolicy": "Lessons inside a unit unlock in order. Skill units open once the Try it unit is done.",
   "roles": [
     {
       "id": "builders",
@@ -2418,6 +2418,2781 @@
               "slice": "The longer path if organising work still feels like yours. You do not need it now."
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "builders",
+      "title": "Builders",
+      "avatar": "Beaver",
+      "version": 2,
+      "description": "A first-year discovery trail, not a job-readiness certificate. Try small outputs and decide what you enjoy.",
+      "steps": [
+        {
+          "id": "builders-v2-01",
+          "role": "builders",
+          "version": 2,
+          "order": 1,
+          "type": "task",
+          "title": "Notice one small campus problem",
+          "goal": "Find something worth making",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "List three small frustrations from your own college day. Choose one and finish: A student needs ___ because ___. Sketch one screen or physical fix on paper. No interviews or coding needed.",
+          "requiredOutput": "One problem sentence and one rough sketch",
+          "doneChecklist": [
+            "Three frustrations listed",
+            "One user and problem chosen",
+            "One sketch made"
+          ],
+          "primaryResource": {
+            "id": "mdn-plan",
+            "publisher": "MDN",
+            "title": "What will your website look like?",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/What_will_your_website_look_like",
+            "slice": "First things first: planning",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article; no sign-in. Planning and paper sketch sections are appropriate before coding. The broader module assumes basic file handling; our phone-first fallbacks remove that prerequisite.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What will your website look like? - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Find",
+          "unit": "try"
+        },
+        {
+          "id": "builders-v2-02",
+          "role": "builders",
+          "version": 2,
+          "order": 2,
+          "type": "checklist",
+          "title": "Choose a tiny first version",
+          "goal": "Keep your project finishable",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Use your chosen problem to sketch three states: start, action, result. Circle one action for version one and list two things you will not build. A paper prototype is acceptable throughout.",
+          "requiredOutput": "Three-state sketch and scope note",
+          "doneChecklist": [
+            "One main action chosen",
+            "Two exclusions written"
+          ],
+          "primaryResource": {
+            "id": "mdn-plan",
+            "publisher": "MDN",
+            "title": "What will your website look like?",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/What_will_your_website_look_like",
+            "slice": "Sketching out your design",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article; no sign-in. Planning and paper sketch sections are appropriate before coding. The broader module assumes basic file handling; our phone-first fallbacks remove that prerequisite.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What will your website look like? - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Find",
+          "unit": "try"
+        },
+        {
+          "id": "builders-v2-03",
+          "role": "builders",
+          "version": 2,
+          "order": 3,
+          "type": "tutorial",
+          "title": "Make your first page",
+          "goal": "Try structure without mastering coding",
+          "estimateMinutes": 60,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Use the article's first document example in an available plain-text editor and browser, or copy and edit it in MDN Playground where available. Replace it with a heading, problem paragraph and three-item solution list. Phone-only fallback: write and annotate the HTML in notes; no account required.",
+          "requiredOutput": "A saved page or annotated HTML text",
+          "doneChecklist": [
+            "Heading and paragraph included",
+            "Three-item list included",
+            "Explained what one tag does"
+          ],
+          "primaryResource": {
+            "id": "mdn-html",
+            "publisher": "MDN",
+            "title": "Creating the content",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Creating_the_content",
+            "slice": "Creating your first HTML document; headings and paragraphs",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free lesson within the Your first website module, not a requirement to complete the module. Browser/text editor or an available MDN Playground; no paid environment. Phone-only annotated-code route allowed.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "HTML: Creating the content - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Make",
+          "links": [
+            {
+              "kind": "video",
+              "publisher": "Traversy Media",
+              "title": "HTML Crash Course For Absolute Beginners",
+              "url": "https://www.youtube.com/watch?v=UB1O30fR-EE",
+              "slice": "What HTML is, through headings and links. Stop when the page has a heading and a paragraph."
+            }
+          ],
+          "unit": "try"
+        },
+        {
+          "id": "builders-v2-04",
+          "role": "builders",
+          "version": 2,
+          "order": 4,
+          "type": "tutorial",
+          "title": "Give it a visual identity",
+          "goal": "Use simple styling deliberately",
+          "estimateMinutes": 60,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Style your page with readable text, a light background, spacing and one accent. Use inline style in your saved HTML or MDN Playground if file handling is difficult. Phone fallback: annotate your mockup with four CSS rules.",
+          "requiredOutput": "Styled page or mockup with four rules",
+          "doneChecklist": [
+            "Text is readable",
+            "Spacing and accent chosen",
+            "Four rules recorded"
+          ],
+          "primaryResource": {
+            "id": "mdn-css",
+            "publisher": "MDN",
+            "title": "Styling the content",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Styling_the_content",
+            "slice": "Applying CSS to your HTML; improving the text",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free tutorial. Only named styling sections, not entire CSS mastery. Tool account unnecessary; paper annotations accepted.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "CSS: Styling the content - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Make",
+          "links": [
+            {
+              "kind": "video",
+              "publisher": "Traversy Media",
+              "title": "CSS Crash Course For Absolute Beginners",
+              "url": "https://www.youtube.com/watch?v=yfoY53QXEnI",
+              "slice": "Colors, fonts, and spacing. Stop before layout systems if you run out of time."
+            }
+          ],
+          "unit": "skill-1"
+        },
+        {
+          "id": "builders-v2-05",
+          "role": "builders",
+          "version": 2,
+          "order": 5,
+          "type": "tutorial",
+          "title": "Add one response",
+          "goal": "Understand input and feedback",
+          "estimateMinutes": 75,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Change a heading using the introductory JavaScript example. Then specify how a button for your idea should change the screen. Try that interaction if able; otherwise write pseudocode with before/after states. Do not collect real names.",
+          "requiredOutput": "One working change or annotated pseudocode",
+          "doneChecklist": [
+            "Before and after shown",
+            "One event and response explained"
+          ],
+          "primaryResource": {
+            "id": "mdn-js",
+            "publisher": "MDN",
+            "title": "Adding interactivity",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Adding_interactivity",
+            "slice": "A Hello world walkthrough; adding a personalized welcome message",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free tutorial. Only introductory examples; later tasks have prerequisites that this trail does not pretend to teach. Pseudocode alternative avoids making JavaScript fluency a gate.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "JavaScript: Adding interactivity - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Make",
+          "links": [
+            {
+              "kind": "video",
+              "publisher": "Programming with Mosh",
+              "title": "JavaScript Course for Beginners",
+              "url": "https://www.youtube.com/watch?v=W6NZfCO5SIk",
+              "slice": "First 20 minutes only: values, a function, and one click. The rest of the course is optional."
+            }
+          ],
+          "unit": "skill-1"
+        },
+        {
+          "id": "builders-v2-06",
+          "role": "builders",
+          "version": 2,
+          "order": 6,
+          "type": "tutorial",
+          "title": "Break it, then repair it",
+          "goal": "Try debugging patiently",
+          "estimateMinutes": 45,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "In your own example remove a quote or misspell a variable, predict the result, then restore it. If phone-only, use a short copied example on paper and mark the broken token. Record expected and actual behavior or a reasoned paper trace.",
+          "requiredOutput": "A three-line bug log and correction",
+          "doneChecklist": [
+            "Expected behavior noted",
+            "Fault located",
+            "Repair explained"
+          ],
+          "primaryResource": {
+            "id": "mdn-debug",
+            "publisher": "MDN",
+            "title": "What went wrong? Troubleshooting JavaScript",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_went_wrong",
+            "slice": "Types of error; fixing errors reported in the console",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free tutorial with a broken number-game example. Only error categories and a single correction; not completing the whole game.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What went wrong? Troubleshooting JavaScript - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Make",
+          "unit": "skill-1"
+        },
+        {
+          "id": "builders-v2-07",
+          "role": "builders",
+          "version": 2,
+          "order": 7,
+          "type": "checklist",
+          "title": "Test your tiny product",
+          "goal": "Think beyond the happy path",
+          "estimateMinutes": 45,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Try three scenarios: normal use, long text and viewing at 200% zoom. On a coded version also try keyboard navigation; on paper annotate the expected focus order. Fix one issue.",
+          "requiredOutput": "Three test cases and one fix",
+          "doneChecklist": [
+            "Each case has expected and observed result",
+            "One fix recorded"
+          ],
+          "primaryResource": {
+            "id": "wcag",
+            "publisher": "W3C WAI",
+            "title": "Easy Checks – A First Review of Web Accessibility",
+            "url": "https://www.w3.org/WAI/test-evaluate/easy-checks/",
+            "slice": "Headings; zoom; visible keyboard focus",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public W3C WAI resource. Current retrieved title labels it Draft. A first review, not a conformance audit. Use named checks only and supply inline guidance; no accessibility-compliance claim.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "[Draft] Easy Checks – A First Review of Web Accessibility | Web Accessibility Initiative (WAI) | W3C",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Check",
+          "unit": "skill-2"
+        },
+        {
+          "id": "builders-v2-08",
+          "role": "builders",
+          "version": 2,
+          "order": 8,
+          "type": "task",
+          "title": "Make the handoff understandable",
+          "goal": "Explain what you made",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write a title, who it helps, how to use it in three steps and one limitation. Add a screenshot, sketch or saved code excerpt. Keep everything private unless you choose otherwise.",
+          "requiredOutput": "One-page project handoff",
+          "doneChecklist": [
+            "User and purpose clear",
+            "Three use steps",
+            "One honest limitation"
+          ],
+          "primaryResource": {
+            "id": "mdn-plan",
+            "publisher": "MDN",
+            "title": "What will your website look like?",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/What_will_your_website_look_like",
+            "slice": "First things first: planning revisited for the next reader",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article; no sign-in. Planning and paper sketch sections are appropriate before coding. The broader module assumes basic file handling; our phone-first fallbacks remove that prerequisite.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What will your website look like? - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Check",
+          "unit": "skill-2"
+        },
+        {
+          "id": "builders-v2-09",
+          "role": "builders",
+          "version": 2,
+          "order": 9,
+          "type": "task",
+          "title": "Improve one thing using evidence",
+          "goal": "Choose useful iteration over extra features",
+          "estimateMinutes": 45,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Test your prototype once yourself or with a consenting classmate. Write one observation, one assumption and one improvement; make that improvement. Label self-testing honestly and never invent feedback.",
+          "requiredOutput": "Before/after and an observation note",
+          "doneChecklist": [
+            "Source of feedback labelled",
+            "One improvement made"
+          ],
+          "primaryResource": {
+            "id": "poster",
+            "publisher": "Atlassian",
+            "title": "Project Poster",
+            "url": "https://www.atlassian.com/team-playbook/plays/project-poster",
+            "slice": "Validation",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; templates/Confluence are not needed. Original is a longer team workshop; our named slices become short solo exercises, with our own time estimates and outputs, not the source workshop duration.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Project Poster Template to Guide Your Work | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "unit": "skill-2"
+        },
+        {
+          "id": "builders-v2-10",
+          "role": "builders",
+          "version": 2,
+          "order": 10,
+          "type": "checklist",
+          "title": "Decide your next building direction",
+          "goal": "Reflect without committing to a career",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write one thing loved, loathed, longed for and learned. Choose your next experiment: coding, product prototyping or a paper/cardboard hardware model. Define a 60-minute task, not a full course.",
+          "requiredOutput": "Four reflections and next experiment",
+          "doneChecklist": [
+            "Four reflections complete",
+            "Next task fits one sitting"
+          ],
+          "primaryResource": {
+            "id": "retro",
+            "publisher": "Atlassian",
+            "title": "4 Ls Retrospective",
+            "url": "https://www.atlassian.com/team-playbook/plays/4-ls-retrospective-technique",
+            "slice": "Define the 4Ls; discuss actions to improve",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; four prompts are loved, loathed, longed for, learned. Individual reflection adaptation, not a compulsory team meeting. Same close-out method intentionally reused across all six roles.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "The \"4 Ls\" Retrospective Technique | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "roadmap.sh",
+              "title": "Frontend Developer Roadmap",
+              "url": "https://roadmap.sh/frontend",
+              "slice": "The longer path if making pages still feels like yours. You do not need it to finish this trail."
+            }
+          ],
+          "unit": "skill-2"
+        }
+      ],
+      "units": [
+        {
+          "id": "try",
+          "kind": "try",
+          "title": "Try it"
+        },
+        {
+          "id": "careers",
+          "kind": "careers",
+          "title": "Careers"
+        },
+        {
+          "id": "skill-1",
+          "kind": "skill",
+          "title": "Coding",
+          "skill": "Coding"
+        },
+        {
+          "id": "skill-2",
+          "kind": "skill",
+          "title": "Product thinking",
+          "skill": "Product thinking"
+        }
+      ],
+      "careers": [
+        {
+          "id": "developer",
+          "title": "Developer",
+          "tag": "pays",
+          "blurb": "Turns an idea into software people can use.",
+          "dayInLife": "Read a small problem, write and test code, fix what breaks, share it with the team.",
+          "skills": [
+            "Coding",
+            "Problem-solving"
+          ],
+          "profiles": []
+        },
+        {
+          "id": "product-manager",
+          "title": "Product manager",
+          "tag": "interesting",
+          "blurb": "Decides what is worth building next, and why.",
+          "dayInLife": "Talk to users, write the problem down, agree the smallest version, check whether it helped.",
+          "skills": [
+            "Product thinking",
+            "Prototyping"
+          ],
+          "profiles": []
+        }
+      ]
+    },
+    {
+      "id": "hackers",
+      "title": "Hackers",
+      "avatar": "Fox",
+      "version": 2,
+      "description": "A first-year discovery trail, not a job-readiness certificate. Try small outputs and decide what you enjoy.",
+      "steps": [
+        {
+          "id": "hackers-v2-01",
+          "role": "hackers",
+          "version": 2,
+          "order": 1,
+          "type": "article",
+          "title": "Write your safe explorer promise",
+          "goal": "Separate curiosity from permission",
+          "estimateMinutes": 20,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Read how the Academy separates learning material from practice labs. Write three rules: only my own examples or explicitly authorised labs, no real credentials or personal data, and stop when scope is unclear. Draw a fictional club sign-in screen and circle one question you would test on paper.",
+          "requiredOutput": "Three safety rules and a fictional screen",
+          "doneChecklist": [
+            "Three rules written",
+            "Fictional example only",
+            "One test question chosen"
+          ],
+          "primaryResource": {
+            "id": "portswigger",
+            "publisher": "PortSwigger",
+            "title": "Getting started with Web Security Academy",
+            "url": "https://portswigger.net/web-security/getting-started",
+            "slice": "How the Web Security Academy works",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free Academy introduction. Actual lab launch/progress may require a free account and some exercises need Burp/desktop. Required steps only read the introduction and plan safe practice; no lab completion or purchase is required.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Getting started | Web Security Academy - PortSwigger",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Look",
+          "unit": "try"
+        },
+        {
+          "id": "hackers-v2-02",
+          "role": "hackers",
+          "version": 2,
+          "order": 2,
+          "type": "article",
+          "title": "Trace a web request",
+          "goal": "Understand what a browser asks for",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Draw browser → server → browser for a fictional club page. Label a GET request, a response and what 200 and 404 would mean. Do not intercept anyone's traffic.",
+          "requiredOutput": "One annotated request/response diagram",
+          "doneChecklist": [
+            "Client and server labelled",
+            "200 and 404 explained"
+          ],
+          "primaryResource": {
+            "id": "mdn-http",
+            "publisher": "MDN",
+            "title": "Overview of HTTP",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview",
+            "slice": "HTTP flow; requests and responses",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public reference; read HTTP flow and message examples only. No packet capture, proxy installation or real traffic inspection.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Overview of HTTP - HTTP | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Look",
+          "links": [
+            {
+              "kind": "video",
+              "publisher": "Traversy Media",
+              "title": "HTTP Crash Course & Exploration",
+              "url": "https://www.youtube.com/watch?v=iYM2zFP3Zn0",
+              "slice": "What a request and a response are. Stop after status codes."
+            }
+          ],
+          "unit": "try"
+        },
+        {
+          "id": "hackers-v2-03",
+          "role": "hackers",
+          "version": 2,
+          "order": 3,
+          "type": "article",
+          "title": "Spot a suspicious message",
+          "goal": "Practise checking claims safely",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write a fictional message claiming urgent scholarship verification at scholarship.example. Underline three warning signs and write a safe verification route using an independently found official contact. Do not visit the fictional link or message anyone.",
+          "requiredOutput": "Annotated fictional message and safe response",
+          "doneChecklist": [
+            "Three warning signs",
+            "Independent verification route",
+            "No links opened"
+          ],
+          "primaryResource": {
+            "id": "phishing-cisa",
+            "publisher": "US CISA",
+            "title": "Recognize and Report Phishing",
+            "url": "https://www.cisa.gov/secure-our-world/recognize-and-report-phishing",
+            "slice": "Recognize; Resist; Delete",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public guidance verified by WebFetch, even if a direct HTTP probe is blocked. Use fictional messages only. No reporting or deletion action is part of this curriculum.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Recognize and Report Phishing | CISA",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Look",
+          "unit": "try"
+        },
+        {
+          "id": "hackers-v2-04",
+          "role": "hackers",
+          "version": 2,
+          "order": 4,
+          "type": "checklist",
+          "title": "Design five tests",
+          "goal": "Explore QA as well as security",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "For your fictional sign-in screen list five cases: normal, empty, very long text, unusual characters and repeated submission. Write expected safe behavior. This is a paper exercise, not live probing.",
+          "requiredOutput": "Five-case test table",
+          "doneChecklist": [
+            "Five inputs",
+            "Five expected outcomes",
+            "No live target"
+          ],
+          "primaryResource": {
+            "id": "owasp-top10",
+            "publisher": "OWASP",
+            "title": "OWASP Top 10",
+            "url": "https://owasp.org/www-project-top-ten/",
+            "slice": "Read the short intro and the names of the risks. Then write your five paper tests. Do not probe a live site.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public project page. No sign-in. This is a list of risks, not a set of attacks to try.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "OWASP Top 10",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Think",
+          "unit": "skill-1"
+        },
+        {
+          "id": "hackers-v2-05",
+          "role": "hackers",
+          "version": 2,
+          "order": 5,
+          "type": "tutorial",
+          "title": "Reproduce a tiny bug",
+          "goal": "Think in evidence, not guesses",
+          "estimateMinutes": 45,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Read the introductory broken-number-game example. Select one reported syntax error or use provided paper code 'let total = 2 + ;'. Explain the error, correct it and record reproduction steps. No need to finish the whole game.",
+          "requiredOutput": "A reproducible bug note",
+          "doneChecklist": [
+            "Input or code included",
+            "Expected versus actual",
+            "One correction"
+          ],
+          "primaryResource": {
+            "id": "mdn-debug",
+            "publisher": "MDN",
+            "title": "What went wrong? Troubleshooting JavaScript",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_went_wrong",
+            "slice": "Types of error; an erroneous example",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free tutorial with a broken number-game example. Only error categories and a single correction; not completing the whole game.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What went wrong? Troubleshooting JavaScript - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Think",
+          "unit": "skill-1"
+        },
+        {
+          "id": "hackers-v2-06",
+          "role": "hackers",
+          "version": 2,
+          "order": 6,
+          "type": "article",
+          "title": "Map what needs protecting",
+          "goal": "Try analytical threat modelling",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Draw a fictional club registration flow with student, form, storage and organiser. Use made-up fields only. Mark where data moves and identify which fields are unnecessary.",
+          "requiredOutput": "A four-part data-flow sketch",
+          "doneChecklist": [
+            "Four parts shown",
+            "Data arrows labelled",
+            "One unnecessary field removed"
+          ],
+          "primaryResource": {
+            "id": "owasp-auth",
+            "publisher": "OWASP Cheat Sheet Series",
+            "title": "Authentication Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+            "slice": "Password storage and who should see stored data. Note two fields you would not collect on your fictional form.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public cheat sheet. No sign-in. Use it to mark your paper diagram, not to test a real login.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Authentication Cheat Sheet",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Think",
+          "unit": "skill-2"
+        },
+        {
+          "id": "hackers-v2-07",
+          "role": "hackers",
+          "version": 2,
+          "order": 7,
+          "type": "article",
+          "title": "Ask what could go wrong",
+          "goal": "Discover structured investigation",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "For that flow choose three concerns: impersonation, changed data or exposed details. For each, describe harm and a simple protection in everyday language. No attack code.",
+          "requiredOutput": "Three-row risk and protection table",
+          "doneChecklist": [
+            "Three harms identified",
+            "One protection per harm"
+          ],
+          "primaryResource": {
+            "id": "owasp",
+            "publisher": "OWASP",
+            "title": "Threat Modeling Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+            "slice": "Threat Identification; STRIDE table as prompts only",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free reference, advanced in full. Our tasks use only named sections and plain-language fictional examples. No live exploits or testing real websites.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Threat Modeling - OWASP Cheat Sheet Series",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Think",
+          "unit": "skill-2"
+        },
+        {
+          "id": "hackers-v2-08",
+          "role": "hackers",
+          "version": 2,
+          "order": 8,
+          "type": "task",
+          "title": "Write a helpful report",
+          "goal": "Communicate findings without exposing people",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Turn your paper bug or fictional risk into a report: title, scope, reproduction steps, expected/actual result, impact and suggested fix. Use no real account details; keep it as a private draft.",
+          "requiredOutput": "One six-part report",
+          "doneChecklist": [
+            "Scope is explicit",
+            "Repro steps clear",
+            "Sensitive data absent"
+          ],
+          "primaryResource": {
+            "id": "owasp-disclose",
+            "publisher": "OWASP Cheat Sheet Series",
+            "title": "Vulnerability Disclosure Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.html",
+            "slice": "What a clear private report contains: what you saw, who it affects, and what you suggest. Do not send it.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public cheat sheet. No sign-in. Your report stays a private draft.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Vulnerability Disclosure Cheat Sheet",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Report",
+          "unit": "skill-2"
+        },
+        {
+          "id": "hackers-v2-09",
+          "role": "hackers",
+          "version": 2,
+          "order": 9,
+          "type": "checklist",
+          "title": "Retest your proposed fix",
+          "goal": "Check whether a fix really helps",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "For your suggested fix replay the original test on paper and add one edge case. Mark pass, fail or not yet tested, with a reason. Never claim a real system was fixed.",
+          "requiredOutput": "Two retest cases",
+          "doneChecklist": [
+            "Original case revisited",
+            "One edge case",
+            "Simulation clearly labelled"
+          ],
+          "primaryResource": {
+            "id": "mdn-devtools",
+            "publisher": "MDN",
+            "title": "What are browser developer tools?",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools",
+            "slice": "Open the tools on a page you made, or on this article. Inspect one element. Then replay your paper test.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. Inspect only a page you own or this article. Do not test someone else's site.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What are browser developer tools?",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Report",
+          "unit": "skill-2"
+        },
+        {
+          "id": "hackers-v2-10",
+          "role": "hackers",
+          "version": 2,
+          "order": 10,
+          "type": "task",
+          "title": "Pick your next investigation",
+          "goal": "Know which part of Hackers you enjoyed",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Choose security, QA/debugging or research. Write a 60-minute next experiment and why. Academy lab solving is optional later: requires an account and sometimes desktop tooling; it is not a requirement here.",
+          "requiredOutput": "Reflection and next experiment",
+          "doneChecklist": [
+            "Enjoyed and difficult parts noted",
+            "One safe next task",
+            "Permissions restated"
+          ],
+          "primaryResource": {
+            "id": "portswigger",
+            "publisher": "PortSwigger",
+            "title": "Getting started with Web Security Academy",
+            "url": "https://portswigger.net/web-security/getting-started",
+            "slice": "Get started with your first topic; reading versus labs",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public free Academy introduction. Actual lab launch/progress may require a free account and some exercises need Burp/desktop. Required steps only read the introduction and plan safe practice; no lab completion or purchase is required.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Getting started | Web Security Academy - PortSwigger",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "roadmap.sh",
+              "title": "Cyber Security Roadmap",
+              "url": "https://roadmap.sh/cyber-security",
+              "slice": "The longer path if careful investigating still feels like yours. Stay on practice sites that invite it."
+            }
+          ],
+          "unit": "skill-2"
+        }
+      ],
+      "units": [
+        {
+          "id": "try",
+          "kind": "try",
+          "title": "Try it"
+        },
+        {
+          "id": "careers",
+          "kind": "careers",
+          "title": "Careers"
+        },
+        {
+          "id": "skill-1",
+          "kind": "skill",
+          "title": "Testing & debugging",
+          "skill": "Testing & debugging"
+        },
+        {
+          "id": "skill-2",
+          "kind": "skill",
+          "title": "Security fundamentals",
+          "skill": "Security fundamentals"
+        }
+      ],
+      "careers": [
+        {
+          "id": "cybersecurity",
+          "title": "Cybersecurity analyst",
+          "tag": "pays",
+          "blurb": "Finds weak spots before someone harmful does.",
+          "dayInLife": "Learn how a system works, run safe tests, write a clear report on what to fix.",
+          "skills": [
+            "Security fundamentals",
+            "Testing & debugging"
+          ],
+          "profiles": []
+        },
+        {
+          "id": "researcher",
+          "title": "Researcher",
+          "tag": "interesting",
+          "blurb": "Asks careful questions and finds out what is true.",
+          "dayInLife": "Read, test one idea, write down what you found, then ask the next question.",
+          "skills": [
+            "Research",
+            "Analytical thinking"
+          ],
+          "profiles": []
+        }
+      ]
+    },
+    {
+      "id": "creators",
+      "title": "Creators",
+      "avatar": "Peacock",
+      "version": 2,
+      "description": "A first-year discovery trail, not a job-readiness certificate. Try small outputs and decide what you enjoy.",
+      "steps": [
+        {
+          "id": "creators-v2-01",
+          "role": "creators",
+          "version": 2,
+          "order": 1,
+          "type": "video",
+          "title": "Make a message people notice",
+          "goal": "Understand design as communication",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Watch or read the lesson's proximity and hierarchy explanation. Choose a fictional campus club meet-up. Write who it is for, one message and one action, then sketch a poster in phone notes or on paper. Do not publish it.",
+          "requiredOutput": "A three-line brief and first sketch",
+          "doneChecklist": [
+            "Audience named",
+            "One message",
+            "One action",
+            "Sketch saved"
+          ],
+          "primaryResource": {
+            "id": "design-video",
+            "publisher": "GCFGlobal",
+            "title": "Beginning Graphic Design: Layout & Composition",
+            "url": "https://www.youtube.com/watch?v=a5KYlHNKQB8",
+            "slice": "Proximity and hierarchy discussion in the transcript",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "GCFGlobal / GCFLearnFree.org lesson; YouTube page title and transcript checked via WebFetch, not watched. Transcript covers proximity, white space, alignment, contrast/hierarchy and repetition. Each reuse applies a distinct principle. Reading our inline task suffices when YouTube is unavailable.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Beginning Graphic Design: Layout & Composition - YouTube",
+              "contentCheckedViaWebFetch": true,
+              "watched": false
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "See",
+          "unit": "try"
+        },
+        {
+          "id": "creators-v2-02",
+          "role": "creators",
+          "version": 2,
+          "order": 2,
+          "type": "video",
+          "title": "Arrange before decorating",
+          "goal": "Use space to guide attention",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Make two small layouts of the same poster: one centred and one left-aligned. Group date/time/location together and leave breathing space. Pick one and explain why.",
+          "requiredOutput": "Two layout thumbnails",
+          "doneChecklist": [
+            "Related items grouped",
+            "Consistent alignment",
+            "Choice explained"
+          ],
+          "primaryResource": {
+            "id": "nng-hierarchy",
+            "publisher": "Nielsen Norman Group",
+            "title": "Visual Hierarchy in UX: Definition",
+            "url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/",
+            "slice": "Size, space, and grouping. Use one idea in your two poster layouts.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Visual Hierarchy in UX: Definition",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "See",
+          "unit": "try"
+        },
+        {
+          "id": "creators-v2-03",
+          "role": "creators",
+          "version": 2,
+          "order": 3,
+          "type": "video",
+          "title": "Choose readable type",
+          "goal": "Build hierarchy with fewer fonts",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Use one available font in three sizes or weights for heading, details and action. If paper-only, label those styles. Compare at phone size and remove any decorative style that hurts reading.",
+          "requiredOutput": "Type specimen and updated poster",
+          "doneChecklist": [
+            "Three text levels",
+            "No more than two fonts",
+            "Phone-size check"
+          ],
+          "primaryResource": {
+            "id": "type-video",
+            "publisher": "GCFGlobal",
+            "title": "Beginning Graphic Design: Typography",
+            "url": "https://www.youtube.com/watch?v=sByzHoiYFX0",
+            "slice": "Font families; hierarchy; line spacing",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "GCFGlobal / GCFLearnFree.org; YouTube title and transcript checked, not watched. Read font families, hierarchy and spacing only; no claimed runtime or timestamps.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Beginning Graphic Design: Typography - YouTube",
+              "contentCheckedViaWebFetch": true,
+              "watched": false
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "See",
+          "unit": "try"
+        },
+        {
+          "id": "creators-v2-04",
+          "role": "creators",
+          "version": 2,
+          "order": 4,
+          "type": "video",
+          "title": "Build a simple palette",
+          "goal": "Use colour for meaning",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Choose a dark text colour, a light background and one accent. Explain the role of each and apply to your poster. A Yellove-inspired accent is welcome; readability beats bright yellow everywhere.",
+          "requiredOutput": "Three-colour palette and update",
+          "doneChecklist": [
+            "Three roles defined",
+            "Dark readable text",
+            "Colour is not the only signal"
+          ],
+          "primaryResource": {
+            "id": "color-video",
+            "publisher": "GCFGlobal",
+            "title": "Beginning Graphic Design: Color",
+            "url": "https://www.youtube.com/watch?v=_2LLXnUdUIc",
+            "slice": "Hue saturation value; monochromatic schemes; readability",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "GCFGlobal / GCFLearnFree.org; title and transcript checked, not watched. Use hue/value, simple palettes and readability, not the whole theory as an assessment.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Beginning Graphic Design: Color - YouTube",
+              "contentCheckedViaWebFetch": true,
+              "watched": false
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "See",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "Nielsen Norman Group",
+              "title": "Using Color to Enhance Your Design",
+              "url": "https://www.nngroup.com/articles/color-enhance-design/",
+              "slice": "How color guides the eye. Pick one contrast idea, not a whole brand system."
+            }
+          ],
+          "unit": "skill-1"
+        },
+        {
+          "id": "creators-v2-05",
+          "role": "creators",
+          "version": 2,
+          "order": 5,
+          "type": "task",
+          "title": "Tell a tiny story",
+          "goal": "Try content beyond a poster",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write a three-panel storyboard: student problem, useful change, invitation. Use stick figures or text, not paid assets. Make each panel understandable without audio.",
+          "requiredOutput": "Three-panel storyboard",
+          "doneChecklist": [
+            "Beginning middle end",
+            "One sentence per panel",
+            "No audio-only information"
+          ],
+          "primaryResource": {
+            "id": "design-video",
+            "publisher": "GCFGlobal",
+            "title": "Beginning Graphic Design: Layout & Composition",
+            "url": "https://www.youtube.com/watch?v=a5KYlHNKQB8",
+            "slice": "Hierarchy and movement adapted to a sequence",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "GCFGlobal / GCFLearnFree.org lesson; YouTube page title and transcript checked via WebFetch, not watched. Transcript covers proximity, white space, alignment, contrast/hierarchy and repetition. Each reuse applies a distinct principle. Reading our inline task suffices when YouTube is unavailable.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Beginning Graphic Design: Layout & Composition - YouTube",
+              "contentCheckedViaWebFetch": true,
+              "watched": false
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Shape",
+          "unit": "skill-1"
+        },
+        {
+          "id": "creators-v2-06",
+          "role": "creators",
+          "version": 2,
+          "order": 6,
+          "type": "task",
+          "title": "Sketch a useful screen",
+          "goal": "Explore UI/UX without a design-tool prerequisite",
+          "estimateMinutes": 45,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Sketch a phone screen for discovering your fictional club event. Include title, essential details, one button and an error/empty state. Paper or phone notes are fine; Figma is not required.",
+          "requiredOutput": "Main screen plus empty/error state",
+          "doneChecklist": [
+            "One clear action",
+            "Essential details present",
+            "Alternate state included"
+          ],
+          "primaryResource": {
+            "id": "mdn-plan",
+            "publisher": "MDN",
+            "title": "What will your website look like?",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/What_will_your_website_look_like",
+            "slice": "Sketching out your design",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article; no sign-in. Planning and paper sketch sections are appropriate before coding. The broader module assumes basic file handling; our phone-first fallbacks remove that prerequisite.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What will your website look like? - Learn web development | MDN",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Shape",
+          "unit": "skill-1"
+        },
+        {
+          "id": "creators-v2-07",
+          "role": "creators",
+          "version": 2,
+          "order": 7,
+          "type": "article",
+          "title": "Make it more accessible",
+          "goal": "Design for more students",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Review your poster/screen for contrast, reading order and information conveyed by colour alone. Write a short text alternative and make two fixes. The resource is a first check, not an accessibility certificate.",
+          "requiredOutput": "Text alternative and two fixes",
+          "doneChecklist": [
+            "Text alternative included",
+            "Reading order explained",
+            "Two changes made"
+          ],
+          "primaryResource": {
+            "id": "wcag",
+            "publisher": "W3C WAI",
+            "title": "Easy Checks – A First Review of Web Accessibility",
+            "url": "https://www.w3.org/WAI/test-evaluate/easy-checks/",
+            "slice": "Color contrast; image alternative text; headings",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public W3C WAI resource. Current retrieved title labels it Draft. A first review, not a conformance audit. Use named checks only and supply inline guidance; no accessibility-compliance claim.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "[Draft] Easy Checks – A First Review of Web Accessibility | Web Accessibility Initiative (WAI) | W3C",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Check",
+          "unit": "skill-2"
+        },
+        {
+          "id": "creators-v2-08",
+          "role": "creators",
+          "version": 2,
+          "order": 8,
+          "type": "task",
+          "title": "Ask what is understood",
+          "goal": "Test meaning instead of asking if it looks nice",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Show the draft to a consenting friend and ask what it is, when it is and what to do; or hide it briefly and self-test, labelled as such. Record the answers and one uncertainty without collecting names.",
+          "requiredOutput": "A three-question comprehension note",
+          "doneChecklist": [
+            "Three questions used",
+            "Feedback source labelled",
+            "One uncertainty recorded"
+          ],
+          "primaryResource": {
+            "id": "poster",
+            "publisher": "Atlassian",
+            "title": "Project Poster",
+            "url": "https://www.atlassian.com/team-playbook/plays/project-poster",
+            "slice": "Validation applied to a communication brief",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; templates/Confluence are not needed. Original is a longer team workshop; our named slices become short solo exercises, with our own time estimates and outputs, not the source workshop duration.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Project Poster Template to Guide Your Work | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Check",
+          "unit": "skill-2"
+        },
+        {
+          "id": "creators-v2-09",
+          "role": "creators",
+          "version": 2,
+          "order": 9,
+          "type": "task",
+          "title": "Create a coherent mini-set",
+          "goal": "Practise consistent creative execution",
+          "estimateMinutes": 60,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Revise your poster using the test. Make a matching three-panel story or event screen using the same palette and text styles. Save drafts locally; sharing is optional.",
+          "requiredOutput": "Two matching pieces and revision note",
+          "doneChecklist": [
+            "Consistent styles",
+            "One evidence-led revision",
+            "Private export or sketch retained"
+          ],
+          "primaryResource": {
+            "id": "nng-consistency",
+            "publisher": "Nielsen Norman Group",
+            "title": "Consistency and Standards",
+            "url": "https://www.nngroup.com/articles/consistency-and-standards/",
+            "slice": "Why matching pieces feel like one set. Apply one rule across your mini-set.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Consistency and Standards",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Shape",
+          "unit": "skill-2"
+        },
+        {
+          "id": "creators-v2-10",
+          "role": "creators",
+          "version": 2,
+          "order": 10,
+          "type": "checklist",
+          "title": "Reflect on your creative direction",
+          "goal": "Choose the next medium to explore",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write your four reflections and choose a next 60-minute experiment in UI/UX, writing, visual design or storytelling. Describe what you would make, not which certificate you would collect.",
+          "requiredOutput": "Four reflections and next brief",
+          "doneChecklist": [
+            "Four reflections",
+            "One concrete output",
+            "Fits one sitting"
+          ],
+          "primaryResource": {
+            "id": "retro",
+            "publisher": "Atlassian",
+            "title": "4 Ls Retrospective",
+            "url": "https://www.atlassian.com/team-playbook/plays/4-ls-retrospective-technique",
+            "slice": "Define the 4Ls",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; four prompts are loved, loathed, longed for, learned. Individual reflection adaptation, not a compulsory team meeting. Same close-out method intentionally reused across all six roles.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "The \"4 Ls\" Retrospective Technique | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "roadmap.sh",
+              "title": "UX Design Roadmap",
+              "url": "https://roadmap.sh/ux-design",
+              "slice": "The longer path if shaping what people see still feels like yours."
+            }
+          ],
+          "unit": "skill-2"
+        }
+      ],
+      "units": [
+        {
+          "id": "try",
+          "kind": "try",
+          "title": "Try it"
+        },
+        {
+          "id": "careers",
+          "kind": "careers",
+          "title": "Careers"
+        },
+        {
+          "id": "skill-1",
+          "kind": "skill",
+          "title": "Design philosophies",
+          "skill": "Design philosophies"
+        },
+        {
+          "id": "skill-2",
+          "kind": "skill",
+          "title": "User research",
+          "skill": "User research"
+        }
+      ],
+      "careers": [
+        {
+          "id": "ui-ux-designer",
+          "title": "UI/UX designer",
+          "tag": "pays",
+          "blurb": "Shapes how an app or website looks and feels to use.",
+          "dayInLife": "Sketch screens, watch someone try them, change whatever confuses them.",
+          "skills": [
+            "User research",
+            "Wireframing",
+            "Prototyping"
+          ],
+          "profiles": []
+        },
+        {
+          "id": "social-content",
+          "title": "Social media content creator",
+          "tag": "interesting",
+          "blurb": "Makes posts, reels and stories people want to share.",
+          "dayInLife": "Pick an idea, make it, post it, then look at what landed and what did not.",
+          "skills": [
+            "Design philosophies"
+          ],
+          "profiles": []
+        }
+      ]
+    },
+    {
+      "id": "connectors",
+      "title": "Connectors",
+      "avatar": "Dolphin",
+      "version": 2,
+      "description": "A first-year discovery trail, not a job-readiness certificate. Try small outputs and decide what you enjoy.",
+      "steps": [
+        {
+          "id": "connectors-v2-01",
+          "role": "connectors",
+          "version": 2,
+          "order": 1,
+          "type": "video",
+          "title": "Introduce yourself with a purpose",
+          "goal": "Make a clear friendly first connection",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Read or watch the HAIL section. Write a 30-second introduction: name or nickname, one interest and one thing you would like to learn with others. Practise privately twice; voice recording is optional and a written version counts equally.",
+          "requiredOutput": "A short introduction and one revision",
+          "doneChecklist": [
+            "Interest named",
+            "Learning invitation included",
+            "Two private practices or written revisions"
+          ],
+          "primaryResource": {
+            "id": "speaking-video",
+            "publisher": "TED / Julian Treasure",
+            "title": "How to speak so that people want to listen",
+            "url": "https://www.youtube.com/watch?v=eIho2S0ZahI",
+            "slice": "HAIL: honesty authenticity integrity and wishing people well",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "TED, Julian Treasure; title and full available transcript checked via WebFetch, not watched. Use HAIL and pace/pause; not voice-depth stereotypes or mandatory vocal/physical exercises. Written communication is equivalent. Captions/YouTube access can vary by region/device.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to Speak So That People Want to Listen | Julian Treasure | TED - YouTube",
+              "contentCheckedViaWebFetch": true,
+              "watched": false
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Voice",
+          "unit": "try"
+        },
+        {
+          "id": "connectors-v2-02",
+          "role": "connectors",
+          "version": 2,
+          "order": 2,
+          "type": "article",
+          "title": "Listen before replying",
+          "goal": "Notice another person's meaning",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "With a consenting friend discuss a harmless topic for five minutes, then paraphrase their point. Solo alternative: use a paragraph from the resource as a simulated speaker and paraphrase it, labelled simulated. Record no names.",
+          "requiredOutput": "One paraphrase and one follow-up question",
+          "doneChecklist": [
+            "Meaning restated without judgement",
+            "Open question",
+            "Consent or simulation labelled"
+          ],
+          "primaryResource": {
+            "id": "ted-listen",
+            "publisher": "TED / Julian Treasure",
+            "title": "5 ways to listen better",
+            "url": "https://www.ted.com/talks/julian_treasure_5_ways_to_listen_better",
+            "slice": "Watch or read the five ways. Then paraphrase one point in your own words.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public talk page. A TED account is optional. The YouTube copy is linked if this page is slow.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "5 ways to listen better",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Voice",
+          "links": [
+            {
+              "kind": "video",
+              "publisher": "TED",
+              "title": "5 ways to listen better",
+              "url": "https://www.youtube.com/watch?v=cSohjlYQI2A",
+              "slice": "Same talk, if the TED page is slow. Then paraphrase one point."
+            }
+          ],
+          "unit": "try"
+        },
+        {
+          "id": "connectors-v2-03",
+          "role": "connectors",
+          "version": 2,
+          "order": 3,
+          "type": "article",
+          "title": "Ask welcoming questions",
+          "goal": "Turn small talk into understanding",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write five open questions for a new classmate about interests and ways of working, not sensitive identity or finances. Replace two yes/no questions with open ones. No outreach is required.",
+          "requiredOutput": "Five-question conversation guide",
+          "doneChecklist": [
+            "Five non-sensitive questions",
+            "Two rewrites",
+            "One opt-out sentence"
+          ],
+          "primaryResource": {
+            "id": "nng-questions",
+            "publisher": "Nielsen Norman Group",
+            "title": "Open-Ended Questions in User Research",
+            "url": "https://www.nngroup.com/articles/open-ended-questions/",
+            "slice": "How an open question differs from a yes or no. Rewrite two of your questions.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. Do not contact anyone.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Open-Ended Questions in User Research",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Voice",
+          "unit": "try"
+        },
+        {
+          "id": "connectors-v2-04",
+          "role": "connectors",
+          "version": 2,
+          "order": 4,
+          "type": "task",
+          "title": "Make an invitation easy to answer",
+          "goal": "Communicate purpose and consent",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Draft an invitation to a fictional study circle: purpose, who it suits, place/time placeholders and how to decline. Write a shorter accessible text-only version. Do not send it.",
+          "requiredOutput": "Two private invitation drafts",
+          "doneChecklist": [
+            "Purpose and logistics",
+            "No pressure",
+            "Text-only alternative"
+          ],
+          "primaryResource": {
+            "id": "atl-meetings",
+            "publisher": "Atlassian",
+            "title": "How to run effective meetings",
+            "url": "https://www.atlassian.com/blog/teamwork/how-to-run-effective-meetings",
+            "slice": "Purpose, time, and a clear way to respond. Use that shape in your unsent invitation.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. Do not send the invitation.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to run effective meetings",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Invite",
+          "unit": "skill-1"
+        },
+        {
+          "id": "connectors-v2-05",
+          "role": "connectors",
+          "version": 2,
+          "order": 5,
+          "type": "checklist",
+          "title": "Plan an inclusive ten-minute conversation",
+          "goal": "Practise facilitation",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Create a ten-minute agenda with a welcome, one question, turn-taking and summary. Offer speaking, typing or passing. Include a plan for interrupting politely if one person dominates.",
+          "requiredOutput": "Timed facilitation card",
+          "doneChecklist": [
+            "Ten minutes total",
+            "Three participation choices",
+            "Dominance response"
+          ],
+          "primaryResource": {
+            "id": "agreements",
+            "publisher": "Atlassian",
+            "title": "Working Agreements",
+            "url": "https://www.atlassian.com/team-playbook/plays/working-agreements",
+            "slice": "Start the Play; create or refine your meeting plan",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article. Distinct slices for active listening, communication, inclusive meetings and escalation. Do not require cameras, speaking, a team or an Atlassian account. Source instructions to send invitations are NOT learner requirements.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Working Agreements Play | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Invite",
+          "unit": "skill-1"
+        },
+        {
+          "id": "connectors-v2-06",
+          "role": "connectors",
+          "version": 2,
+          "order": 6,
+          "type": "article",
+          "title": "Make space for quieter voices",
+          "goal": "Design belonging without forcing participation",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "For a fictional campus activity list host, welcome helper and accessibility helper. Write what each does and one barrier a newcomer could face. Draft a small fix for that barrier.",
+          "requiredOutput": "Three-role welcome plan",
+          "doneChecklist": [
+            "Responsibilities clear",
+            "One barrier",
+            "One practical fix"
+          ],
+          "primaryResource": {
+            "id": "roles",
+            "publisher": "Atlassian",
+            "title": "Roles and Responsibilities",
+            "url": "https://www.atlassian.com/team-playbook/plays/roles-and-responsibilities",
+            "slice": "Identify responsibilities; review unassigned responsibilities",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; shortened fictional owner/responsibility exercise. No Jira/Confluence sign-up and no actual group assignment needed.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to Define Team Roles and Responsibilities | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Care",
+          "unit": "skill-1"
+        },
+        {
+          "id": "connectors-v2-07",
+          "role": "connectors",
+          "version": 2,
+          "order": 7,
+          "type": "task",
+          "title": "Practise a difficult reply",
+          "goal": "Handle disagreement respectfully",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Imagine two students disagreeing on an activity. Draft a neutral summary of both needs, one clarifying question and one fair next step. No real conflict or public argument is needed.",
+          "requiredOutput": "Four-line mediation draft",
+          "doneChecklist": [
+            "Both needs represented",
+            "No blame",
+            "Clear next step"
+          ],
+          "primaryResource": {
+            "id": "ted-conversation",
+            "publisher": "TED / Celeste Headlee",
+            "title": "10 ways to have a better conversation",
+            "url": "https://www.ted.com/talks/celeste_headlee_10_ways_to_have_a_better_conversation",
+            "slice": "One idea: don't repeat your point louder. Use it in your private reply draft.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public talk page. A TED account is optional. This is a private writing exercise.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "10 ways to have a better conversation",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Care",
+          "unit": "skill-2"
+        },
+        {
+          "id": "connectors-v2-08",
+          "role": "connectors",
+          "version": 2,
+          "order": 8,
+          "type": "task",
+          "title": "Run a tiny rehearsal",
+          "goal": "Try connecting in practice",
+          "estimateMinutes": 45,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Use your ten-minute agenda with consenting friends if available. Otherwise rehearse the host and two fictional participants privately, including a silent participant. Log timings and one adjustment; never invent attendance.",
+          "requiredOutput": "Rehearsal log and revised agenda",
+          "doneChecklist": [
+            "Actual or simulated clearly labelled",
+            "Turn-taking tested",
+            "One adjustment"
+          ],
+          "primaryResource": {
+            "id": "agreements",
+            "publisher": "Atlassian",
+            "title": "Working Agreements",
+            "url": "https://www.atlassian.com/team-playbook/plays/working-agreements",
+            "slice": "Create or refine your meeting plan applied in rehearsal",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article. Distinct slices for active listening, communication, inclusive meetings and escalation. Do not require cameras, speaking, a team or an Atlassian account. Source instructions to send invitations are NOT learner requirements.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Working Agreements Play | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Care",
+          "unit": "skill-2"
+        },
+        {
+          "id": "connectors-v2-09",
+          "role": "connectors",
+          "version": 2,
+          "order": 9,
+          "type": "task",
+          "title": "Design one helpful contribution",
+          "goal": "Explore volunteering without requiring access to an event",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Choose a campus need such as helping newcomers find a classroom. Draft a welcome FAQ with three questions and a volunteer role description. Do not contact an organisation or promise a real service.",
+          "requiredOutput": "Three-question FAQ and role card",
+          "doneChecklist": [
+            "Need identified",
+            "Three helpful answers",
+            "Limits of role stated"
+          ],
+          "primaryResource": {
+            "id": "poster",
+            "publisher": "Atlassian",
+            "title": "Project Poster",
+            "url": "https://www.atlassian.com/team-playbook/plays/project-poster",
+            "slice": "Problem space; ready to make it",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; templates/Confluence are not needed. Original is a longer team workshop; our named slices become short solo exercises, with our own time estimates and outputs, not the source workshop duration.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Project Poster Template to Guide Your Work | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Care",
+          "unit": "skill-2"
+        },
+        {
+          "id": "connectors-v2-10",
+          "role": "connectors",
+          "version": 2,
+          "order": 10,
+          "type": "checklist",
+          "title": "Reflect on your community style",
+          "goal": "Choose speaking facilitation or service next",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write four reflections from the rehearsal. Pick a next 60-minute experiment in speaking, community welcoming, volunteering preparation or facilitation. Public posting is optional, never required.",
+          "requiredOutput": "Four reflections and next experiment",
+          "doneChecklist": [
+            "Four reflections",
+            "One small next action",
+            "No compulsory outreach"
+          ],
+          "primaryResource": {
+            "id": "retro",
+            "publisher": "Atlassian",
+            "title": "4 Ls Retrospective",
+            "url": "https://www.atlassian.com/team-playbook/plays/4-ls-retrospective-technique",
+            "slice": "Define the 4Ls; discuss actions",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; four prompts are loved, loathed, longed for, learned. Individual reflection adaptation, not a compulsory team meeting. Same close-out method intentionally reused across all six roles.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "The \"4 Ls\" Retrospective Technique | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "roadmap.sh",
+              "title": "Developer Relations Roadmap",
+              "url": "https://roadmap.sh/devrel",
+              "slice": "The longer path if bringing people together still feels like yours."
+            }
+          ],
+          "unit": "skill-2"
+        }
+      ],
+      "units": [
+        {
+          "id": "try",
+          "kind": "try",
+          "title": "Try it"
+        },
+        {
+          "id": "careers",
+          "kind": "careers",
+          "title": "Careers"
+        },
+        {
+          "id": "skill-1",
+          "kind": "skill",
+          "title": "Facilitation",
+          "skill": "Facilitation"
+        },
+        {
+          "id": "skill-2",
+          "kind": "skill",
+          "title": "Community building",
+          "skill": "Community building"
+        }
+      ],
+      "careers": [
+        {
+          "id": "public-speaker",
+          "title": "Public speaker",
+          "tag": "interesting",
+          "blurb": "Helps a room understand and care about one clear idea.",
+          "dayInLife": "Pick one message, rehearse it out loud, speak, then listen to the questions.",
+          "skills": [
+            "Communication",
+            "Storytelling"
+          ],
+          "profiles": []
+        },
+        {
+          "id": "community-lead",
+          "title": "Community lead",
+          "tag": "pays",
+          "blurb": "Brings people together around something they care about.",
+          "dayInLife": "Welcome new people, plan the next meetup, make space for quieter voices.",
+          "skills": [
+            "Facilitation",
+            "Community building"
+          ],
+          "profiles": []
+        }
+      ]
+    },
+    {
+      "id": "leaders",
+      "title": "Leaders",
+      "avatar": "Wolf",
+      "version": 2,
+      "description": "A first-year discovery trail, not a job-readiness certificate. Try small outputs and decide what you enjoy.",
+      "steps": [
+        {
+          "id": "leaders-v2-01",
+          "role": "leaders",
+          "version": 2,
+          "order": 1,
+          "type": "video",
+          "title": "Notice an opportunity, not just an idea",
+          "goal": "Connect a problem with people",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Watch or read the five-question section, not the whole lecture. Pick a problem you personally experienced at college. Write who faces it, the last time it happened and the current workaround. Treat it as a guess to explore, not a startup claim.",
+          "requiredOutput": "Three-line problem hypothesis",
+          "doneChecklist": [
+            "Person or group named",
+            "Real personal incident",
+            "Current workaround",
+            "Assumption labelled"
+          ],
+          "primaryResource": {
+            "id": "users-video",
+            "publisher": "Y Combinator / Eric Migicovsky",
+            "title": "How to Talk to Users",
+            "url": "https://www.youtube.com/watch?v=MT4Ig2uqjTc",
+            "slice": "Three common interview mistakes; five questions section only",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Y Combinator, Eric Migicovsky; page title and available transcript checked via WebFetch, not watched. Assign three mistakes/five questions only, no invented timestamps or full lecture requirement. Ignore later credit-card/phone collection and unsolicited drop-in examples; they are inappropriate for this trail. Self-interview is valid when labelled.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Eric Migicovsky - How to Talk to Users - YouTube",
+              "contentCheckedViaWebFetch": true,
+              "watched": false
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "alternativeResource": {
+            "id": "users-text",
+            "publisher": "Y Combinator",
+            "title": "Startup School Week 1 Recap: Kevin Hale and Eric Migicovsky",
+            "url": "https://www.ycombinator.com/blog/startup-school-week-1-recap-kevin-hale-and-eric-migicovsky",
+            "slice": "Eric Migicovsky transcript: three mistakes and five questions"
+          },
+          "section": "Learn",
+          "unit": "try"
+        },
+        {
+          "id": "leaders-v2-02",
+          "role": "leaders",
+          "version": 2,
+          "order": 2,
+          "type": "video",
+          "title": "Prepare to learn from someone",
+          "goal": "Ask about real behaviour",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write five non-leading questions about your problem. Replace would-you-use-it questions with last-time questions. Add a consent sentence and avoid sensitive data. Do not send a pitch.",
+          "requiredOutput": "Five-question guide",
+          "doneChecklist": [
+            "Questions ask about past behaviour",
+            "Consent sentence",
+            "No request for private information"
+          ],
+          "primaryResource": {
+            "id": "yc-users",
+            "publisher": "Y Combinator",
+            "title": "How to Talk to Users",
+            "url": "https://www.ycombinator.com/library/Iz-how-to-talk-to-users",
+            "slice": "The written method: ask about the last time, not a hypothetical. Write five questions. Do not send them.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. No outreach in this step.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to Talk to Users",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "alternativeResource": {
+            "id": "users-text",
+            "publisher": "Y Combinator",
+            "title": "Startup School Week 1 Recap: Kevin Hale and Eric Migicovsky",
+            "url": "https://www.ycombinator.com/blog/startup-school-week-1-recap-kevin-hale-and-eric-migicovsky",
+            "slice": "Eric Migicovsky transcript: three mistakes and five questions"
+          },
+          "section": "Learn",
+          "unit": "try"
+        },
+        {
+          "id": "leaders-v2-03",
+          "role": "leaders",
+          "version": 2,
+          "order": 3,
+          "type": "article",
+          "title": "Collect one small piece of evidence",
+          "goal": "Separate observations from hopes",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Have a ten-minute conversation with one consenting person, or answer from your own real past experience. Save anonymous notes. Label self-interview honestly and list one finding plus one unanswered question.",
+          "requiredOutput": "One evidence note",
+          "doneChecklist": [
+            "Source type labelled",
+            "Finding grounded in an incident",
+            "Uncertainty retained"
+          ],
+          "primaryResource": {
+            "id": "nng-interview",
+            "publisher": "Nielsen Norman Group",
+            "title": "User Interviews: How, When, and Why to Conduct Them",
+            "url": "https://www.nngroup.com/articles/interviewing-users/",
+            "slice": "What one short conversation can and cannot prove. Then collect one honest note, or label a self-interview.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. Talk only to someone who agrees, or use your own past experience.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "User Interviews: How, When, and Why to Conduct Them",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Learn",
+          "unit": "try"
+        },
+        {
+          "id": "leaders-v2-04",
+          "role": "leaders",
+          "version": 2,
+          "order": 4,
+          "type": "article",
+          "title": "Compare three ways to help",
+          "goal": "Practise choosing rather than adding features",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write three possible solutions, including a no-app option. Compare usefulness, effort and access using low/medium/high. Pick one and explain the trade-off. This is a student experiment, not investment advice.",
+          "requiredOutput": "Three-option comparison",
+          "doneChecklist": [
+            "No-app option",
+            "Three criteria",
+            "Decision explained"
+          ],
+          "primaryResource": {
+            "id": "poster",
+            "publisher": "Atlassian",
+            "title": "Project Poster",
+            "url": "https://www.atlassian.com/team-playbook/plays/project-poster",
+            "slice": "Problem space and possible solutions",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; templates/Confluence are not needed. Original is a longer team workshop; our named slices become short solo exercises, with our own time estimates and outputs, not the source workshop duration.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Project Poster Template to Guide Your Work | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "unit": "skill-1"
+        },
+        {
+          "id": "leaders-v2-05",
+          "role": "leaders",
+          "version": 2,
+          "order": 5,
+          "type": "article",
+          "title": "Describe how it could work",
+          "goal": "Explore business basics simply",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Read the free overview, not the paid playbooks or template download. In your own table describe who benefits, value, delivery, costs and possible income or support. Mark every untested claim as an assumption.",
+          "requiredOutput": "Five-part mini-model in your own words",
+          "doneChecklist": [
+            "Five parts",
+            "Costs versus income separated",
+            "Assumptions visible"
+          ],
+          "primaryResource": {
+            "id": "business",
+            "publisher": "Strategyzer",
+            "title": "The Business Model Canvas",
+            "url": "https://www.strategyzer.com/library/the-business-model-canvas",
+            "slice": "Why use the Business Model Canvas? nine blocks overview only",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public overview verified. Paid Strategyzer playbooks are advertised and template downloads may change/gate. Require ONLY the freely readable overview and an original plain-text mini-model; never subscription, email signup, branded template download or full business plan.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Business Model Canvas – Download the Official Template",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "unit": "skill-1"
+        },
+        {
+          "id": "leaders-v2-06",
+          "role": "leaders",
+          "version": 2,
+          "order": 6,
+          "type": "article",
+          "title": "Choose one experiment and a stop rule",
+          "goal": "Make a decision you can revise",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Choose between a paper demo and a role-play service trial. Define one success signal and one reason to stop or change. Record who would decide in a fictional team; you may play all roles.",
+          "requiredOutput": "One experiment decision note",
+          "doneChecklist": [
+            "Two options compared",
+            "Success signal",
+            "Stop rule",
+            "Decision owner"
+          ],
+          "primaryResource": {
+            "id": "daci",
+            "publisher": "Atlassian",
+            "title": "DACI Decision-Making Framework",
+            "url": "https://www.atlassian.com/team-playbook/plays/daci",
+            "slice": "Develop an action plan; gather input and make decisions",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article. Only simple decision roles, options and decision record; not full corporate ceremony or Confluence.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "DACI: A Decision-Making Framework | Atlassian Team Playbook",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "unit": "skill-1"
+        },
+        {
+          "id": "leaders-v2-07",
+          "role": "leaders",
+          "version": 2,
+          "order": 7,
+          "type": "video",
+          "title": "Pitch clearly in one minute",
+          "goal": "Explain a useful change without hype",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Draft a 60-second pitch: problem, who, proposed help, evidence and request for feedback. Practise privately or write an equivalent short pitch. Do not claim untested impact, revenue or real customers.",
+          "requiredOutput": "Short pitch and revision",
+          "doneChecklist": [
+            "Problem and audience",
+            "Honest evidence",
+            "One clear request"
+          ],
+          "primaryResource": {
+            "id": "yc-pitch",
+            "publisher": "Y Combinator",
+            "title": "How to Pitch Your Startup",
+            "url": "https://www.ycombinator.com/library/6q-how-to-pitch-your-startup",
+            "slice": "Problem, who it is for, and what you are asking. Keep your pitch to one minute and do not claim results you have not seen.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. Practise privately.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to Pitch Your Startup",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Say",
+          "unit": "skill-2"
+        },
+        {
+          "id": "leaders-v2-08",
+          "role": "leaders",
+          "version": 2,
+          "order": 8,
+          "type": "article",
+          "title": "Practise a fair negotiation",
+          "goal": "Balance needs instead of winning at any cost",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Role-play two club partners with a fictional ₹1000 event limit. List both sides' interests, one acceptable compromise and a respectful no-deal option. This is a private simulation with no payment or commitment.",
+          "requiredOutput": "Negotiation card",
+          "doneChecklist": [
+            "Both interests",
+            "Budget respected",
+            "No-deal option",
+            "Simulation labelled"
+          ],
+          "primaryResource": {
+            "id": "pon-negotiation",
+            "publisher": "Harvard Program on Negotiation",
+            "title": "What is Negotiation?",
+            "url": "https://www.pon.harvard.edu/daily/negotiation-skills-daily/what-is-negotiation/",
+            "slice": "Interests versus positions. Use it to write both sides and one compromise. No payment or real deal.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. This is a private simulation.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What is Negotiation?",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Say",
+          "unit": "skill-2"
+        },
+        {
+          "id": "leaders-v2-09",
+          "role": "leaders",
+          "version": 2,
+          "order": 9,
+          "type": "task",
+          "title": "Try the smallest demo",
+          "goal": "Lead one evidence-seeking action",
+          "estimateMinutes": 60,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Create a paper mockup or enact the service for ten minutes. Self-test or invite a consenting peer. Record what happened, not compliments alone; choose continue, change or stop based on evidence.",
+          "requiredOutput": "Demo record and decision",
+          "doneChecklist": [
+            "Demo completed",
+            "Source of observations labelled",
+            "Next decision justified"
+          ],
+          "primaryResource": {
+            "id": "poster",
+            "publisher": "Atlassian",
+            "title": "Project Poster",
+            "url": "https://www.atlassian.com/team-playbook/plays/project-poster",
+            "slice": "Validation",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; templates/Confluence are not needed. Original is a longer team workshop; our named slices become short solo exercises, with our own time estimates and outputs, not the source workshop duration.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Project Poster Template to Guide Your Work | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Say",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "Y Combinator",
+              "title": "How to Plan an MVP",
+              "url": "https://www.ycombinator.com/library/6f-how-to-plan-an-mvp",
+              "slice": "What a smallest demo includes. Keep yours on paper or one screen."
+            }
+          ],
+          "unit": "skill-2"
+        },
+        {
+          "id": "leaders-v2-10",
+          "role": "leaders",
+          "version": 2,
+          "order": 10,
+          "type": "checklist",
+          "title": "Decide whether leading energises you",
+          "goal": "Reflect beyond the founder stereotype",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write four reflections, including one moment of listening and one hard decision. Choose a 60-minute next experiment in business research, pitching or organising a small team simulation.",
+          "requiredOutput": "Four reflections and next experiment",
+          "doneChecklist": [
+            "Listening and decision reflected",
+            "Concrete next task",
+            "No company launch required"
+          ],
+          "primaryResource": {
+            "id": "retro",
+            "publisher": "Atlassian",
+            "title": "4 Ls Retrospective",
+            "url": "https://www.atlassian.com/team-playbook/plays/4-ls-retrospective-technique",
+            "slice": "Define the 4Ls; discuss actions to improve",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; four prompts are loved, loathed, longed for, learned. Individual reflection adaptation, not a compulsory team meeting. Same close-out method intentionally reused across all six roles.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "The \"4 Ls\" Retrospective Technique | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "roadmap.sh",
+              "title": "Product Manager Roadmap",
+              "url": "https://roadmap.sh/product-manager",
+              "slice": "The longer path if choosing what to try still feels like yours."
+            }
+          ],
+          "unit": "skill-2"
+        }
+      ],
+      "units": [
+        {
+          "id": "try",
+          "kind": "try",
+          "title": "Try it"
+        },
+        {
+          "id": "careers",
+          "kind": "careers",
+          "title": "Careers"
+        },
+        {
+          "id": "skill-1",
+          "kind": "skill",
+          "title": "Decision-making",
+          "skill": "Decision-making"
+        },
+        {
+          "id": "skill-2",
+          "kind": "skill",
+          "title": "Pitching",
+          "skill": "Pitching"
+        }
+      ],
+      "careers": [
+        {
+          "id": "business-development",
+          "title": "Business development",
+          "tag": "pays",
+          "blurb": "Finds new people and organisations worth working with.",
+          "dayInLife": "Spot an opening, talk to someone, make a small offer, follow up.",
+          "skills": [
+            "Opportunity spotting",
+            "Negotiation"
+          ],
+          "profiles": []
+        },
+        {
+          "id": "founder",
+          "title": "Founder",
+          "tag": "interesting",
+          "blurb": "Starts something new and keeps it going.",
+          "dayInLife": "Choose one problem, try the smallest version, learn from it, decide what is next.",
+          "skills": [
+            "Pitching",
+            "Decision-making"
+          ],
+          "profiles": []
+        }
+      ]
+    },
+    {
+      "id": "planners",
+      "title": "Planners",
+      "avatar": "Spider",
+      "version": 2,
+      "description": "A first-year discovery trail, not a job-readiness certificate. Try small outputs and decide what you enjoy.",
+      "steps": [
+        {
+          "id": "planners-v2-01",
+          "role": "planners",
+          "version": 2,
+          "order": 1,
+          "type": "article",
+          "title": "Turn a small idea into a clear goal",
+          "goal": "Make work understandable",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Imagine a 30-minute study circle for five classmates; it does not need to happen. Write its purpose, what success looks like and two things outside scope. Keep the plan to five lines in notes or on paper.",
+          "requiredOutput": "Five-line project brief",
+          "doneChecklist": [
+            "Purpose written",
+            "Success defined",
+            "Two exclusions",
+            "Fictional status clear"
+          ],
+          "primaryResource": {
+            "id": "poster",
+            "publisher": "Atlassian",
+            "title": "Project Poster",
+            "url": "https://www.atlassian.com/team-playbook/plays/project-poster",
+            "slice": "Define the problem space",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; templates/Confluence are not needed. Original is a longer team workshop; our named slices become short solo exercises, with our own time estimates and outputs, not the source workshop duration.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Project Poster Template to Guide Your Work | Atlassian",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Goal",
+          "unit": "try"
+        },
+        {
+          "id": "planners-v2-02",
+          "role": "planners",
+          "version": 2,
+          "order": 2,
+          "type": "article",
+          "title": "Break the work into small pieces",
+          "goal": "Make a doable checklist",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Turn the study-circle goal into six actions small enough for one sitting. Give every action a visible output and choose the first action. Do not build a whole semester timetable.",
+          "requiredOutput": "Six-item action list",
+          "doneChecklist": [
+            "Six actions",
+            "Output for each",
+            "First action identified"
+          ],
+          "primaryResource": {
+            "id": "atl-stories",
+            "publisher": "Atlassian",
+            "title": "User Stories",
+            "url": "https://www.atlassian.com/agile/project-management/user-stories",
+            "slice": "One story is one small outcome. Turn your goal into six actions with a visible result each.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "User Stories",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Goal",
+          "unit": "try"
+        },
+        {
+          "id": "planners-v2-03",
+          "role": "planners",
+          "version": 2,
+          "order": 3,
+          "type": "article",
+          "title": "Put tasks in order",
+          "goal": "See dependencies and limits",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Draw To do, Doing and Done columns. Add your six tasks, mark any that depend on others and set Doing limit to one. Move one pretend card and explain why it is ready.",
+          "requiredOutput": "Paper or notes-based board",
+          "doneChecklist": [
+            "Six cards",
+            "Dependencies marked",
+            "Doing limit one"
+          ],
+          "primaryResource": {
+            "id": "kanban",
+            "publisher": "Atlassian",
+            "title": "Kanban",
+            "url": "https://www.atlassian.com/agile/kanban",
+            "slice": "Kanban boards and cards; bottlenecks",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article. Read board/cards, work-in-progress and bottleneck concepts only. Draw on paper or notes. Jira/Trello sign-up not needed.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What is Kanban in Project Management?",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Order",
+          "unit": "try"
+        },
+        {
+          "id": "planners-v2-04",
+          "role": "planners",
+          "version": 2,
+          "order": 4,
+          "type": "article",
+          "title": "Make a realistic one-day schedule",
+          "goal": "Leave room for real life",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Place three plan tasks around a fictional class day. Estimate each task and leave a 15-minute buffer. If they do not fit, remove or split a task rather than pretending you can do everything.",
+          "requiredOutput": "One-day schedule",
+          "doneChecklist": [
+            "Class commitments respected",
+            "Three estimates",
+            "Buffer",
+            "One trade-off"
+          ],
+          "primaryResource": {
+            "id": "atl-estimate",
+            "publisher": "Atlassian",
+            "title": "Estimation",
+            "url": "https://www.atlassian.com/agile/project-management/estimation",
+            "slice": "Why a guess should include slack. Put three tasks on one class day and drop what does not fit.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "Estimation",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Order",
+          "unit": "skill-1"
+        },
+        {
+          "id": "planners-v2-05",
+          "role": "planners",
+          "version": 2,
+          "order": 5,
+          "type": "article",
+          "title": "Build a tiny budget",
+          "goal": "Check arithmetic and assumptions",
+          "estimateMinutes": 40,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Use a fictional ₹1000 activity fund. Create five expense lines totalling no more than ₹900 and reserve at least ₹100. Show quantity × unit cost and remaining money. Ignore UK tax, debt and product advice; use only budgeting arithmetic. No real financial data.",
+          "requiredOutput": "Five-line INR budget",
+          "doneChecklist": [
+            "Five line calculations",
+            "Total at most ₹900",
+            "Reserve at least ₹100",
+            "Assumptions labelled"
+          ],
+          "primaryResource": {
+            "id": "budget-new",
+            "publisher": "MoneyHelper / UK Money and Pensions Service",
+            "title": "Managing your money: a beginner’s guide",
+            "url": "https://www.moneyhelper.org.uk/en/everyday-money/budgeting/beginners-guide-to-managing-your-money",
+            "slice": "Step 2: Create a budget; work out what is left",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public UK Money and Pensions Service / MoneyHelper article. Use Step 2 arithmetic only with fictional INR. UK benefits, pensions, tax, financial products and investment advice do not transfer to India and are not assigned. No bank statements, account connection or real financial disclosures. Direct HTTP probe returned 403; WebFetch successfully retrieved the public article text. Treat future access errors with the inline task fallback.",
+            "verification": {
+              "httpStatus": 403,
+              "pageTitle": "Just a moment...",
+              "contentCheckedViaWebFetch": true,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Order",
+          "unit": "skill-1"
+        },
+        {
+          "id": "planners-v2-06",
+          "role": "planners",
+          "version": 2,
+          "order": 6,
+          "type": "article",
+          "title": "Decide who owns what",
+          "goal": "Prevent work from disappearing",
+          "estimateMinutes": 30,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Assign fictional owner roles to the six tasks, one backup for the key task and one approval point. Use role names, not real phone numbers or classmates' details.",
+          "requiredOutput": "Responsibility table",
+          "doneChecklist": [
+            "Every task has one owner",
+            "One backup",
+            "Approval point"
+          ],
+          "primaryResource": {
+            "id": "roles",
+            "publisher": "Atlassian",
+            "title": "Roles and Responsibilities",
+            "url": "https://www.atlassian.com/team-playbook/plays/roles-and-responsibilities",
+            "slice": "Identify responsibilities; review unassigned responsibilities",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; shortened fictional owner/responsibility exercise. No Jira/Confluence sign-up and no actual group assignment needed.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to Define Team Roles and Responsibilities | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Order",
+          "unit": "skill-1"
+        },
+        {
+          "id": "planners-v2-07",
+          "role": "planners",
+          "version": 2,
+          "order": 7,
+          "type": "article",
+          "title": "Think ahead about what could go wrong",
+          "goal": "Prepare calmly for uncertainty",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Imagine the session went badly. List three possible causes, a low/medium/high likelihood and impact, and one prevention or fallback each. Cover an absent organiser and a budget overrun.",
+          "requiredOutput": "Three-risk mini-register",
+          "doneChecklist": [
+            "Three risks",
+            "Likelihood and impact",
+            "Response for each"
+          ],
+          "primaryResource": {
+            "id": "premortem",
+            "publisher": "Atlassian",
+            "title": "Pre-mortem",
+            "url": "https://www.atlassian.com/team-playbook/plays/pre-mortem",
+            "slice": "Brainstorm; threats; action",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article. Short hypothetical brainstorm/risk-response slice, not a full workshop.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "How to Run Pre-Mortem Exercises [Templates Included] | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Risks",
+          "unit": "skill-2"
+        },
+        {
+          "id": "planners-v2-08",
+          "role": "planners",
+          "version": 2,
+          "order": 8,
+          "type": "article",
+          "title": "Use AI responsibly without needing AI",
+          "goal": "Keep people and facts protected",
+          "estimateMinutes": 35,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Review this fictional AI suggestion: upload every student's phone number, promise 100% attendance, and use an unverified timetable. Mark the privacy risk and two unsupported claims. Rewrite it as a safer plan with human checks. No AI account or upload needed.",
+          "requiredOutput": "Annotated suggestion and safer rewrite",
+          "doneChecklist": [
+            "No personal data upload",
+            "Two claims challenged",
+            "Human verification named"
+          ],
+          "primaryResource": {
+            "id": "commonsense-ai",
+            "publisher": "Common Sense Education",
+            "title": "ChatGPT and beyond: How to handle AI in schools",
+            "url": "https://www.commonsense.org/education/articles/chatgpt-and-beyond-how-to-handle-ai-in-schools",
+            "slice": "Privacy and checking the answer. Use it on the fictional suggestion. No AI account and no upload.",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP status and page title",
+            "accessNote": "Public article. No sign-in. Do not upload anyone's phone numbers or personal information.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "ChatGPT and beyond: How to handle AI in schools",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Risks",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "UNESCO",
+              "title": "Guidance for generative AI in education and research",
+              "url": "https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research",
+              "slice": "Read the summary only. Use it to check the privacy point in your safer plan."
+            }
+          ],
+          "unit": "skill-2"
+        },
+        {
+          "id": "planners-v2-09",
+          "role": "planners",
+          "version": 2,
+          "order": 9,
+          "type": "task",
+          "title": "Rehearse and update the plan",
+          "goal": "Adapt instead of defending the first plan",
+          "estimateMinutes": 50,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Simulate your study-circle preparation. Inject a 15-minute delay and a ₹100 price increase. Update the board, schedule and budget while protecting the reserve or explicitly cutting scope. Keep this a tabletop exercise.",
+          "requiredOutput": "Updated three-part plan and change log",
+          "doneChecklist": [
+            "Delay handled",
+            "Arithmetic rechecked",
+            "Scope or sequence change explained"
+          ],
+          "primaryResource": {
+            "id": "kanban",
+            "publisher": "Atlassian",
+            "title": "Kanban",
+            "url": "https://www.atlassian.com/agile/kanban",
+            "slice": "Visualising work; bottlenecks; planning flexibility",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public article. Read board/cards, work-in-progress and bottleneck concepts only. Draw on paper or notes. Jira/Trello sign-up not needed.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "What is Kanban in Project Management?",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Order",
+          "unit": "skill-2"
+        },
+        {
+          "id": "planners-v2-10",
+          "role": "planners",
+          "version": 2,
+          "order": 10,
+          "type": "checklist",
+          "title": "Close the loop and choose next",
+          "goal": "Discover your planning strengths",
+          "estimateMinutes": 25,
+          "estimateLabel": "Estimated active time including the selected resource slice; flexible, not a deadline",
+          "task": "Write four reflections plus a five-line handoff stating goal, next action, owner role, risk and budget balance. Choose a 60-minute next experiment in operations, project planning, money planning or responsible AI.",
+          "requiredOutput": "Reflection and final handoff",
+          "doneChecklist": [
+            "Four reflections",
+            "Five handoff fields",
+            "One next experiment"
+          ],
+          "primaryResource": {
+            "id": "retro",
+            "publisher": "Atlassian",
+            "title": "4 Ls Retrospective",
+            "url": "https://www.atlassian.com/team-playbook/plays/4-ls-retrospective-technique",
+            "slice": "Define the 4Ls; discuss actions to improve",
+            "checkedDate": "2026-11-09",
+            "checkMethod": "HTTP and page title; video transcripts additionally checked through WebFetch for all YouTube resources",
+            "accessNote": "Public Atlassian article; four prompts are loved, loathed, longed for, learned. Individual reflection adaptation, not a compulsory team meeting. Same close-out method intentionally reused across all six roles.",
+            "verification": {
+              "httpStatus": 200,
+              "pageTitle": "The \"4 Ls\" Retrospective Technique | Atlassian",
+              "contentCheckedViaWebFetch": false,
+              "watched": null
+            }
+          },
+          "completion": "Self-attested checklist; evidence optional and private",
+          "fallback": "If the external resource is unavailable, use the task and checklist in this drawer; no external account or public sharing is required.",
+          "section": "Choose",
+          "links": [
+            {
+              "kind": "article",
+              "publisher": "roadmap.sh",
+              "title": "Engineering Manager Roadmap",
+              "url": "https://roadmap.sh/engineering-manager",
+              "slice": "The longer path if organising work still feels like yours. You do not need it now."
+            }
+          ],
+          "unit": "skill-2"
+        }
+      ],
+      "units": [
+        {
+          "id": "try",
+          "kind": "try",
+          "title": "Try it"
+        },
+        {
+          "id": "careers",
+          "kind": "careers",
+          "title": "Careers"
+        },
+        {
+          "id": "skill-1",
+          "kind": "skill",
+          "title": "Planning & organization",
+          "skill": "Planning & organization"
+        },
+        {
+          "id": "skill-2",
+          "kind": "skill",
+          "title": "Risk assessment",
+          "skill": "Risk assessment"
+        }
+      ],
+      "careers": [
+        {
+          "id": "project-manager",
+          "title": "Project manager",
+          "tag": "pays",
+          "blurb": "Keeps a team on track from idea to finish.",
+          "dayInLife": "Break the work into pieces, set an order and owners, check progress, adjust the plan.",
+          "skills": [
+            "Planning & organization",
+            "Budgeting",
+            "Process design"
+          ],
+          "profiles": []
+        },
+        {
+          "id": "risk-ai-governance",
+          "title": "Risk and AI governance",
+          "tag": "interesting",
+          "blurb": "Helps teams use new tools safely and fairly.",
+          "dayInLife": "List what could go wrong, agree simple guardrails, check they are followed.",
+          "skills": [
+            "Risk assessment",
+            "AI guardrails"
+          ],
+          "profiles": []
         }
       ]
     }

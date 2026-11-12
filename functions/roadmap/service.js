@@ -80,8 +80,8 @@ function cleanRole(input, roleId) {
     throw new RoadmapError(400, "role_unknown", "That trail does not exist.");
   }
   const stepsIn = Array.isArray(input.steps) ? input.steps : [];
-  if (stepsIn.length < 1 || stepsIn.length > 15) {
-    throw new RoadmapError(400, "content_invalid", "A trail needs 1 to 15 steps.");
+  if (stepsIn.length < 1 || stepsIn.length > 40) {
+    throw new RoadmapError(400, "content_invalid", "A trail needs 1 to 40 steps.");
   }
   const steps = stepsIn.map((step, index) => {
     const resource = step?.primaryResource || {};
@@ -91,6 +91,7 @@ function cleanRole(input, roleId) {
       role: roleId,
       version: Number(input.version) || 1,
       order: index + 1,
+      unit: String(step?.unit || "").trim(),
       type: String(step?.type || "task").trim() || "task",
       section: String(step?.section || "Trail").trim().slice(0, 24) || "Trail",
       title: String(step?.title || "").trim(),
@@ -134,6 +135,9 @@ function cleanRole(input, roleId) {
     avatar: AVATARS[roleId],
     version: Number(input.version) || 1,
     description: String(input.description || "").trim(),
+    // Units and careers are checked by validateContent; pass them through untouched.
+    units: Array.isArray(input.units) ? input.units : [],
+    careers: Array.isArray(input.careers) ? input.careers : [],
     steps,
   };
 }

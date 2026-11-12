@@ -12,39 +12,25 @@ const cors = require("cors");
 const { createRouter } = require("../roadmap/routes");
 const { RoadmapService } = require("../roadmap/service");
 const { MemoryStore } = require("../roadmap/store");
-const { readSeed, validateContent } = require("../roadmap/validate");
+const { loadSeed } = require("../roadmap/validate");
 const { SocialService, MemoryRepo } = require("../social/service");
 const { createSocialRouter } = require("../social/routes");
 
-// Test content only: give Builders the unit layout the real v2 content will have.
-const raw = readSeed();
-const builders = raw.roles.find((r) => r.id === "builders");
-builders.units = [
-  { id: "try", kind: "try", title: "Try it" },
-  { id: "careers", kind: "careers", title: "Careers" },
-  { id: "skill-a", kind: "skill", title: "First skill", skill: "Skill A" },
-  { id: "skill-b", kind: "skill", title: "Second skill", skill: "Skill B" },
-];
-builders.careers = [
-  { id: "product-engineer", title: "Product engineer", tag: "pays", blurb: "Builds features end to end.", dayInLife: "Pairs, ships, fixes.", skills: ["Skill A"] },
-  { id: "maker", title: "Hardware maker", tag: "interesting", blurb: "Makes things you can hold.", dayInLife: "", skills: [] },
-];
-builders.steps.forEach((step, i) => {
-  step.unit = i < 3 ? "try" : i < 7 ? "skill-a" : "skill-b";
-});
-const checked = validateContent(raw);
-if (!checked.ok) throw new Error(checked.errors.join("\n"));
+const catalog = loadSeed();
 const social = new SocialService({ repo: new MemoryRepo() });
 
 const users = new Map();
-const service = new RoadmapService({ store: new MemoryStore(), catalog: checked.catalog });
+const service = new RoadmapService({ store: new MemoryStore(), catalog });
 const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json({ limit: "1mb" }));
 
+// QUESTIONS_FILE: a saved copy of the public GET /api/questions, so the quiz can run locally.
 app.get("/api/questions", (_req, res) => {
+  if (process.env.QUESTIONS_FILE) return res.json(JSON.parse(require("fs").readFileSync(process.env.QUESTIONS_FILE, "utf8")));
   res.json({ version: "dev-fixture", questions: [], anchors: [], roleMap: {}, boosts: [], whatsappUrl: "" });
 });
+app.post("/api/invites/check", (req, res) => res.json({ ok: true, code: String(req.body?.code || "DEV").toUpperCase(), label: "Dev" }));
 app.get("/api/colleges", (_req, res) => {
   res.json({ colleges: [{ id: "c1", name: "Test College" }], departments: [{ id: "d1", name: "CSE" }], whatsappUrl: "" });
 });
@@ -60,6 +46,9 @@ const requireStudent = (req, res, next) => {
 };
 const SELECTED = { id: "builders", name: "Builders", key: "R", score: 8, animal: "Beaver" };
 const learnerOf = (uid) => {
+  if (!users.has(uid) && uid.startsWith("dev-new")) {
+    users.set(uid, { displayName: "New", roles: [], inviteCode: "" }); // fresh student: onboarding + quiz
+  }
   if (!users.has(uid)) {
     users.set(uid, {
       roles: [SELECTED, { id: "hackers", name: "Hackers", key: "I", score: 7 }],
@@ -77,7 +66,18 @@ const learnerOf = (uid) => {
 };
 app.get("/api/me", requireStudent, (req, res) => {
   const u = learnerOf(req.student.uid);
-  res.json({ ok: true, user: { ...u, uid: req.student.uid, hasAnswers: true } });
+  res.json({ ok: true, user: { ...u, uid: req.student.uid, hasAnswers: Boolean(u.scores) } });
+});
+app.post("/api/me/profile", requireStudent, (req, res) => {
+  const u = learnerOf(req.student.uid);
+  Object.assign(u, req.body);
+  res.json({ ok: true, user: { ...u, uid: req.student.uid, hasAnswers: Boolean(u.scores) } });
+});
+app.post("/api/me/discovery", requireStudent, async (req, res) => {
+  const u = learnerOf(req.student.uid);
+  Object.assign(u, { roles: req.body.roles, scores: req.body.scores, selectedRole: req.body.selectedRole });
+  await social.quizDone({ uid: req.student.uid, displayName: u.displayName, collegeId: u.collegeId, roleId: u.selectedRole?.id || "" });
+  res.json({ ok: true, selectedRole: u.selectedRole });
 });
 
 const resolveLearner = async (req) => {
