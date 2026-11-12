@@ -217,18 +217,19 @@ function createRouter({
 
   router.post("/me/roadmap/notes", requireStudent, handle(async (req, res) => {
     const learner = await resolveLearner(req);
-    res.json(
-      await service.saveNotes({
-        uid: learner.uid,
-        roleId: req.body?.roleId,
-        version: req.body?.version,
-        stepId: req.body?.stepId,
-        text: req.body?.text,
-        evidence: req.body?.evidence,
-        expectedRevision: req.body?.expectedRevision,
-        opId: req.body?.opId,
-      })
-    );
+    const result = await service.saveNotes({
+      uid: learner.uid,
+      roleId: req.body?.roleId,
+      version: req.body?.version,
+      stepId: req.body?.stepId,
+      text: req.body?.text,
+      evidence: req.body?.evidence,
+      expectedRevision: req.body?.expectedRevision,
+      opId: req.body?.opId,
+    });
+    const wrote = result.saved && String(req.body?.text || "").trim().length > 0;
+    const quests = wrote ? await award((x) => x.noteSaved(whoOf(learner), result.stepId)) : null;
+    res.json(quests ? { ...result, social: quests } : result);
   }));
 
   router.post("/me/roadmap/restart", requireStudent, handle(async (req, res) => {

@@ -44,12 +44,12 @@ export default function Quests() {
         ))}
       </ul>
       <div className="chest">
-        <strong>Daily chest · +{q.chestXp} XP</strong>
+        <strong>Daily chest (tick one item + write one line) · +{q.chestXp} XP</strong>
         {q.chestClaimed ? (
           <p className="muted">Claimed today. Come back tomorrow.</p>
         ) : (
           <button type="button" className="btn dark" disabled={!q.canClaim || busy} onClick={claim}>
-            {q.canClaim ? 'Claim chest' : 'Finish all three to open'}
+            {q.canClaim ? 'Claim chest' : 'Do the two small ones to open'}
           </button>
         )}
       </div>

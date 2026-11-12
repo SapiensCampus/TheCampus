@@ -159,7 +159,7 @@ const DEFAULT_BOOSTS = [
   },
   {
     id: "mid-2",
-    title: "Halfway energy",
+    title: "Keep mapping",
     body: "You’re mapping curiosity, not talent. Ikigai grows when you try tiny experiments — the quiz is your first map.",
   },
   {

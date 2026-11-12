@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSession } from '../lib/session'
 import { LessonShell, LufySays } from '../components/Chrome'
+import { QUESTIONS_PER_AREA } from '../lib/scoring'
 
 const COACH = [
   'No right answers. Just your first reaction.',
@@ -35,13 +36,14 @@ export default function Quiz() {
       progress={answeredCount}
       total={quiz.length}
       label="Quiz progress"
+      segments={Math.round(quiz.length / QUESTIONS_PER_AREA)}
       onClose={() => go('/start/intro')}
       footer={reactions}
     >
       <button type="button" className="linkish quiz-back" onClick={quizBack}>
         ← Back
       </button>
-      <div key={liveTrivia ? boostIndex : index % COACH.length} role="status" aria-live="polite">
+      <div key={liveTrivia ? boostIndex : index % COACH.length}>
         <LufySays>
           {liveTrivia ? (
             <>
@@ -64,7 +66,7 @@ export default function Quiz() {
             ✳
           </div>
           {current.scene && <p className="scene">{current.scene}</p>}
-          <h1>{current.title}</h1>
+          <h1 aria-live="polite">{current.title}</h1>
           {current.cue && <p className="cue">{current.cue}</p>}
         </div>
       </article>

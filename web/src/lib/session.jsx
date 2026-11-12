@@ -68,7 +68,7 @@ export const FALLBACK_BOOSTS = [
     body: 'Ikigai means “reason for being.” You don’t need a perfect answer — just honest gut reactions. We’ll turn those into roles you can grow into.',
   },
   { id: 'mid-1', title: 'Nice pace.', body: 'Trying a few things is how you find out what you like. That is all this quiz asks.' },
-  { id: 'mid-2', title: 'Halfway energy', body: 'You’re mapping curiosity, not talent. Ikigai grows through tiny experiments — this quiz is your first map.' },
+  { id: 'mid-2', title: 'Keep mapping', body: 'You’re mapping curiosity, not talent. Ikigai grows through tiny experiments — this quiz is your first map.' },
   { id: 'mid-3', title: 'Keep going', body: 'A “maybe” still tells us something. Keep answering honestly.' },
   { id: 'mid-4', title: 'Almost there', body: 'Your mix becomes Builders, Hackers, Creators, Connectors, Leaders, or Planners — campus roles, not alphabet soup.' },
   { id: 'mid-5', title: 'Last stretch', body: 'One more round. Then your path, careers and peers.' },
@@ -540,9 +540,10 @@ export function SessionProvider({ children }) {
     else setIndex((i) => Math.max(0, i - 1))
   }
 
+  // A round is QUESTIONS_PER_AREA cards. The tip shows once, on the first card after each round ends.
   const liveTrivia =
-    answeredCount >= QUESTIONS_PER_AREA
-      ? midBoosts[Math.min(Math.floor((answeredCount - 1) / QUESTIONS_PER_AREA), Math.max(0, midBoosts.length - 1))] || midBoosts[0]
+    answeredCount > 0 && answeredCount < quiz.length && answeredCount % QUESTIONS_PER_AREA === 0
+      ? midBoosts[Math.min(boostIndex, Math.max(0, midBoosts.length - 1))] || null
       : null
 
   async function confirmSelectedRole() {

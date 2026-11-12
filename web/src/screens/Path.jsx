@@ -1,8 +1,7 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSession } from '../lib/session'
 import { useTrail } from '../lib/trail'
-import { avatarForRole } from '../lib/roleAvatars'
 import { LufySays } from '../components/Chrome'
 
 function Lock() {
@@ -18,9 +17,13 @@ const OFFSETS = [0, 36, 56, 36, 0, -36, -56, -36]
 const BANNER_COLORS = ['mint', 'sky']
 export const STEP_XP = 10
 
-function Node({ state, label, selected, onClick, index, glyph, minutes }) {
+const UNIT_LABEL = { try: 'Explore', skill: 'Evelve', careers: 'Explore' }
+const COMING_NEXT = 'Prototyping, Problem-solving'
+
+function Node({ state, label, selected, onClick, index, glyph, minutes, title, current, nodeRef }) {
   return (
-    <li className="node-row" style={{ '--off': `${OFFSETS[index % OFFSETS.length]}px` }}>
+    <li ref={nodeRef} className="node-row" style={{ '--off': `${OFFSETS[index % OFFSETS.length]}px` }}>
+      {current && <span className="start-bubble" aria-hidden="true">Start</span>}
       <button
         type="button"
         className={`path-node state-${state}${selected ? ' selected' : ''}`}
@@ -30,7 +33,12 @@ function Node({ state, label, selected, onClick, index, glyph, minutes }) {
       >
         <span aria-hidden="true">{state === 'completed' ? '✓' : state === 'locked' ? <Lock /> : glyph || '★'}</span>
       </button>
-      {minutes > 0 && <span className="node-min mono" aria-hidden="true">{minutes} min</span>}
+      {title && (
+        <span className="node-cap" aria-hidden="true">
+          <b>{title}</b>
+          {minutes > 0 && <small>{minutes} min</small>}
+        </span>
+      )}
     </li>
   )
 }
@@ -56,9 +64,19 @@ function StepPopover({ step, unitLocked }) {
 }
 
 export default function Path() {
-  const { profile, go } = useSession()
+  const { go, whatsappUrl } = useSession()
   const t = useTrail()
   const [open, setOpen] = useState('')
+  const currentRef = useRef(null)
+  const nextId = t.units.flatMap((u) => u.steps).find((s) => s.state === 'available')?.id
+  const scrolled = useRef(false)
+
+  // Returning students land on their current node, not at the top.
+  useEffect(() => {
+    if (scrolled.current || !currentRef.current || t.totalDone === 0) return
+    scrolled.current = true
+    currentRef.current.scrollIntoView({ block: 'center' })
+  })
 
   if (t.loading && !t.role) return <p className="mono pad" aria-busy="true">Loading your path…</p>
   if (t.loadError) {
@@ -71,14 +89,12 @@ export default function Path() {
   }
   if (!t.role) return <p className="mono pad">Loading your path…</p>
 
-  const avatar = avatarForRole(profile.selectedRole)
   const tryDone = !t.tryUnit || t.tryUnit.finished
   const nextStep = t.units.flatMap((u) => u.steps).find((s) => s.state === 'available')
 
   return (
     <div className="path">
       <div className="path-intro">
-        {avatar && <img src={avatar.src} alt={avatar.alt} width="72" height="72" />}
         <div>
           <p className="eyebrow">{t.role.title}</p>
           <h1>Your path</h1>
@@ -96,6 +112,14 @@ export default function Path() {
       )}
       {t.actionError && <p className="form-error" role="alert">{t.actionError}</p>}
 
+      {nextStep && (
+        <Link className="today-card" to={`/lesson/${nextStep.id}`}>
+          <span className="mono">Today</span>
+          <strong>{nextStep.title}</strong>
+          <span>{nextStep.estimateMinutes} min · Start</span>
+        </Link>
+      )}
+
       {t.totalDone === 0 && nextStep && (
         <LufySays>Start small. Open the first lesson, try the task, tick the list. Each lesson is worth {STEP_XP} XP.</LufySays>
       )}
@@ -107,9 +131,9 @@ export default function Path() {
           <section key={unit.id} className="unit" aria-labelledby={`u-${unit.id}`}>
             <header className={`unit-banner ${color}`}>
               <div>
-                <p className="mono">Unit {ui + 1}</p>
+                <p className="mono">Unit {ui + 1} · {UNIT_LABEL[unit.kind] || 'Evelve'}</p>
                 <h2 id={`u-${unit.id}`}>{unit.title}</h2>
-                {unit.skill && <p>{unit.skill}</p>}
+                {unit.skill && unit.skill !== unit.title && <p>{unit.skill}</p>}
               </div>
               {unit.kind !== 'careers' && unit.total > 0 && (
                 <span className="unit-count">{unit.done}/{unit.total}</span>
@@ -131,6 +155,9 @@ export default function Path() {
                       index={i}
                       state={step.state}
                       minutes={step.estimateMinutes}
+                      title={step.title}
+                      current={step.id === nextId}
+                      nodeRef={step.id === nextId ? currentRef : undefined}
                       label={`${step.title}, ${step.state === 'completed' ? 'done' : step.state === 'locked' ? 'locked' : 'up next'}`}
                       selected={open === step.id}
                       onClick={() => setOpen(open === step.id ? '' : step.id)}
@@ -144,21 +171,21 @@ export default function Path() {
                 ))
               )}
             </ol>
+            {unit.kind !== 'careers' && whatsappUrl && (
+              <p className="muted">Stuck? <a href={whatsappUrl} target="_blank" rel="noreferrer">Ask in the WhatsApp group</a></p>
+            )}
           </section>
         )
       })}
 
-      <section className="unit" aria-label="Engineer, coming soon">
+      <section className="unit" aria-label="Coming next">
         <header className="unit-banner cream">
           <div>
-            <p className="mono">Next up</p>
-            <h2>Engineer</h2>
-            <p>Small starts. Real things.</p>
+            <p className="mono">Coming next</p>
+            <h2>{COMING_NEXT}</h2>
+            <p>Engineer opens after your first skill. We’re building it.</p>
           </div>
         </header>
-        <ol className="nodes">
-          <Node index={0} state="locked" label="Engineer, coming soon" onClick={() => {}} />
-        </ol>
       </section>
     </div>
   )

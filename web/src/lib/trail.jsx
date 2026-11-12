@@ -205,10 +205,14 @@ export function TrailProvider({ children }) {
     return saved
   }
 
-  const saveNotes = (stepId, text, evidence, expectedRevision) =>
-    saveRoadmapNotes({
+  async function saveNotes(stepId, text, evidence, expectedRevision) {
+    const saved = await saveRoadmapNotes({
       opId: newOp(), roleId: role.id, version: role.version, stepId, expectedRevision, text, evidence,
     })
+    adoptSocial(saved)
+    reloadMine().catch(() => {}) // so reopening the notes shows the newest revision
+    return saved
+  }
 
   /** Move to the newest published version of this role (the old attempt is kept). */
   async function upgrade() {

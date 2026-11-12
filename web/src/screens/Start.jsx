@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { PASSOUT_YEARS, useSession } from '../lib/session'
-import { setLeagueVisible } from '../lib/api'
 import { track } from '../lib/analytics'
 import { LufySays } from '../components/Chrome'
 
@@ -283,45 +282,19 @@ export function ProfileSteps() {
   )
 }
 
-/** Before the quiz: how it works, plus the opt-in for the college league. */
+/** Before the quiz: how it works. The leaderboard opt-in waits until they have seen XP and streaks. */
 export function Intro() {
   const s = useSession()
-  const [join, setJoin] = useState(s.profile?.leagueVisible === true)
-  const [busy, setBusy] = useState(false)
-
-  async function start() {
-    setBusy(true)
-    try {
-      if (join) await setLeagueVisible(true)
-    } catch {
-      // Not blocking, but say so: they can switch it on later from Profile.
-      setJoin(false) // a second press carries on without it
-      s.setError('We could not add you to the leaderboard. Press again to carry on, or retry from Profile.')
-      setBusy(false)
-      return
-    }
-    setBusy(false)
-    s.startQuiz()
-  }
-
   return (
     <Frame
       step={5}
       of={5}
       onBack={() => s.go('/start/profile')}
       cta={s.resumable ? 'Continue your quiz' : 'Start the quiz'}
-      ctaBusy={busy}
-      onCta={start}
+      onCta={s.startQuiz}
     >
       <LufySays>{s.introBoost.body}</LufySays>
       <p className="muted">30 quick cards, about 5 minutes. No right answers. You earn 20 XP at the end.</p>
-      <label className="check-card">
-        <input type="checkbox" checked={join} onChange={(e) => setJoin(e.target.checked)} />
-        <span>
-          <strong>Show me on my college leaderboard</strong>
-          <small>Only the name you chose, your college, role, XP and streak. You can turn this off any time.</small>
-        </span>
-      </label>
       {s.error && (
         <p className="form-error" role="alert">
           {s.error}

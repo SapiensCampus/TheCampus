@@ -201,3 +201,22 @@
 .stat-row li.on svg { color: var(--paper); }
 
 .lesson-foot .btn, .onboard .btn, .pad .btn, .node-pop .btn { justify-content: center; text-align: center; }
+.wrap-name { overflow-wrap: anywhere; }
+
+.lesson-bar:has(.seg-cell) { display: flex; gap: 4px; border: 0; background: none; height: 16px; }
+.seg-cell { flex: 1; border: var(--b); background: var(--cream); display: block; }
+.seg-cell b { border-right: 0; }
+
+.node-row { position: relative; }
+.node-cap { display: grid; justify-items: center; text-align: center; max-width: 160px; gap: 2px; }
+.node-cap b { font-size: 13px; line-height: 1.2; }
+.node-cap small { font: 12px/1 var(--mono); color: var(--muted); }
+.start-bubble {
+  background: var(--ink); color: var(--paper); font: 800 13px/1 var(--body); padding: 6px 10px; text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.today-card {
+  display: grid; gap: 4px; padding: 14px 16px; border: var(--b); box-shadow: var(--sh); background: var(--y);
+  color: var(--ink); text-decoration: none;
+}
+.today-card strong { font-size: 18px; }

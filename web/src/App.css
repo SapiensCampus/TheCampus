@@ -1033,7 +1033,7 @@ h3 {
   width: 54px;
   height: 54px;
   border: var(--b);
-  background: var(--lilac);
+  background: var(--y);
   box-shadow: 3px 3px 0 var(--ink);
   display: grid;
   place-items: center;

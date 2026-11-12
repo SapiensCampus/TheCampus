@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTrail } from '../lib/trail'
-import { LessonShell } from '../components/Chrome'
+import { LessonShell, LufySays } from '../components/Chrome'
+import { claimChest } from '../lib/api'
 import { STEP_XP } from './Path'
 
 const PAGES = ['Goal', 'Task', 'Done when']
@@ -63,7 +64,14 @@ export default function Lesson() {
   const [saveState, setSaveState] = useState('')
   const [result, setResult] = useState(null)
   const [notesOpen, setNotesOpen] = useState(false)
+  const [sentence, setSentence] = useState('')
+  const [noteState, setNoteState] = useState('')
+  const [claimed, setClaimed] = useState(false)
   const timer = useRef(null)
+  const noteTimer = useRef(null)
+  const noteRev = useRef(0)
+  const noteEvidence = useRef('')
+  const noteSaving = useRef(null)
 
   useEffect(() => {
     if (!step) return
@@ -74,10 +82,16 @@ export default function Lesson() {
     setChecks(next)
     setPage(0)
     setResult(null)
+    setClaimed(false)
+    const note = t.trail?.notes?.[step.id]
+    setSentence(note?.text || '')
+    noteRev.current = note?.revision || 0
+    noteEvidence.current = note?.evidence || ''
+    t.setActionError('') // an old error must not follow the student into another lesson
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step?.id])
 
-  useEffect(() => () => clearTimeout(timer.current), [])
+  useEffect(() => () => { clearTimeout(timer.current); clearTimeout(noteTimer.current) }, [])
 
   if (t.loading && !step) return <p className="mono pad" aria-busy="true">Loading lesson…</p>
   if (!step) {
@@ -105,8 +119,30 @@ export default function Lesson() {
     }, 500)
   }
 
+  function saveSentence(text) {
+    setNoteState('Saving')
+    noteSaving.current = t.saveNotes(step.id, text, noteEvidence.current, noteRev.current)
+      .then((res) => { noteRev.current = res.revision ?? noteRev.current; setNoteState('Saved') })
+      .catch(() => setNoteState('Not saved'))
+    return noteSaving.current
+  }
+
+  function editSentence(text) {
+    setSentence(text)
+    setNoteState('Saving')
+    clearTimeout(noteTimer.current)
+    noteTimer.current = setTimeout(() => saveSentence(text), 700)
+  }
+
   async function markDone() {
     clearTimeout(timer.current)
+    if (noteTimer.current) {
+      clearTimeout(noteTimer.current)
+      noteTimer.current = null
+      await saveSentence(sentence)
+    } else if (noteSaving.current) {
+      await noteSaving.current
+    }
     try {
       const res = await t.complete(step.id, checks)
       setResult(res)
@@ -125,11 +161,21 @@ export default function Lesson() {
     }
   }
 
-  // Completion screen: XP, streak, quest progress.
+  // Completion screen: XP, quest progress, what is next.
   if (result) {
-    const nextStep = unit.steps.find((s) => s.state === 'available' && s.id !== step.id)
+    const nextStep = t.units.flatMap((u) => u.steps).find((s) => s.state === 'available' && s.id !== step.id)
     const me = t.me
-    const quest = me?.quests?.list?.find((q) => !q.done)
+    const firstToday = (me?.stepsToday ?? 1) <= 1
+    const quest = me?.quests?.list?.find((q) => !q.done && q.required)
+    async function claim() {
+      try {
+        const res = await claimChest()
+        t.setMe(res.me)
+        setClaimed(true)
+      } catch (err) {
+        t.setActionError(err.message)
+      }
+    }
     return (
       <LessonShell
         progress={3}
@@ -137,9 +183,10 @@ export default function Lesson() {
         onClose={leave}
         footer={
           <>
+            {t.actionError && <p className="form-error" role="alert">{t.actionError}</p>}
             {nextStep && (
               <button type="button" className="btn dark lg block" onClick={() => navigate(`/lesson/${nextStep.id}`)}>
-                Next lesson
+                Next: {nextStep.title} · {nextStep.estimateMinutes} min
               </button>
             )}
             <button type="button" className={`btn lg block${nextStep ? '' : ' dark'}`} onClick={leave}>
@@ -150,13 +197,17 @@ export default function Lesson() {
       >
         <div className="done-screen">
           <h1>{result.finishedTrail ? 'Path complete!' : 'Lesson complete!'}</h1>
+          <LufySays>{result.finishedTrail ? 'You finished the whole path.' : 'You made something real today. That counts.'}</LufySays>
           <ul className="tiles">
             <li className="tile y"><small>XP earned</small><b>+{result.alreadyComplete ? 0 : STEP_XP}</b></li>
-            <li className="tile"><small>Streak</small><b>{me?.streak ?? 1}</b></li>
+            {firstToday && <li className="tile"><small>Streak</small><b>{me?.streak ?? 1}</b></li>}
             <li className="tile"><small>This week</small><b>{me?.xpWeek ?? 0}</b></li>
           </ul>
           {quest && <p className="muted">Next quest: {quest.label} ({quest.progress}/{quest.goal})</p>}
-          {me?.quests?.canClaim && <p className="notice">All daily quests done. Claim your chest in Quests.</p>}
+          {me?.quests?.canClaim && (
+            <button type="button" className="btn dark block" onClick={claim}>Claim chest +{me.quests.chestXp} XP</button>
+          )}
+          {claimed && <p className="notice">Chest claimed.</p>}
         </div>
       </LessonShell>
     )
@@ -166,6 +217,7 @@ export default function Lesson() {
   let reason = ''
   if (state === 'locked') reason = 'Finish the earlier lessons to mark this one done. You can still read it.'
   else if (!allChecked) reason = 'Tick every item after you try the task.'
+  else if (sentence.trim().length < 8) reason = 'Write one sentence about what you made.'
 
   const footer = last ? (
     state === 'completed' ? (
@@ -175,6 +227,7 @@ export default function Lesson() {
       </>
     ) : (
       <>
+        {t.actionError && <p className="form-error" role="alert">{t.actionError}</p>}
         {reason && <p className="muted" role="status">{reason}</p>}
         <button type="button" className="btn dark lg block" disabled={Boolean(reason) || t.busy} onClick={markDone}>
           {t.busy ? 'Saving…' : `Mark done +${STEP_XP} XP`}
@@ -224,12 +277,18 @@ export default function Lesson() {
               ))}
             </ul>
             <p className="mono" role="status">{saveState}</p>
+            {state === 'available' && (
+              <label className="field">
+                <span className="field-label">In one sentence, what did you make?</span>
+                <input maxLength={300} value={sentence} onChange={(e) => editSentence(e.target.value)} />
+                <span className="field-hint" role="status">{noteState || 'Private. Only you can read this.'}</span>
+              </label>
+            )}
             {state !== 'locked' && (
               <button type="button" className="linkish" onClick={() => setNotesOpen(true)}>My notes</button>
             )}
           </>
         )}
-        {t.actionError && <p className="form-error" role="alert">{t.actionError}</p>}
         {page > 0 && <button type="button" className="linkish" onClick={() => setPage(page - 1)}>← Back</button>}
       </LessonShell>
       {notesOpen && <NotesDialog stepId={step.id} onClose={() => setNotesOpen(false)} />}

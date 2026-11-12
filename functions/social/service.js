@@ -9,10 +9,11 @@
 const STEP_XP = 10;
 const QUIZ_XP = 20;
 const CHEST_XP = 10;
+// Small honest actions keep the day alive; the lesson itself is a bonus (it can take an hour).
 const QUESTS = [
-  { id: "lesson", label: "Finish 1 lesson", goal: 1 },
-  { id: "xp", label: "Earn 20 XP", goal: 20 },
-  { id: "ticks", label: "Tick 3 checklist items", goal: 3 },
+  { id: "ticks", label: "Tick one checklist item", goal: 1, required: true },
+  { id: "note", label: "Write one line in My notes", goal: 1, required: true },
+  { id: "lesson", label: "Finish 1 lesson (bonus)", goal: 1, required: false },
 ];
 const IST_MS = 5.5 * 60 * 60 * 1000;
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -49,7 +50,7 @@ function blankProfile(uid, who = {}) {
     xpWeek: 0,
     streak: 0,
     lastActiveDay: "",
-    today: { day: "", steps: 0, xp: 0, ticks: {}, chestClaimed: false },
+    today: { day: "", steps: 0, xp: 0, ticks: {}, notes: {}, chestClaimed: false },
     quizAwarded: false,
   };
 }
@@ -63,7 +64,7 @@ function roll(doc, now) {
     doc.xpWeek = 0;
   }
   if (!doc.today || doc.today.day !== day) {
-    doc.today = { day, steps: 0, xp: 0, ticks: {}, chestClaimed: false };
+    doc.today = { day, steps: 0, xp: 0, ticks: {}, notes: {}, chestClaimed: false };
   }
   return doc;
 }
@@ -73,13 +74,13 @@ function tickTotal(today) {
 }
 
 function questsOf(doc) {
-  const progress = { lesson: doc.today.steps, xp: doc.today.xp, ticks: tickTotal(doc.today) };
+  const progress = { lesson: doc.today.steps, note: Object.keys(doc.today.notes || {}).length, ticks: tickTotal(doc.today) };
   const list = QUESTS.map((q) => ({
     ...q,
     progress: Math.min(q.goal, Math.max(0, progress[q.id])),
     done: progress[q.id] >= q.goal,
   }));
-  const allDone = list.every((q) => q.done);
+  const allDone = list.filter((q) => q.required).every((q) => q.done);
   return {
     list,
     allDone,
@@ -106,6 +107,7 @@ function selfView(doc, now) {
     xpWeek: doc.xpWeek,
     streak: liveStreak(doc, now),
     doneToday: doc.lastActiveDay === dayOf(now),
+    stepsToday: doc.today.steps,
     quests: questsOf(doc),
   };
 }
@@ -310,6 +312,17 @@ class SocialService {
         d.today.ticks[stepId] = tickedCount;
         this._activity(d, now);
       }
+    });
+    return selfView(doc, this.now());
+  }
+
+  /** A non-empty note was saved for a step. Counts once per step per day. */
+  async noteSaved(who, stepId) {
+    const doc = await this._touch(who.uid, who, (d, now) => {
+      d.today.notes = d.today.notes || {};
+      if (d.today.notes[stepId]) return;
+      d.today.notes[stepId] = true;
+      this._activity(d, now);
     });
     return selfView(doc, this.now());
   }

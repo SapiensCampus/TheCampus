@@ -115,7 +115,7 @@ export function AppShell() {
 }
 
 /** Full-screen lesson frame: X, progress bar, content, sticky bottom bar. */
-export function LessonShell({ progress, total, onClose, footer, children, label }) {
+export function LessonShell({ progress, total, onClose, footer, children, label, segments = 0 }) {
   return (
     <div className="lesson">
       <div className="lesson-top">
@@ -130,7 +130,15 @@ export function LessonShell({ progress, total, onClose, footer, children, label 
           aria-valuemax={total}
           aria-valuenow={progress}
         >
-          <b style={{ width: `${total ? (progress / total) * 100 : 0}%` }} />
+          {segments > 1 ? (
+            Array.from({ length: segments }, (_, i) => {
+              const size = total / segments
+              const fill = Math.min(1, Math.max(0, (progress - i * size) / size))
+              return <i key={i} className="seg-cell"><b style={{ width: `${fill * 100}%` }} /></i>
+            })
+          ) : (
+            <b style={{ width: `${total ? (progress / total) * 100 : 0}%` }} />
+          )}
         </div>
       </div>
       <div className="lesson-body">{children}</div>

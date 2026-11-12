@@ -39,7 +39,11 @@ function Classmates() {
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Name" />
       </label>
       {error && <p className="form-error" role="alert">{error}</p>}
-      {rows && rows.length === 0 && <p className="muted">No one from your college is on the league yet.</p>}
+      {rows && rows.length === 0 && (
+        <p className="muted">
+          {q ? 'No one by that name.' : 'You are the first from your college here. Share the invite in your WhatsApp group.'}
+        </p>
+      )}
       <ul className="people">
         {(rows || []).map((s) => (
           <li key={s.uid}>
@@ -80,9 +84,9 @@ export default function Me() {
       <div className="profile-head">
         {avatar && <img src={avatar.src} alt={avatar.alt} width="96" height="96" />}
         <div>
-          <h1>{user?.displayName || 'You'}</h1>
+          <h1 className="wrap-name">{profile?.displayName || user?.displayName || 'You'}</h1>
           <p className="muted">{profile?.selectedRole?.name} · {selectedCollege?.name}</p>
-          {counts && <p className="mono">{counts.following} following · {counts.followers} followers</p>}
+          {counts && (counts.following > 0 || counts.followers > 0) && <p className="mono">{counts.following} following · {counts.followers} followers</p>}
         </div>
       </div>
       {me && (

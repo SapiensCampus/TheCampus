@@ -54,23 +54,25 @@ test("streak grows on consecutive days, resets after a gap, and counts once a da
   assert.equal(me.streak, 1);
 });
 
-test("quests complete from steps, XP and ticks; chest pays once per day", async () => {
+test("small actions keep the streak; chest needs a tick and a note, lesson is a bonus", async () => {
   const { social, ann, clock } = setup();
   await assert.rejects(social.claimChest(ann), (e) => e.code === "chest_unavailable");
-  await social.checklistSaved(ann, "s1", 2);
-  await social.checklistSaved(ann, "s1", 2); // re-save does not double count
-  let me = await social.checklistSaved(ann, "s1", 3);
-  assert.equal(me.quests.list.find((q) => q.id === "ticks").progress, 3);
-  await social.stepCompleted(ann, "x");
-  me = await social.stepCompleted(ann, "y");
+  let me = await social.checklistSaved(ann, "s1", 1);
+  await social.checklistSaved(ann, "s1", 1); // re-save does not double count
+  assert.equal(me.streak, 1, "one tick is honest activity");
+  assert.equal(me.xpTotal, 0, "ticking earns no XP");
+  assert.equal(me.quests.allDone, false);
+  await social.noteSaved(ann, "s1");
+  me = await social.noteSaved(ann, "s1"); // same step again counts once
+  assert.equal(me.quests.list.find((q) => q.id === "note").progress, 1);
   assert.equal(me.quests.allDone, true);
   me = await social.claimChest(ann);
-  assert.equal(me.xpTotal, 30);
+  assert.equal(me.xpTotal, 10);
   await assert.rejects(social.claimChest(ann), (e) => e.code === "chest_unavailable");
   clock.t += DAY;
   me = await social.me(ann);
   assert.equal(me.quests.list.every((q) => q.progress === 0), true, "quests reset daily");
-  assert.equal(me.xpTotal, 30);
+  assert.equal(me.streak, 1);
 });
 
 test("quiz XP is awarded once", async () => {
