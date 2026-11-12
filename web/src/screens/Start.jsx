@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { PASSOUT_YEARS, useSession } from '../lib/session'
 import { setLeagueVisible } from '../lib/api'
 import { track } from '../lib/analytics'
-import { Header, LufySays } from '../components/Chrome'
+import { LufySays } from '../components/Chrome'
 
 /** Duolingo-style onboarding frame: back + progress on top, one thing in the middle, CTA at the bottom. */
 function Frame({ step, of, onBack, children, cta, ctaDisabled, onCta, ctaBusy, secondary }) {
@@ -310,8 +310,4 @@ export function Intro() {
       )}
     </Frame>
   )
-}
-
-export function StartHeader() {
-  return <Header />
 }

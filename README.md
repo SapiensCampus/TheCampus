@@ -34,6 +34,8 @@ Student web includes **Firebase Analytics** + **Performance Monitoring**. Key fu
 | `admins/{email}` | Allowlisted admin emails |
 | `roadmapPrivate/{id}` | Owner enrolment, attempts, notes, and operation ids. Cloud Functions only. |
 | `roadmapCounts/{id}` | Anonymous per-version step counts. Cloud Functions only. |
+| `publicProfiles/{uid}` | XP, weekly XP, streak, daily quest progress and the league opt-in. Only opted-in students appear in league or search, with name, college, role, XP and streak. Cloud Functions only. |
+| `follows/{from}_{to}` | One-way follow between students. Cloud Functions only. |
 
 Roadmap counts use the existing Cloud Firestore Native `(default)` database in `asia-south1` through the Admin SDK. The web client cannot read or write these documents. Notes are not included in admin or public responses.
 
@@ -84,7 +86,9 @@ firebase deploy --only firestore,functions,hosting
 - `GET /api/me`, `POST /api/me/profile`, `POST /api/me/discovery` — student Bearer token
 - `GET /api/roadmaps` and `GET /api/roadmaps/:roleId` — published trail content
 - `GET /api/roadmaps/:roleId/counts` — anonymous per-step counts for one version
-- `GET /api/me/roadmap`, `POST /api/me/roadmap/start|switch|checklist|complete|undo|notes|restart` — owner progress and private notes
+- `GET /api/me/roadmap`, `POST /api/me/roadmap/start|switch|checklist|complete|undo|notes|restart` — owner progress and private notes. Trails with `units` unlock per unit: lessons in order, skill units after the Try it unit.
+- `GET /api/me/social`, `POST /api/me/social/visibility|chest` — XP, streak, daily quests and the league opt-in (+10 XP a lesson, +20 for the quiz, IST days)
+- `GET /api/league?scope=college|campus|friends`, `GET /api/classmates?q=`, `POST /api/follow|unfollow`, `GET /api/users/:uid/public` — weekly league and friends
 - `GET /api/admin/roadmaps`, `POST /api/admin/roadmaps/reconcile` — catalog check and count repair, never student notes  
 - `POST /api/waitlist` — legacy `{ email, consent, company?, answers?, scores? }`  
 

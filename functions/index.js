@@ -1403,7 +1403,13 @@ router.get("/admin/users", requireAdmin, async (req, res) => {
     const [snap, totalSnap] = await Promise.all([query.get(), USERS.count().get()]);
     const bare = snap.docs.map((doc) => serializeAdminUser(doc));
     const names = await resolveDirectoryNames(bare);
-    const users = snap.docs.map((doc) => serializeAdminUser(doc, names));
+    // XP and streak live on the opt-in social profile; read them for this page only.
+    const xp = {};
+    const profileSnaps = await Promise.all(snap.docs.map((doc) => db.collection("publicProfiles").doc(doc.id).get()));
+    profileSnaps.forEach((p) => {
+      if (p.exists) xp[p.id] = { xpTotal: p.data().xpTotal || 0, streak: p.data().streak || 0 };
+    });
+    const users = snap.docs.map((doc) => ({ ...serializeAdminUser(doc, names), ...(xp[doc.id] || {}) }));
     const nextCursor = snap.docs.length === limit ? snap.docs[snap.docs.length - 1].id : null;
     res.json({
       ok: true,

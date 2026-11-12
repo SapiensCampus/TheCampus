@@ -434,6 +434,7 @@ export default function UsersAdmin() {
                       <th>College</th>
                       <th>Role</th>
                       <th>Scores</th>
+                      <th>XP · streak</th>
                       <th>Joined</th>
                       <th />
                     </tr>
@@ -474,6 +475,7 @@ export default function UsersAdmin() {
                         <td>
                           <ScoreChips scores={row.scores} />
                         </td>
+                        <td>{row.xpTotal ? `${row.xpTotal} XP · ${row.streak || 0}d` : '—'}</td>
                         <td>{formatWhen(row.createdAt)}</td>
                         <td className="users-row-action">
                           <span className="btn sm ghost">View</span>

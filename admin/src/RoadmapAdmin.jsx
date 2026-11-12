@@ -10,7 +10,7 @@ import {
 
 const ROLES = ['builders', 'hackers', 'creators', 'connectors', 'leaders', 'planners']
 
-function blankStep(roleId, order) {
+function blankStep(roleId, order, unit) {
   return {
     id: `${roleId}-new-${String(order).padStart(2, '0')}`,
     role: roleId,
@@ -18,6 +18,7 @@ function blankStep(roleId, order) {
     order,
     type: 'task',
     section: 'Next',
+    unit: unit || '',
     title: 'New step',
     goal: 'Say what this step is for',
     estimateMinutes: 30,
@@ -41,6 +42,73 @@ function stateLabel(state) {
   if (state === 'on-step') return 'On a step'
   if (state === 'unknown-trail') return 'Trail missing'
   return 'Not started'
+}
+
+/** Unit titles and careers for the student path. Unit ids and kinds stay fixed. */
+function PathEditor({ role, setRole }) {
+  const patchUnit = (id, patch) =>
+    setRole((cur) => ({ ...cur, units: cur.units.map((u) => (u.id === id ? { ...u, ...patch } : u)) }))
+  const patchCareer = (index, patch) =>
+    setRole((cur) => ({ ...cur, careers: cur.careers.map((c, i) => (i === index ? { ...c, ...patch } : c)) }))
+  const careers = role.careers || []
+  return (
+    <details className="stack path-editor">
+      <summary>Path: units and careers</summary>
+      {role.units
+        .filter((u) => u.kind !== 'careers')
+        .map((u) => (
+          <label key={u.id} className="field">
+            <span>
+              {u.kind === 'try' ? 'Try it unit' : 'Skill unit'} ({u.id})
+            </span>
+            <input value={u.title} onChange={(e) => patchUnit(u.id, { title: e.target.value, ...(u.kind === 'skill' ? { skill: e.target.value } : {}) })} />
+          </label>
+        ))}
+      {careers.map((c, i) => (
+        <fieldset key={c.id} className="stack">
+          <legend>{c.title || 'New career'}</legend>
+          <label className="field">
+            <span>Title</span>
+            <input value={c.title} onChange={(e) => patchCareer(i, { title: e.target.value })} />
+          </label>
+          <label className="field">
+            <span>Tag</span>
+            <select value={c.tag} onChange={(e) => patchCareer(i, { tag: e.target.value })}>
+              <option value="pays">Pays well</option>
+              <option value="interesting">Interesting</option>
+            </select>
+          </label>
+          <label className="field">
+            <span>What it is</span>
+            <input value={c.blurb} onChange={(e) => patchCareer(i, { blurb: e.target.value })} />
+          </label>
+          <label className="field">
+            <span>A day in the life</span>
+            <input value={c.dayInLife} onChange={(e) => patchCareer(i, { dayInLife: e.target.value })} />
+          </label>
+          <label className="field">
+            <span>Skills (comma separated)</span>
+            <input value={(c.skills || []).join(', ')} onChange={(e) => patchCareer(i, { skills: e.target.value.split(',').map((x) => x.trim()).filter(Boolean) })} />
+          </label>
+          <button type="button" className="btn sm" onClick={() => setRole((cur) => ({ ...cur, careers: cur.careers.filter((_, n) => n !== i) }))}>
+            Remove career
+          </button>
+        </fieldset>
+      ))}
+      <button
+        type="button"
+        className="btn sm"
+        onClick={() =>
+          setRole((cur) => ({
+            ...cur,
+            careers: [...(cur.careers || []), { id: `career-${(cur.careers || []).length + 1}`, title: 'New career', tag: 'interesting', blurb: 'What this career is', dayInLife: 'What a day looks like', skills: [], profiles: [] }],
+          }))
+        }
+      >
+        Add career
+      </button>
+    </details>
+  )
 }
 
 export default function RoadmapAdmin() {
@@ -146,8 +214,9 @@ export default function RoadmapAdmin() {
 
   function addStep() {
     setRole((current) => {
-      if (!current || current.steps.length >= 15) return current
-      const steps = [...current.steps, blankStep(current.id, current.steps.length + 1)]
+      if (!current || current.steps.length >= 40) return current
+      const inUnit = current.steps[stepIndex]?.unit
+      const steps = [...current.steps, blankStep(current.id, current.steps.length + 1, inUnit)]
       return { ...current, steps }
     })
     setStepIndex(role?.steps?.length || 0)
@@ -254,10 +323,11 @@ export default function RoadmapAdmin() {
                     </li>
                   ))}
                 </ol>
-                <button type="button" className="btn sm" disabled={busy || role.steps.length >= 15} onClick={addStep}>
+                <button type="button" className="btn sm" disabled={busy || role.steps.length >= 40} onClick={addStep}>
                   Add step
                 </button>
               </div>
+              {role.units?.length > 0 && <PathEditor role={role} setRole={setRole} />}
               <form
                 className="stack"
                 onSubmit={(event) => {
@@ -265,6 +335,20 @@ export default function RoadmapAdmin() {
                   onPublish()
                 }}
               >
+                {role.units?.length > 0 && (
+                  <label className="field">
+                    <span>Unit</span>
+                    <select value={step.unit || ''} onChange={(event) => patchStep({ unit: event.target.value })}>
+                      {role.units
+                        .filter((unit) => unit.kind !== 'careers')
+                        .map((unit) => (
+                          <option key={unit.id} value={unit.id}>
+                            {unit.title}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                )}
                 <label className="field">
                   <span>Section</span>
                   <input value={step.section || ''} onChange={(event) => patchStep({ section: event.target.value })} maxLength={24} />
@@ -281,7 +365,7 @@ export default function RoadmapAdmin() {
                   <span>Minutes</span>
                   <input
                     type="number"
-                    min={20}
+                    min={5}
                     max={75}
                     value={step.estimateMinutes || 30}
                     onChange={(event) => patchStep({ estimateMinutes: Number(event.target.value) })}
