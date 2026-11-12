@@ -40,7 +40,14 @@ export function TrailProvider({ children }) {
     () => (mine?.trails || []).find((t) => t.roleId === role?.id && t.version === role?.version && !t.missingContent) || null,
     [mine, role]
   )
-  revisionRef.current = trail?.revision ?? revisionRef.current
+  // Only ever move forward: a stale render must not overwrite a revision we just saved.
+  const trailKey = useRef('')
+  useEffect(() => {
+    if (!trail) return
+    const key = `${trail.roleId}:${trail.version}`
+    revisionRef.current = key === trailKey.current ? Math.max(revisionRef.current, trail.revision ?? 0) : (trail.revision ?? 0)
+    trailKey.current = key
+  }, [trail])
 
   const load = useCallback(async () => {
     if (!user || !roleId) {
@@ -77,6 +84,13 @@ export function TrailProvider({ children }) {
     setMine(owner)
     return owner
   }, [])
+
+  /** Reload and adopt the server's revision (used after a conflict). */
+  async function syncRevision() {
+    const owner = await reloadMine()
+    const fresh = (owner?.trails || []).find((t) => t.roleId === role.id && t.version === role.version)
+    if (fresh) revisionRef.current = fresh.revision ?? 0
+  }
 
   // First visit to the path enrols the student in their chosen role. No separate "start" screen.
   const enrolling = useRef(false)
@@ -147,9 +161,10 @@ export function TrailProvider({ children }) {
       })
       revisionRef.current = saved.revision
       adoptSocial(saved)
+      reloadMine().catch(() => {}) // keep the trail (and its ticks) in step with the server
       return saved
     } catch (err) {
-      if (err.code === 'revision_conflict') await reloadMine()
+      if (err.code === 'revision_conflict') await syncRevision()
       throw err
     }
   }
@@ -157,10 +172,16 @@ export function TrailProvider({ children }) {
   async function complete(stepId, checklist) {
     const opId = completeOp.current || newOp()
     completeOp.current = opId
+    const attempt = () => completeRoadmapStep({
+      opId, roleId: role.id, version: role.version, stepId,
+      expectedRevision: revisionRef.current, checklist,
+    })
+    // On a revision conflict (e.g. a tick save landed first) refresh and retry once, silently.
     const saved = await run(
-      () => completeRoadmapStep({
-        opId, roleId: role.id, version: role.version, stepId,
-        expectedRevision: revisionRef.current, checklist,
+      () => attempt().catch(async (err) => {
+        if (err.code !== 'revision_conflict') throw err
+        await syncRevision()
+        return attempt()
       }),
       'This step was not saved.'
     )

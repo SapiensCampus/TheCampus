@@ -203,12 +203,11 @@ export default function Lesson() {
               <p className="mono">{step.resource.publisher}</p>
               <a href={step.resource.url} target="_blank" rel="noreferrer">{step.resource.title}</a>
               <p className="muted">{step.resource.slice}</p>
-              <p className="muted">{step.resource.accessNote}</p>
             </div>
             {step.links?.map((l) => (
               <p key={l.url}><a href={l.url} target="_blank" rel="noreferrer">{l.title}</a> <span className="muted">{l.publisher}</span></p>
             ))}
-            <p className="muted">Can’t open the link? {step.fallback}</p>
+            <p className="muted">Link not opening? Do the task anyway, you don’t need it.</p>
           </>
         )}
         {page === 2 && (
@@ -228,7 +227,6 @@ export default function Lesson() {
             {state !== 'locked' && (
               <button type="button" className="linkish" onClick={() => setNotesOpen(true)}>My notes</button>
             )}
-            <p className="muted">{step.completionNote}</p>
           </>
         )}
         {t.actionError && <p className="form-error" role="alert">{t.actionError}</p>}

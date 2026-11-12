@@ -18,7 +18,7 @@ const OFFSETS = [0, 36, 56, 36, 0, -36, -56, -36]
 const BANNER_COLORS = ['mint', 'sky']
 export const STEP_XP = 10
 
-function Node({ state, label, selected, onClick, index, glyph }) {
+function Node({ state, label, selected, onClick, index, glyph, minutes }) {
   return (
     <li className="node-row" style={{ '--off': `${OFFSETS[index % OFFSETS.length]}px` }}>
       <button
@@ -30,6 +30,7 @@ function Node({ state, label, selected, onClick, index, glyph }) {
       >
         <span aria-hidden="true">{state === 'completed' ? '✓' : state === 'locked' ? <Lock /> : glyph || '★'}</span>
       </button>
+      {minutes > 0 && <span className="node-min mono" aria-hidden="true">{minutes} min</span>}
     </li>
   )
 }
@@ -119,10 +120,9 @@ export default function Path() {
                 <Node
                   index={0}
                   glyph="◆"
-                  state={tryDone ? 'available' : 'locked'}
-                  label={tryDone ? 'Explore careers' : 'Careers, locked until Try it is done'}
-                  selected={open === unit.id}
-                  onClick={() => (tryDone ? go('/careers') : setOpen(open === unit.id ? '' : unit.id))}
+                  state="available"
+                  label="Explore careers"
+                  onClick={() => go('/careers')}
                 />
               ) : (
                 unit.steps.map((step, i) => (
@@ -130,6 +130,7 @@ export default function Path() {
                     <Node
                       index={i}
                       state={step.state}
+                      minutes={step.estimateMinutes}
                       label={`${step.title}, ${step.state === 'completed' ? 'done' : step.state === 'locked' ? 'locked' : 'up next'}`}
                       selected={open === step.id}
                       onClick={() => setOpen(open === step.id ? '' : step.id)}
@@ -143,9 +144,6 @@ export default function Path() {
                 ))
               )}
             </ol>
-            {unit.kind === 'careers' && open === unit.id && !tryDone && (
-              <div className="node-pop"><p className="muted">Finish the Try it lessons to open careers.</p></div>
-            )}
           </section>
         )
       })}

@@ -139,7 +139,8 @@
 .unit-banner p { margin: 0; }
 .unit-count { font: 800 16px/1 var(--body); padding: 6px 10px; border: var(--b); background: var(--paper); }
 .nodes { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; justify-items: center; }
-.node-row { transform: translateX(var(--off, 0)); }
+.node-row { transform: translateX(var(--off, 0)); display: grid; justify-items: center; gap: 6px; }
+.node-min { font-size: 12px; margin: 0; }
 .path-node {
   width: 72px; height: 72px; border-radius: 50%; border: var(--b);
   display: grid; place-items: center; font: 800 28px/1 var(--body); cursor: pointer;

@@ -155,7 +155,7 @@ const DEFAULT_BOOSTS = [
   {
     id: "mid-1",
     title: "Nice pace.",
-    body: "Trivia: people who explore interests early often find ‘paid work they enjoy’ faster — not because they pick once, but because they sample more.",
+    body: "Trying a few things is how you find out what you like. That is all this quiz asks.",
   },
   {
     id: "mid-2",
@@ -165,7 +165,7 @@ const DEFAULT_BOOSTS = [
   {
     id: "mid-3",
     title: "Keep going",
-    body: "Trivia: ‘maybe’ is data. Soft yeses often point to skills you can grow into paid roles.",
+    body: "A ‘maybe’ still tells us something. Keep answering honestly.",
   },
   {
     id: "mid-4",
@@ -610,7 +610,7 @@ router.post("/me/profile", requireStudent, async (req, res) => {
     const collegeId = String(req.body?.collegeId || "").trim();
     const departmentId = String(req.body?.departmentId || "").trim();
     const passoutYear = Number(req.body?.passoutYear);
-    const displayName = String(req.body?.displayName || req.student.name || "").trim();
+    const displayName = String(req.body?.displayName || req.student.name || "").trim().slice(0, 30);
     const mobile = normalizeMobile(req.body?.mobile);
 
     if (!inviteCode) {

@@ -142,9 +142,9 @@ function collegeCountCopy(count, name) {
   return `${count} students from ${name} already exploring.`
 }
 
-const PROFILE_STEPS = ['college', 'department', 'year', 'mobile']
+const PROFILE_STEPS = ['name', 'college', 'department', 'year', 'mobile']
 
-/** One question per screen: college → department → passout year → mobile. */
+/** One question per screen: name → college → department → passout year → mobile. */
 export function ProfileSteps() {
   const s = useSession()
   const [step, setStep] = useState(0)
@@ -158,7 +158,14 @@ export function ProfileSteps() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
 
+  // Prefill with the first word of the sign-in name; the student can change it.
+  useEffect(() => {
+    if (!s.nickname) s.setNickname(String(s.profile?.displayName || s.user?.displayName || '').trim().split(/\s+/)[0] || '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const ready = {
+    name: s.nickname.trim().length > 0,
     college: Boolean(s.collegeId),
     department: Boolean(s.departmentId),
     year: Boolean(s.passoutYear),
@@ -172,6 +179,7 @@ export function ProfileSteps() {
   }
 
   const prompt = {
+    name: 'What should we call you? A first name or nickname is fine.',
     college: 'Where do you study? Pick your college.',
     department: 'Which department are you in?',
     year: 'When do you finish college?',
@@ -189,6 +197,13 @@ export function ProfileSteps() {
         ctaBusy={s.submitting}
       >
         <LufySays>{prompt}</LufySays>
+        {key === 'name' && (
+          <label className="field">
+            <span className="field-label">First name or nickname</span>
+            <input required maxLength={30} autoComplete="given-name" value={s.nickname} onChange={(e) => s.setNickname(e.target.value)} />
+            <span className="field-hint">This is the name classmates see on the leaderboard.</span>
+          </label>
+        )}
         {key === 'college' && (
           <>
             <label className="field">
@@ -279,7 +294,11 @@ export function Intro() {
     try {
       if (join) await setLeagueVisible(true)
     } catch {
-      // Not blocking: they can switch it on later from Profile.
+      // Not blocking, but say so: they can switch it on later from Profile.
+      setJoin(false) // a second press carries on without it
+      s.setError('We could not add you to the leaderboard. Press again to carry on, or retry from Profile.')
+      setBusy(false)
+      return
     }
     setBusy(false)
     s.startQuiz()
@@ -300,7 +319,7 @@ export function Intro() {
         <input type="checkbox" checked={join} onChange={(e) => setJoin(e.target.checked)} />
         <span>
           <strong>Show me on my college leaderboard</strong>
-          <small>Only your name, college, role, XP and streak. You can turn this off any time.</small>
+          <small>Only the name you chose, your college, role, XP and streak. You can turn this off any time.</small>
         </span>
       </label>
       {s.error && (

@@ -42,9 +42,6 @@ export default function Careers() {
           <li key={c.id} className={`career-card${goal === c.id ? ' aimed' : ''}`}>
             <div className="career-head">
               <h2>{c.title}</h2>
-              <span className={`career-tag ${c.tag === 'pays' ? 'pays' : 'interesting'}`}>
-                {c.tag === 'pays' ? 'Pays well' : 'Interesting'}
-              </span>
             </div>
             {c.blurb && <p>{c.blurb}</p>}
             {c.dayInLife && (

@@ -1566,25 +1566,6 @@ h3 {
   background: var(--paper);
 }
 
-.career-tag {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: var(--b);
-  border-radius: 999px;
-  padding: 4px 8px;
-  white-space: nowrap;
-}
-
-.career-tag.pays {
-  background: var(--mint);
-}
-
-.career-tag.interesting {
-  background: var(--lilac);
-}
-
 .roadmap-lock {
   margin-top: 28px;
 }

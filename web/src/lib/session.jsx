@@ -67,9 +67,9 @@ export const FALLBACK_BOOSTS = [
     title: 'How this works',
     body: 'Ikigai means “reason for being.” You don’t need a perfect answer — just honest gut reactions. We’ll turn those into roles you can grow into.',
   },
-  { id: 'mid-1', title: 'Nice pace.', body: 'Trivia: people who explore interests early often find paid work they enjoy faster — because they sample more.' },
+  { id: 'mid-1', title: 'Nice pace.', body: 'Trying a few things is how you find out what you like. That is all this quiz asks.' },
   { id: 'mid-2', title: 'Halfway energy', body: 'You’re mapping curiosity, not talent. Ikigai grows through tiny experiments — this quiz is your first map.' },
-  { id: 'mid-3', title: 'Keep going', body: 'Trivia: “maybe” is data. Soft yeses often point to skills you can grow into paid roles.' },
+  { id: 'mid-3', title: 'Keep going', body: 'A “maybe” still tells us something. Keep answering honestly.' },
   { id: 'mid-4', title: 'Almost there', body: 'Your mix becomes Builders, Hackers, Creators, Connectors, Leaders, or Planners — campus roles, not alphabet soup.' },
   { id: 'mid-5', title: 'Last stretch', body: 'One more round. Then your path, careers and peers.' },
 ]
@@ -136,6 +136,7 @@ export function SessionProvider({ children }) {
   const [departmentId, setDepartmentId] = useState('')
   const [passoutYear, setPassoutYear] = useState('')
   const [mobile, setMobile] = useState('')
+  const [nickname, setNickname] = useState('')
   const [collegeCount, setCollegeCount] = useState(null)
   const [submitting, setSubmitting] = useState(false)
   const [busyAuth, setBusyAuth] = useState(false)
@@ -466,6 +467,7 @@ export function SessionProvider({ children }) {
       if (!collegeId) return showProfileError('Select your college.', 'college_required')
       if (!departmentId) return showProfileError('Select your department.', 'department_required')
       if (!passoutYear) return showProfileError('Select your passout year.', 'passout_required')
+      if (!nickname.trim()) return showProfileError('Tell us what to call you.', 'name_required')
       if (!isValidMobile(mobile)) {
         return showProfileError('Enter a valid 10-digit mobile number — the same one you’ll use for campus WhatsApp.', 'mobile_invalid')
       }
@@ -476,7 +478,7 @@ export function SessionProvider({ children }) {
         departmentId,
         passoutYear: Number(passoutYear),
         mobile,
-        displayName: user.displayName || '',
+        displayName: nickname.trim().slice(0, 30),
       })
       setProfile(data.user)
       if (data.user?.inviteCode) setInviteCode(data.user.inviteCode)
@@ -620,13 +622,13 @@ export function SessionProvider({ children }) {
   const value = {
     // data
     pack, colleges, departments, whatsappUrl, loading, authChecked, error, user, profile,
-    inviteCode, inviteLabel, collegeId, departmentId, passoutYear, mobile, collegeCount, selectedCollege,
+    inviteCode, inviteLabel, collegeId, departmentId, passoutYear, mobile, nickname, collegeCount, selectedCollege,
     quiz, index, answers, current, answeredCount, boostIndex, liveTrivia, introBoost, resumable,
     roleProfile, chosenRole, selectedRoleId,
     // flags
     submitting, busyAuth, confirmingRole, roleConfirmed,
     // setters for form fields
-    setError, setCollegeId, setDepartmentId, setPassoutYear, setMobile, setSelectedRoleId, setRoleConfirmed,
+    setError, setCollegeId, setDepartmentId, setPassoutYear, setMobile, setNickname, setSelectedRoleId, setRoleConfirmed,
     // actions
     go, goGetStarted, homeFor, onCheckInvite, onGoogleAuth, onEmailAuth, onSaveProfile, startQuiz, answer, quizBack,
     confirmSelectedRole, onSignOut, retakeQuiz, applySelectedRole,
