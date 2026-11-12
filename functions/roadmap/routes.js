@@ -190,10 +190,13 @@ function createRouter({
       opId: req.body?.opId,
     });
     bust(result.countKeys);
-    const gained =
-      result.saved && !result.alreadyComplete
-        ? await award((x) => x.stepCompleted(whoOf(learner), req.body?.opId))
-        : null;
+    let gained = null;
+    if (result.saved && !result.alreadyComplete) {
+      // The client skips its pending autosave on "Mark done", so count the ticks sent with it.
+      const ticked = Object.values(req.body?.checklist || {}).filter((v) => v === true).length;
+      await award((x) => x.checklistSaved(whoOf(learner), result.stepId, ticked));
+      gained = await award((x) => x.stepCompleted(whoOf(learner), req.body?.opId));
+    }
     res.json(gained ? { ...result, social: gained } : result);
   }));
 

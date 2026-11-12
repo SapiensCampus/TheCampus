@@ -245,3 +245,15 @@ export function saveRoadmapNotes(body) {
 export function restartRoadmap(body) {
   return postRoadmap('/api/me/roadmap/restart', body)
 }
+
+// Social: XP, streak, quests, league, follows. Always fresh, never cached.
+const post = (path, body = {}) => authRequest(path, { method: 'POST', body: JSON.stringify(body) })
+
+export const fetchSocial = () => authRequest('/api/me/social')
+export const setLeagueVisible = (visible) => post('/api/me/social/visibility', { visible })
+export const claimChest = () => post('/api/me/social/chest')
+export const fetchLeague = (scope) => authRequest(`/api/league?scope=${encodeURIComponent(scope)}`)
+export const fetchClassmates = (q = '') => authRequest(`/api/classmates?q=${encodeURIComponent(q)}`)
+export const followStudent = (uid) => post('/api/follow', { uid })
+export const unfollowStudent = (uid) => post('/api/unfollow', { uid })
+export const fetchStudent = (uid) => authRequest(`/api/users/${encodeURIComponent(uid)}/public`)
