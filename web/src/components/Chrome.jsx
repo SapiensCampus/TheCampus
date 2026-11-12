@@ -107,7 +107,7 @@ function SideColumn({ me }) {
         ))}
       </ul>
       <p className="muted">{rank ? `You are #${rank} on the campus board this week.` : 'Join the league to see your spot.'}</p>
-      <Link to="/quests">Quests</Link> · <Link to="/league">League</Link>
+      <p><Link to="/quests">Quests</Link> · <Link to="/league">League</Link></p>
     </aside>
   )
 }

@@ -85,6 +85,8 @@ export default function Lesson() {
     setResult(null)
     setClaimed(false)
     setConfirmUndo(false)
+    setNoteState('')
+    setSaveState('')
     const note = t.trail?.notes?.[step.id]
     setSentence(note?.text || '')
     noteRev.current = note?.revision || 0

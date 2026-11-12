@@ -65,7 +65,7 @@ export default function League() {
       </div>
       {small !== null && scope === 'campus' && !picked && (
         <p className="notice">
-          {small === 1 ? '1 classmate is' : `${small} classmates are`} in. Share the invite in your WhatsApp group.
+          {small === 0 ? 'No classmates are in yet.' : small === 1 ? '1 classmate is in.' : `${small} classmates are in.`} Share the invite in your WhatsApp group.
           {whatsappUrl && <> <a href={whatsappUrl} target="_blank" rel="noreferrer">Open the group</a></>}
         </p>
       )}
