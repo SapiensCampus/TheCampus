@@ -30,6 +30,10 @@ function createSocialRouter({ social, requireStudent, resolveLearner }) {
     res.json({ ok: true, me: await social.setVisible(who, req.body?.visible) });
   }));
 
+  router.post("/me/social/goal", requireStudent, handle(async (req, res, who) => {
+    res.json({ ok: true, me: await social.setGoal(who, req.body?.careerId) });
+  }));
+
   router.post("/me/social/chest", requireStudent, handle(async (_req, res, who) => {
     res.json({ ok: true, me: await social.claimChest(who) });
   }));

@@ -19,7 +19,7 @@ function Boot() {
   return (
     <div className="boot">
       <div className="pulse" aria-hidden="true" />
-      <p className="mono">Loading discovery</p>
+      <p className="mono">Loading</p>
       <h2>Hang tight…</h2>
     </div>
   )

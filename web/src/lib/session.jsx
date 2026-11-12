@@ -65,7 +65,7 @@ export const FALLBACK_BOOSTS = [
   {
     id: 'ikigai-intro',
     title: 'How this works',
-    body: 'Ikigai means “reason for being.” You don’t need a perfect answer — just honest gut reactions. We’ll turn those into roles you can grow into.',
+    body: 'Ikigai means “reason for being.” Give honest gut reactions and we’ll turn them into roles you can grow into.',
   },
   { id: 'mid-1', title: 'Nice pace.', body: 'Trying a few things is how you find out what you like. That is all this quiz asks.' },
   { id: 'mid-2', title: 'Keep mapping', body: 'You’re mapping curiosity, not talent. Ikigai grows through tiny experiments — this quiz is your first map.' },

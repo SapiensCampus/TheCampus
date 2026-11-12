@@ -1,4 +1,6 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, Outlet } from 'react-router-dom'
+import { fetchLeague } from '../lib/api'
 import { useSession } from '../lib/session'
 import { useTrail } from '../lib/trail'
 import { avatarForRole } from '../lib/roleAvatars'
@@ -16,7 +18,7 @@ export function Header({ note = true }) {
             go('/')
           }}
         >
-          <img src="/lufy-icon.png" alt="" />
+          <img src="/lufy-icon.webp" alt="" />
           <span>
             SapiensCampus<span aria-hidden="true">.</span>
           </span>
@@ -50,7 +52,7 @@ export function Footer() {
 export function LufySays({ children }) {
   return (
     <div className="lufy-says">
-      <img src="/lufy-standing.png" alt="" width="72" height="96" />
+      <img src="/lufy-standing.webp" alt="" width="72" height="96" />
       <div className="bubble">{children}</div>
     </div>
   )
@@ -77,12 +79,38 @@ export function StatRow({ me }) {
   )
 }
 
+const svg = (children) => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="square">
+    {children}
+  </svg>
+)
 const TABS = [
-  { to: '/path', label: 'Path', icon: '◉' },
-  { to: '/quests', label: 'Quests', icon: '✦' },
-  { to: '/league', label: 'League', icon: '▲' },
-  { to: '/me', label: 'Profile', icon: '☺' },
+  { to: '/path', label: 'Path', icon: svg(<><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="3" fill="currentColor" /></>) },
+  { to: '/quests', label: 'Quests', icon: svg(<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.3 6L12 16.5 6.6 19.4l1.3-6L3.4 9.3l6-.7z" />) },
+  { to: '/league', label: 'League', icon: svg(<path d="M5 20V10h4v10M10 20V4h4v16M15 20v-7h4v7" />) },
+  { to: '/me', label: 'Profile', icon: svg(<><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></>) },
 ]
+
+/** Wide screens only: today's quests and your league spot, so the right half is not empty. */
+function SideColumn({ me }) {
+  const [rank, setRank] = useState(null)
+  useEffect(() => {
+    fetchLeague('campus').then((d) => setRank(d.rows.find((r) => r.you)?.rank ?? null)).catch(() => {})
+  }, [])
+  if (!me) return null
+  return (
+    <aside className="side-col" aria-label="Today">
+      <h2>Today</h2>
+      <ul>
+        {me.quests.list.map((q) => (
+          <li key={q.id} className={q.done ? 'done' : ''}>{q.done ? '✓ ' : ''}{q.label}</li>
+        ))}
+      </ul>
+      <p className="muted">{rank ? `You are #${rank} on the campus board this week.` : 'Join the league to see your spot.'}</p>
+      <Link to="/quests">Quests</Link> · <Link to="/league">League</Link>
+    </aside>
+  )
+}
 
 /** Signed-in shell: bottom tabs on phones, left rail on wide screens. */
 export function AppShell() {
@@ -93,7 +121,7 @@ export function AppShell() {
     <div className="shell">
       <nav className="tabbar" aria-label="Main">
         <a className="rail-brand" href="#/path">
-          <img src="/lufy-icon.png" alt="" />
+          <img src="/lufy-icon.webp" alt="" />
           <span>SapiensCampus</span>
         </a>
         {TABS.map((t) => (
@@ -110,6 +138,7 @@ export function AppShell() {
         </div>
         <Outlet />
       </main>
+      <SideColumn me={me} />
     </div>
   )
 }

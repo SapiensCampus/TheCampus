@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSession } from '../lib/session'
 import { useTrail } from '../lib/trail'
 import { LufySays } from '../components/Chrome'
+import { skillUnitFor } from './Careers'
 
 function Lock() {
   return (
@@ -90,6 +91,8 @@ export default function Path() {
   if (!t.role) return <p className="mono pad">Loading your path…</p>
 
   const tryDone = !t.tryUnit || t.tryUnit.finished
+  const goalCareer = (t.role.careers || []).find((c) => c.id === t.me?.goal) || null
+  const neededUnits = new Set((goalCareer?.skills || []).map((s) => skillUnitFor(t.units, s)?.id).filter(Boolean))
   const nextStep = t.units.flatMap((u) => u.steps).find((s) => s.state === 'available')
 
   return (
@@ -99,6 +102,7 @@ export default function Path() {
           <p className="eyebrow">{t.role.title}</p>
           <h1>Your path</h1>
           <p className="muted">{t.totalDone} of {t.totalSteps} lessons done</p>
+          {goalCareer && <p className="mono">Aiming for: {goalCareer.title}</p>}
         </div>
       </div>
 
@@ -134,6 +138,7 @@ export default function Path() {
                 <p className="mono">Unit {ui + 1} · {UNIT_LABEL[unit.kind] || 'Evelve'}</p>
                 <h2 id={`u-${unit.id}`}>{unit.title}</h2>
                 {unit.skill && unit.skill !== unit.title && <p>{unit.skill}</p>}
+                {neededUnits.has(unit.id) && <p className="mono">Needed for {goalCareer.title}</p>}
               </div>
               {unit.kind !== 'careers' && unit.total > 0 && (
                 <span className="unit-count">{unit.done}/{unit.total}</span>
@@ -144,7 +149,7 @@ export default function Path() {
                 <Node
                   index={0}
                   glyph="◆"
-                  state="available"
+                  state={t.me?.goal ? 'completed' : 'available'}
                   label="Explore careers"
                   onClick={() => go('/careers')}
                 />

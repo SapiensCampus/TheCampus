@@ -251,6 +251,7 @@ const post = (path, body = {}) => authRequest(path, { method: 'POST', body: JSON
 
 export const fetchSocial = () => authRequest('/api/me/social')
 export const setLeagueVisible = (visible) => post('/api/me/social/visibility', { visible })
+export const setCareerGoal = (careerId) => post('/api/me/social/goal', { careerId })
 export const claimChest = () => post('/api/me/social/chest')
 export const fetchLeague = (scope) => authRequest(`/api/league?scope=${encodeURIComponent(scope)}`)
 export const fetchClassmates = (q = '') => authRequest(`/api/classmates?q=${encodeURIComponent(q)}`)

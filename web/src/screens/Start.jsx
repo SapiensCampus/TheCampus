@@ -4,7 +4,7 @@ import { track } from '../lib/analytics'
 import { LufySays } from '../components/Chrome'
 
 /** Duolingo-style onboarding frame: back + progress on top, one thing in the middle, CTA at the bottom. */
-function Frame({ step, of, onBack, children, cta, ctaDisabled, onCta, ctaBusy, secondary }) {
+function Frame({ step, of, onBack, children, cta, ctaDisabled, onCta, ctaBusy, secondary, reason }) {
   return (
     <div className="onboard">
       <div className="onboard-top">
@@ -18,6 +18,7 @@ function Frame({ step, of, onBack, children, cta, ctaDisabled, onCta, ctaBusy, s
       <div className="onboard-body">{children}</div>
       <div className="lesson-foot">
         {secondary}
+        {ctaDisabled && reason && <p className="muted" role="status">{reason}</p>}
         <button type="submit" className="btn dark lg block" disabled={ctaDisabled || ctaBusy} onClick={onCta}>
           {ctaBusy ? 'Working…' : cta}
         </button>
@@ -36,8 +37,8 @@ export function Invite() {
         onCheckInvite(code)
       }}
     >
-      <Frame step={1} of={5} onBack={() => go('/')} cta="Unlock" ctaDisabled={!code.trim()} ctaBusy={submitting}>
-        <LufySays>Got an invite code? SapiensCampus opens with a code so the first wave stays intentional.</LufySays>
+      <Frame step={1} of={5} onBack={() => go('/')} cta="Unlock" ctaDisabled={!code.trim()} reason="Type your invite code to continue." ctaBusy={submitting}>
+        <LufySays>Got a code from your campus group? Type it in.</LufySays>
         <label className="field">
           <span className="field-label">Invite code</span>
           <input
@@ -77,16 +78,13 @@ export function SignIn() {
       </div>
       <div className="onboard-body">
         <LufySays>
-          You’re unlocked{inviteLabel ? ` · ${inviteLabel}` : ''}. Create your account to save your path.
+          You’re unlocked{inviteLabel ? ` · ${inviteLabel}` : ''}. Sign in to save your path.
         </LufySays>
         {error && (
           <p className="form-error" role="alert">
             {error}
           </p>
         )}
-        <button type="button" className="btn dark lg block" disabled={busyAuth} onClick={onGoogleAuth}>
-          {busyAuth ? 'Opening…' : 'Continue with Google'}
-        </button>
         {!showEmail ? (
           <button
             type="button"
@@ -96,7 +94,7 @@ export function SignIn() {
               track('email_auth_open')
             }}
           >
-            Sign up or sign in with email
+            Use email instead
           </button>
         ) : (
           <form
@@ -130,6 +128,11 @@ export function SignIn() {
             </button>
           </form>
         )}
+      </div>
+      <div className="lesson-foot">
+        <button type="button" className="btn dark lg block" disabled={busyAuth} onClick={onGoogleAuth}>
+          {busyAuth ? 'Opening…' : 'Continue with Google'}
+        </button>
       </div>
     </div>
   )
@@ -193,6 +196,7 @@ export function ProfileSteps() {
         onBack={() => (step ? setStep(step - 1) : s.go('/start/signin'))}
         cta={step === PROFILE_STEPS.length - 1 ? 'Save and continue' : 'Continue'}
         ctaDisabled={!ready}
+        reason={{ name: 'Add a name to continue.', college: 'Pick your college to continue.', department: 'Pick your department to continue.', year: 'Pick your passout year to continue.', mobile: 'Enter your 10-digit mobile number to continue.' }[key]}
         ctaBusy={s.submitting}
       >
         <LufySays>{prompt}</LufySays>

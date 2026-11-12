@@ -75,6 +75,14 @@ test("small actions keep the streak; chest needs a tick and a note, lesson is a 
   assert.equal(me.streak, 1);
 });
 
+test("career goal is saved on the server and can be cleared", async () => {
+  const { social, ann } = setup();
+  assert.equal((await social.me(ann)).goal, "");
+  assert.equal((await social.setGoal(ann, "dev")).goal, "dev");
+  assert.equal((await social.me(ann)).goal, "dev");
+  assert.equal((await social.setGoal(ann, "")).goal, "");
+});
+
 test("quiz XP is awarded once", async () => {
   const { social, ann } = setup();
   await social.quizDone(ann);

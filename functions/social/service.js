@@ -52,6 +52,7 @@ function blankProfile(uid, who = {}) {
     lastActiveDay: "",
     today: { day: "", steps: 0, xp: 0, ticks: {}, notes: {}, chestClaimed: false },
     quizAwarded: false,
+    goal: "",
   };
 }
 
@@ -108,6 +109,7 @@ function selfView(doc, now) {
     streak: liveStreak(doc, now),
     doneToday: doc.lastActiveDay === dayOf(now),
     stepsToday: doc.today.steps,
+    goal: doc.goal || "",
     quests: questsOf(doc),
   };
 }
@@ -351,6 +353,15 @@ class SocialService {
     }
     const doc = await this._touch(who.uid, who, (d) => {
       d.visible = visible;
+    });
+    return selfView(doc, this.now());
+  }
+
+  /** The career the student is aiming for. Private; empty string clears it. */
+  async setGoal(who, careerId) {
+    const goal = String(careerId || "").trim().slice(0, 80);
+    const doc = await this._touch(who.uid, who, (d) => {
+      d.goal = goal;
     });
     return selfView(doc, this.now());
   }

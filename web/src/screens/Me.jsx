@@ -59,7 +59,7 @@ function Classmates() {
 }
 
 export default function Me() {
-  const { profile, user, onSignOut, whatsappUrl, selectedCollege } = useSession()
+  const { profile, user, onSignOut, whatsappUrl, selectedCollege, retakeQuiz, roleProfile, go } = useSession()
   const { me, refreshSocial, totalDone } = useTrail()
   const [counts, setCounts] = useState(null)
   const [error, setError] = useState('')
@@ -108,7 +108,17 @@ export default function Me() {
       {error && <p className="form-error" role="alert">{error}</p>}
       {me?.visible ? <Classmates /> : <p className="muted">Join the leaderboard to find and follow classmates.</p>}
       {whatsappUrl && <p><a className="linkish" href={whatsappUrl} target="_blank" rel="noreferrer">Optional: join the WhatsApp group</a></p>}
-      <button type="button" className="linkish" onClick={onSignOut}>Sign out</button>
+      <ul className="rows">
+        {roleProfile?.roles?.length > 1 && (
+          <li><button type="button" className="linkish" onClick={() => go('/result')}>Change role</button></li>
+        )}
+        <li>
+          <button type="button" className="linkish" onClick={retakeQuiz}>
+            Retake quiz
+          </button>
+        </li>
+        <li><button type="button" className="linkish" onClick={onSignOut}>Sign out</button></li>
+      </ul>
     </div>
   )
 }

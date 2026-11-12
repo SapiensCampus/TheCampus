@@ -67,6 +67,7 @@ export default function Lesson() {
   const [sentence, setSentence] = useState('')
   const [noteState, setNoteState] = useState('')
   const [claimed, setClaimed] = useState(false)
+  const [confirmUndo, setConfirmUndo] = useState(false)
   const timer = useRef(null)
   const noteTimer = useRef(null)
   const noteRev = useRef(0)
@@ -83,6 +84,7 @@ export default function Lesson() {
     setPage(0)
     setResult(null)
     setClaimed(false)
+    setConfirmUndo(false)
     const note = t.trail?.notes?.[step.id]
     setSentence(note?.text || '')
     noteRev.current = note?.revision || 0
@@ -90,6 +92,15 @@ export default function Lesson() {
     t.setActionError('') // an old error must not follow the student into another lesson
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step?.id])
+
+  // Retry a failed tick save once the phone is back online.
+  useEffect(() => {
+    const retry = () => {
+      if (saveState === 'Not saved' && step) t.saveChecks(step.id, checks).then(() => setSaveState('Saved')).catch(() => {})
+    }
+    window.addEventListener('online', retry)
+    return () => window.removeEventListener('online', retry)
+  })
 
   useEffect(() => () => { clearTimeout(timer.current); clearTimeout(noteTimer.current) }, [])
 
@@ -152,7 +163,10 @@ export default function Lesson() {
   }
 
   async function undo() {
-    if (!window.confirm('Undo this lesson? Later lessons in this unit lock again. Your notes stay.')) return
+    if (!confirmUndo) {
+      setConfirmUndo(true)
+      return
+    }
     try {
       await t.undo(step.id)
       navigate('/path')
@@ -223,7 +237,8 @@ export default function Lesson() {
     state === 'completed' ? (
       <>
         <p className="muted">This lesson is saved.</p>
-        <button type="button" className="btn lg block" onClick={undo}>Undo this lesson</button>
+        {confirmUndo && <p className="muted" role="status">Later lessons in this unit lock again. Your notes stay.</p>}
+        <button type="button" className="btn lg block" onClick={undo}>{confirmUndo ? 'Yes, undo this lesson' : 'Undo this lesson'}</button>
       </>
     ) : (
       <>

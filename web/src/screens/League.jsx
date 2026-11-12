@@ -89,7 +89,7 @@ export default function League() {
               <span className="rank">{r.rank}</span>
               <span className="who">
                 {r.you ? <strong>{r.displayName} (you)</strong> : <Link to={`/student/${r.uid}`}>{r.displayName}</Link>}
-                <small>{r.roleId || 'Explorer'}{r.streak > 0 ? ` · ${r.streak} day streak` : ''}</small>
+                <small><span className="cap">{r.roleId || 'Explorer'}</span>{r.streak > 0 ? ` · ${r.streak} day streak` : ''}</small>
               </span>
               <b>{r.xpWeek} XP</b>
             </li>

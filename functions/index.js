@@ -150,7 +150,7 @@ const DEFAULT_BOOSTS = [
   {
     id: "ikigai-intro",
     title: "How this works",
-    body: "Ikigai trivia: the word means ‘reason for being.’ You don’t need a perfect answer yet — just honest gut reactions. We’ll turn those into roles you can grow into.",
+    body: "Ikigai means ‘reason for being.’ Give honest gut reactions and we’ll turn them into roles you can grow into.",
   },
   {
     id: "mid-1",
