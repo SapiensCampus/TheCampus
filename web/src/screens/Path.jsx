@@ -102,6 +102,9 @@ export default function Path() {
           <p className="eyebrow">{t.role.title}</p>
           <h1>Your path</h1>
           <p className="muted">{t.totalDone} of {t.totalSteps} lessons done</p>
+          <div className="path-progress" role="progressbar" aria-label="Lessons done" aria-valuemin={0} aria-valuemax={t.totalSteps} aria-valuenow={t.totalDone}>
+            <b style={{ width: `${t.totalSteps ? (t.totalDone / t.totalSteps) * 100 : 0}%` }} />
+          </div>
           {goalCareer && <p className="mono">Aiming for: {goalCareer.title}</p>}
         </div>
       </div>
@@ -120,7 +123,10 @@ export default function Path() {
         <Link className="today-card" to={`/lesson/${nextStep.id}`}>
           <span className="mono">Today</span>
           <strong>{nextStep.title}</strong>
-          <span>{nextStep.estimateMinutes} min · Start</span>
+          <span className="today-foot">
+            <span>{nextStep.estimateMinutes} min</span>
+            <span className="today-go">Start ▸</span>
+          </span>
         </Link>
       )}
 

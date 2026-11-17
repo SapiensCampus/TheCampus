@@ -56,7 +56,7 @@
 .stat-row { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; }
 .stat-row li {
   display: flex; align-items: baseline; gap: 5px; padding: 6px 12px;
-  border: var(--b); background: var(--paper); font-weight: 800;
+  border: var(--b); background: var(--paper); font-weight: 800; box-shadow: var(--sh);
 }
 .stat-row li.on { background: var(--y); }
 .stat-row b { font-size: 18px; }
@@ -125,8 +125,11 @@
 .path { width: min(560px, 100%); margin: 0 auto; padding: 20px 16px 40px; display: grid; gap: 22px; }
 .path-intro { display: flex; align-items: center; gap: 14px; }
 .path-intro img { border: var(--b); background: var(--cream); }
-.path-intro h1 { margin: 0; }
+.path-intro h1 { margin: 0; font: 800 56px/0.95 var(--head, var(--body)); letter-spacing: -0.05em; }
 .path-intro p { margin: 2px 0 0; }
+.path-progress { margin-top: 12px; height: 16px; border: var(--b); background: var(--paper); }
+.path-progress b { display: block; height: 100%; background: var(--y); border-right: var(--b); transition: width 240ms ease-out; }
+.path-progress b[style*="width: 0%"] { border-right: 0; }
 .unit { display: grid; gap: 14px; }
 .unit-banner {
   display: flex; justify-content: space-between; align-items: center; gap: 12px;
@@ -216,17 +219,20 @@
   margin-bottom: 2px;
 }
 .today-card {
-  display: grid; gap: 4px; padding: 14px 16px; border: var(--b); box-shadow: var(--sh); background: var(--y);
+  display: grid; gap: 6px; padding: 20px 22px; border: var(--b); box-shadow: var(--shl); background: var(--y);
   color: var(--ink); text-decoration: none;
 }
-.today-card strong { font-size: 18px; }
+.today-card strong { font: 800 24px/1.1 var(--head, var(--body)); letter-spacing: -0.04em; }
+.today-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+.today-go { padding: 10px 18px; background: var(--ink); color: var(--paper); font-weight: 700; box-shadow: 4px 4px 0 #fcd150; }
 .rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; justify-items: start; }
 
 .side-col { display: none; }
 @media (min-width: 1100px) {
   .shell { display: grid; grid-template-columns: auto minmax(0, 1fr) 300px; }
   .side-col { display: grid; align-content: start; gap: 10px; margin: 24px 24px 0 0; padding: 16px; border: var(--b); box-shadow: var(--sh); background: var(--paper); position: sticky; top: 24px; }
-  .side-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  .side-col li.done { color: var(--muted); }
+  .side-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .side-col li { padding: 12px 14px; border: var(--b); box-shadow: var(--sh); background: var(--cream); font-weight: 700; }
+  .side-col li.done { background: var(--mint); }
 }
 .league .who small .cap { text-transform: capitalize; }
