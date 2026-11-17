@@ -3,7 +3,6 @@ import {
   getRoadmapCatalog,
   getRoadmapEditor,
   publishRoadmap,
-  reconcileRoadmaps,
   saveRoadmapDraft,
 } from './api'
 
@@ -242,24 +241,6 @@ export default function RoadmapAdmin() {
     }
   }
 
-  async function onReconcile() {
-    setBusy(true)
-    setError('')
-    setMessage('')
-    try {
-      const result = await reconcileRoadmaps()
-      setMessage(
-        result.repaired?.length
-          ? `Repaired counts for ${result.repaired.join(', ')}.`
-          : 'Counts already matched enrolments.'
-      )
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setBusy(false)
-    }
-  }
-
   return (
     <section className="roadmap-admin stack">
       {error && <p role="alert">{error}</p>}
@@ -451,9 +432,6 @@ export default function RoadmapAdmin() {
               </form>
             </div>
           )}
-          <button type="button" className="btn sm" disabled={busy} onClick={onReconcile}>
-            {busy ? 'Checking…' : 'Recompute anonymous counts'}
-          </button>
         </>
       )}
 
