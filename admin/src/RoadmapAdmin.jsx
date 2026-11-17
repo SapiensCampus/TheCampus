@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import {
   getRoadmapCatalog,
   getRoadmapEditor,
-  listRoadmapLearners,
   publishRoadmap,
   reconcileRoadmaps,
   saveRoadmapDraft,
@@ -37,13 +36,6 @@ function blankStep(roleId, order, unit) {
   }
 }
 
-function stateLabel(state) {
-  if (state === 'finished') return 'Finished'
-  if (state === 'on-step') return 'On a step'
-  if (state === 'unknown-trail') return 'Trail missing'
-  return 'Not started'
-}
-
 /** Unit titles and careers for the student path. Unit ids and kinds stay fixed. */
 function PathEditor({ role, setRole }) {
   const patchUnit = (id, patch) =>
@@ -52,8 +44,8 @@ function PathEditor({ role, setRole }) {
     setRole((cur) => ({ ...cur, careers: cur.careers.map((c, i) => (i === index ? { ...c, ...patch } : c)) }))
   const careers = role.careers || []
   return (
-    <details className="stack path-editor">
-      <summary>Path: units and careers</summary>
+    <div className="stack path-editor">
+      <h3>Units</h3>
       {role.units
         .filter((u) => u.kind !== 'careers')
         .map((u) => (
@@ -64,6 +56,7 @@ function PathEditor({ role, setRole }) {
             <input value={u.title} onChange={(e) => patchUnit(u.id, { title: e.target.value, ...(u.kind === 'skill' ? { skill: e.target.value } : {}) })} />
           </label>
         ))}
+      <h3>Careers</h3>
       {careers.map((c, i) => (
         <fieldset key={c.id} className="stack">
           <legend>{c.title || 'New career'}</legend>
@@ -107,17 +100,16 @@ function PathEditor({ role, setRole }) {
       >
         Add career
       </button>
-    </details>
+    </div>
   )
 }
 
 export default function RoadmapAdmin() {
-  const [mode, setMode] = useState('build')
+  const [view, setView] = useState('steps')
   const [roleId, setRoleId] = useState('builders')
   const [role, setRole] = useState(null)
   const [baseIds, setBaseIds] = useState([])
   const [stepIndex, setStepIndex] = useState(0)
-  const [learners, setLearners] = useState([])
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const [busy, setBusy] = useState(false)
@@ -139,7 +131,7 @@ export default function RoadmapAdmin() {
   }, [])
 
   useEffect(() => {
-    if (mode !== 'build' || !roleId) return undefined
+    if (!roleId) return undefined
     let alive = true
     setBusy(true)
     setError('')
@@ -160,27 +152,7 @@ export default function RoadmapAdmin() {
     return () => {
       alive = false
     }
-  }, [mode, roleId])
-
-  useEffect(() => {
-    if (mode !== 'students') return undefined
-    let alive = true
-    setBusy(true)
-    setError('')
-    listRoadmapLearners()
-      .then((data) => {
-        if (alive) setLearners(data.learners || [])
-      })
-      .catch((err) => {
-        if (alive) setError(err.message)
-      })
-      .finally(() => {
-        if (alive) setBusy(false)
-      })
-    return () => {
-      alive = false
-    }
-  }, [mode])
+  }, [roleId])
 
   const step = role?.steps?.[stepIndex] || null
   const structureChanged = useMemo(() => {
@@ -290,18 +262,10 @@ export default function RoadmapAdmin() {
 
   return (
     <section className="roadmap-admin stack">
-      <div className="roadmap-modes" role="tablist" aria-label="Roadmap tools">
-        <button type="button" className={`btn ${mode === 'build' ? 'dark' : ''}`} aria-pressed={mode === 'build'} onClick={() => setMode('build')}>
-          Build trail
-        </button>
-        <button type="button" className={`btn ${mode === 'students' ? 'dark' : ''}`} aria-pressed={mode === 'students'} onClick={() => setMode('students')}>
-          Student progress
-        </button>
-      </div>
       {error && <p role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
 
-      {mode === 'build' && (
+      {(
         <>
           <div className="role-switch" role="group" aria-label="Role">
             {ROLES.map((id) => (
@@ -310,7 +274,30 @@ export default function RoadmapAdmin() {
               </button>
             ))}
           </div>
-          {role && step && (
+          {role && (
+            <div className="roadmap-modes" role="group" aria-label="Edit">
+              <button type="button" className={`btn sm ${view === 'steps' ? 'dark' : ''}`} aria-pressed={view === 'steps'} onClick={() => setView('steps')}>
+                Trail steps
+              </button>
+              <button type="button" className={`btn sm ${view === 'path' ? 'dark' : ''}`} aria-pressed={view === 'path'} onClick={() => setView('path')}>
+                Units and careers
+              </button>
+            </div>
+          )}
+          {role && view === 'path' && role.units?.length > 0 && (
+            <div className="path-panel">
+              <PathEditor role={role} setRole={setRole} />
+              <div className="roadmap-actions">
+                <button type="button" className="btn dark" disabled={busy} onClick={onPublish}>
+                  {busy ? 'Saving…' : 'Publish changes'}
+                </button>
+                <button type="button" className="btn" disabled={busy} onClick={onSaveDraft}>
+                  Save draft
+                </button>
+              </div>
+            </div>
+          )}
+          {role && step && view === 'steps' && (
             <div className="roadmap-editor">
               <div className="step-picker">
                 <p className="muted">Version {role.version}. {structureChanged ? 'This will publish as a new version.' : 'Text changes stay on this version.'}</p>
@@ -327,7 +314,6 @@ export default function RoadmapAdmin() {
                   Add step
                 </button>
               </div>
-              {role.units?.length > 0 && <PathEditor role={role} setRole={setRole} />}
               <form
                 className="stack"
                 onSubmit={(event) => {
@@ -471,61 +457,6 @@ export default function RoadmapAdmin() {
         </>
       )}
 
-      {mode === 'students' && (
-        <div className="window">
-          <div className="window-bar">
-            <div className="window-dots" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </div>
-            <div className="title">Where students are</div>
-          </div>
-          <div className="window-body">
-            {learners.length === 0 ? (
-              <div className="empty">
-                <strong>No one has started a trail yet</strong>
-                <p className="muted">Progress shows up here after a student opens a role trail.</p>
-              </div>
-            ) : (
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Student</th>
-                      <th>Trail</th>
-                      <th>State</th>
-                      <th>Progress</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {learners.map((row) => (
-                      <tr key={row.uid}>
-                        <td>
-                          <strong>{row.displayName || 'Student'}</strong>
-                          <div className="muted">{row.email || row.uid}</div>
-                          {row.collegeId ? <div className="muted">{row.collegeId}</div> : null}
-                        </td>
-                        <td>
-                          {row.roleTitle || row.roleId || '—'}
-                          {row.version ? ` · v${row.version}` : ''}
-                        </td>
-                        <td>
-                          {stateLabel(row.state)}
-                          {row.currentStep ? <div>{row.currentStep}</div> : null}
-                        </td>
-                        <td>
-                          {row.total ? `${row.done} / ${row.total}` : '—'}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </section>
   )
 }

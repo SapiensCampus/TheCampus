@@ -1329,3 +1329,19 @@ td.email {
     grid-template-columns: 1fr;
   }
 }
+
+.path-panel {
+  display: grid;
+  gap: 16px;
+  max-width: 720px;
+}
+
+.path-editor h3 {
+  margin: 8px 0 0;
+}
+
+.path-editor fieldset {
+  border: 1.5px solid var(--ink);
+  padding: 12px;
+  margin: 0;
+}
