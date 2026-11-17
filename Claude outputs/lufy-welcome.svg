@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" width="480" height="560" role="img" aria-labelledby="t d" xmlns:c2pa="http://c2pa.org/manifest">
+  <title id="t">Lufy welcomes you to Sapiens Campus</title>
+  <desc id="d">Lufy the monkey with glasses jumps with joy and greets the new student.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="75%">
+      <stop offset="0" stop-color="#FFF3A3"/>
+      <stop offset="0.55" stop-color="#FFD93B"/>
+      <stop offset="1" stop-color="#F9B90B"/>
+    </radialGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="11" cy="11" r="5" fill="#F2A900" opacity="0.28"/>
+    </pattern>
+    <radialGradient id="dotfade" cx="50%" cy="50%" r="60%">
+      <stop offset="0.35" stop-color="#000"/>
+      <stop offset="1" stop-color="#fff"/>
+    </radialGradient>
+    <mask id="dotmask"><rect width="480" height="560" fill="url(#dotfade)"/></mask>
+    <!-- white sticker outline like the reference -->
+    <filter id="sticker" x="-20%" y="-20%" width="140%" height="140%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="6" result="grown"/>
+      <feFlood flood-color="#FFFFFF"/>
+      <feComposite in2="grown" operator="in" result="outline"/>
+      <feMerge><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="0" flood-color="#1A1A1A"/>
+    </filter>
+  </defs>
+
+  <style>
+    .ink { fill:#1A1A1A; }
+    .cream { fill:#FFF4DC; }
+    .line { fill:none; stroke:#1A1A1A; stroke-linecap:round; stroke-linejoin:round; }
+    text { font-family:"Baloo 2","Fredoka","Poppins","Arial Rounded MT Bold","Segoe UI",sans-serif; }
+
+    /* entrance */
+    .pop    { transform-box:view-box; transform-origin:240px 470px; animation:pop .7s cubic-bezier(.3,1.6,.5,1) both; }
+    .bubble { transform-box:view-box; transform-origin:240px 170px; animation:pop .6s .45s cubic-bezier(.3,1.6,.5,1) both; }
+    .cta    { transform-box:view-box; transform-origin:240px 520px; animation:pop .5s .9s cubic-bezier(.3,1.6,.5,1) both; }
+    @keyframes pop { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+    /* happy jumping loop */
+    .jump   { animation:jump 1.1s .7s ease-in-out infinite; }
+    @keyframes jump { 0%,100%{transform:translateY(0)} 45%{transform:translateY(-20px)} 60%{transform:translateY(-18px)} }
+    .shadow { transform-box:view-box; transform-origin:240px 488px; animation:shadow 1.1s .7s ease-in-out infinite; }
+    @keyframes shadow { 0%,100%{transform:scaleX(1);opacity:.25} 50%{transform:scaleX(.7);opacity:.12} }
+
+    /* waving arms */
+    .armL { transform-box:view-box; transform-origin:206px 350px; animation:waveL .55s ease-in-out infinite alternate; }
+    .armR { transform-box:view-box; transform-origin:274px 350px; animation:waveR .55s ease-in-out infinite alternate; }
+    @keyframes waveL { from{transform:rotate(-12deg)} to{transform:rotate(10deg)} }
+    @keyframes waveR { from{transform:rotate(12deg)} to{transform:rotate(-10deg)} }
+
+    /* kicking leg + tail swish */
+    .legR { transform-box:view-box; transform-origin:262px 402px; animation:kick 1.1s .7s ease-in-out infinite; }
+    @keyframes kick { 0%,100%{transform:rotate(0)} 50%{transform:rotate(-14deg)} }
+    .tail { transform-box:view-box; transform-origin:268px 402px; animation:swish 1.4s ease-in-out infinite alternate; }
+    @keyframes swish { from{transform:rotate(-8deg)} to{transform:rotate(12deg)} }
+
+    /* head bob */
+    .head { transform-box:view-box; transform-origin:240px 320px; animation:bob 1.1s .7s ease-in-out infinite; }
+    @keyframes bob { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+
+    /* excitement lines + confetti */
+    .zap  { animation:zap .55s steps(2,end) infinite; }
+    .zap2 { animation:zap .55s .27s steps(2,end) infinite; }
+    @keyframes zap { 0%{opacity:1} 100%{opacity:.15} }
+    .conf { transform-box:fill-box; transform-origin:center; animation:spin 2.4s linear infinite; }
+    .conf:nth-of-type(2n) { animation-duration:3.1s; animation-direction:reverse; }
+    .conf:nth-of-type(3n) { animation-duration:1.9s; }
+    @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation:none !important; }
+    }
+  </style>
+
+  <!-- background -->
+  <rect width="480" height="560" rx="32" fill="url(#bg)"/>
+  <rect width="480" height="560" rx="32" fill="url(#dots)" mask="url(#dotmask)"/>
+
+  <!-- confetti -->
+  <g>
+    <rect class="conf" x="40"  y="200" width="14" height="8" rx="2" fill="#FF6B6B"/>
+    <rect class="conf" x="418" y="230" width="14" height="8" rx="2" fill="#4D96FF"/>
+    <circle class="conf" cx="70" cy="330" r="6" fill="#6BCB77"/>
+    <rect class="conf" x="400" y="340" width="12" height="12" rx="2" fill="#FFFFFF"/>
+    <rect class="conf" x="56"  y="430" width="12" height="7" rx="2" fill="#4D96FF"/>
+    <circle class="conf" cx="430" cy="440" r="6" fill="#FF6B6B"/>
+    <path class="conf" d="M110 250 l8 -12 l8 12 z" fill="#FFFFFF"/>
+    <path class="conf" d="M360 205 l8 -12 l8 12 z" fill="#6BCB77"/>
+    <rect class="conf" x="372" y="480" width="10" height="10" rx="2" fill="#FFFFFF"/>
+    <circle class="conf" cx="96" cy="500" r="5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- ground shadow -->
+  <ellipse class="shadow" cx="240" cy="488" rx="78" ry="9" fill="#7A5200"/>
+
+  <!-- ===== LUFY ===== -->
+  <g class="pop">
+   <g class="jump">
+    <!-- excitement lines -->
+    <g class="line" stroke-width="6">
+      <path class="zap"  d="M156 190 L140 170"/>
+      <path class="zap2" d="M176 172 L168 150"/>
+      <path class="zap"  d="M324 190 L340 170"/>
+      <path class="zap2" d="M304 172 L312 150"/>
+      <path class="zap2" d="M146 430 L128 440"/>
+      <path class="zap"  d="M150 452 L134 468"/>
+      <path class="zap"  d="M336 420 L354 414"/>
+    </g>
+
+    <g filter="url(#sticker)">
+      <!-- tail -->
+      <g class="tail">
+        <path class="line" stroke-width="12" d="M266 404 C 320 420, 352 378, 330 352 C 314 334, 292 350, 306 366"/>
+      </g>
+
+      <!-- left leg -->
+      <path class="line" stroke-width="28" d="M222 404 L204 452"/>
+      <ellipse cx="196" cy="462" rx="24" ry="14" class="cream" stroke="#1A1A1A" stroke-width="4"/>
+      <path class="line" stroke-width="3" d="M186 456 v8 M196 455 v9"/>
+
+      <!-- right leg (kicking) -->
+      <g class="legR">
+        <path class="line" stroke-width="28" d="M260 404 L290 446"/>
+        <ellipse cx="300" cy="454" rx="24" ry="14" transform="rotate(-24 300 454)" class="cream" stroke="#1A1A1A" stroke-width="4"/>
+        <path class="line" stroke-width="3" d="M300 446 l4 8 M310 441 l4 8"/>
+      </g>
+
+      <!-- body -->
+      <ellipse cx="240" cy="378" rx="50" ry="52" class="ink"/>
+      <ellipse cx="240" cy="386" rx="29" ry="35" class="cream"/>
+
+      <!-- left arm -->
+      <g class="armL">
+        <path class="line" stroke-width="24" d="M206 354 L138 306"/>
+        <circle cx="126" cy="296" r="21" class="cream" stroke="#1A1A1A" stroke-width="4"/>
+        <path class="line" stroke-width="3" d="M114 288 q6 -6 12 0 M122 284 q6 -6 12 0"/>
+      </g>
+      <!-- right arm -->
+      <g class="armR">
+        <path class="line" stroke-width="24" d="M274 354 L342 306"/>
+        <circle cx="354" cy="296" r="21" class="cream" stroke="#1A1A1A" stroke-width="4"/>
+        <path class="line" stroke-width="3" d="M346 284 q6 -6 12 0 M354 288 q6 -6 12 0"/>
+      </g>
+
+      <!-- head -->
+      <g class="head">
+        <!-- ears -->
+        <circle cx="170" cy="266" r="25" class="ink"/>
+        <circle cx="170" cy="266" r="13" class="cream"/>
+        <circle cx="310" cy="266" r="25" class="ink"/>
+        <circle cx="310" cy="266" r="13" class="cream"/>
+        <!-- skull + hair tuft -->
+        <circle cx="240" cy="260" r="68" class="ink"/>
+        <path class="ink" d="M226 198 C 220 176, 244 164, 258 176 C 246 174, 240 182, 248 196 Z"/>
+        <!-- face mask -->
+        <ellipse cx="217" cy="258" rx="31" ry="32" class="cream"/>
+        <ellipse cx="263" cy="258" rx="31" ry="32" class="cream"/>
+        <ellipse cx="240" cy="292" rx="45" ry="30" class="cream"/>
+        <!-- blush -->
+        <ellipse cx="195" cy="284" rx="9" ry="5" fill="#FFB49B"/>
+        <ellipse cx="285" cy="284" rx="9" ry="5" fill="#FFB49B"/>
+        <!-- glasses -->
+        <path class="line" stroke-width="5" d="M193 252 L178 248 M287 252 L302 248 M236 254 q4 -4 8 0"/>
+        <circle cx="215" cy="255" r="22" fill="#FFFFFF" fill-opacity="0.35" stroke="#1A1A1A" stroke-width="6"/>
+        <circle cx="265" cy="255" r="22" fill="#FFFFFF" fill-opacity="0.35" stroke="#1A1A1A" stroke-width="6"/>
+        <!-- happy >< eyes -->
+        <path class="line" stroke-width="4.5" d="M205 247 L221 255 L205 263"/>
+        <path class="line" stroke-width="4.5" d="M275 247 L259 255 L275 263"/>
+        <!-- nose -->
+        <circle cx="235" cy="280" r="2.4" class="ink"/>
+        <circle cx="245" cy="280" r="2.4" class="ink"/>
+        <!-- open smile -->
+        <path d="M220 289 Q240 322 260 289 Q240 295 220 289 Z" fill="#B3261E" stroke="#1A1A1A" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M229 303 Q240 296 251 303 Q246 311 240 311 Q234 311 229 303 Z" fill="#FF7B8A"/>
+      </g>
+    </g>
+   </g>
+  </g>
+
+  <!-- ===== SPEECH BUBBLE ===== -->
+  <g class="bubble">
+    <g filter="url(#soft)">
+      <rect x="44" y="24" width="392" height="128" rx="30" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="5"/>
+      <path d="M214 148 L238 180 L258 148" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="5" stroke-linejoin="round"/>
+      <rect x="212" y="141" width="48" height="9" fill="#FFFFFF"/>
+    </g>
+    <text x="240" y="72" text-anchor="middle" font-size="32" font-weight="800" fill="#1A1A1A">
+      Vanakkam, <tspan id="student-name" fill="#E07A00">Nanba</tspan>!
+    </text>
+    <text x="240" y="106" text-anchor="middle" font-size="21" font-weight="700" fill="#1A1A1A">Welcome to Sapiens Campus!</text>
+    <text x="240" y="134" text-anchor="middle" font-size="16" font-weight="600" fill="#6B5B3E">Naan Lufy! Vaa, jolly-aa learn pannalaam!</text>
+  </g>
+
+  <!-- ===== CTA PILL ===== -->
+  <g class="cta">
+    <rect x="150" y="500" width="180" height="44" rx="22" fill="#1A1A1A"/>
+    <text x="240" y="529" text-anchor="middle" font-size="19" font-weight="800" fill="#FFD93B">Let's go! →</text>
+  </g>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo5ODI5YzY5MC1lNDc0LTQ0MzMtYWJkMy1kMGM5MTM1ZTE4ZjMAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaOfmMxYbhgNwTw7+MEmc1/UAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpmZDdiYWMwNi0yMmZiLTQxZmItYTVjMy1mZmJiM2M5ZTYxN2NscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNouL7rvtczIcWrP/todX2QSAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggu4ZzOfG8aeF+8/GWfSho6DzGy2KWmNxgHBXM6Ql3jKKkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaOMedIsLAH3c1q1uGLZQoycAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIJLElaToANA/Fo1anwVcLTdYTO0SlVa+vmguCtQUKhxAZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GSkRZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjk4MjljNjkwLWU0NzQtNDQzMy1hYmQzLWQwYzkxMzVlMThmMy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmUxMjJjNTRiLTZkYTAtNDAyZC05YTM2LTRhNTc1YmNlODBlNnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCC7hnM58bxp4X7z8ZZ9KGjoPMbLYpaY3GAcFczpCXeMoqJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggf9KOfXBfaTJgMWxuhmQddUABFQNNd7+tl1mZ+CPJvKeiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFgg1g48/do+DWa0G1IsJcr7Sw6Jz9v75ixlRsTRdXpHDM50Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQNMjxN9i+XOApZVt7C36K4Y45/gGs1YeheTRM/8+YE8DhSOd2M38o7PbPrq07/Tg2O3nvgZVEYRoezGzEC1r3nU=</c2pa:manifest></metadata></svg>
